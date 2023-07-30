@@ -3,14 +3,14 @@ const express = require("express");
 const app = express();
 
 const { verifyJWTToken } = require("./utils/authUtils");
-const loginMiddleware = require("./middleware/login");
+const handleLogin = require("./middleware/login");
 const routes = require("./routes/api"); // routes
 
 app.use(express.json());
 app.use(express.static("./static"));
 
 // Endpoint to login
-app.post("/login", loginMiddleware);
+app.post("/login", handleLogin);
 
 // Authenticate Users
 app.use(verifyJWTToken);

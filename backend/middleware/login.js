@@ -5,7 +5,7 @@ const users = [
   { id: 2, username: "user2", password: "pass2" },
 ];
 
-const loginMiddleware = (req, res) => {
+const handleLogin = (req, res) => {
   const { username, password } = req.body;
   //   Check if user is in database
   const user = users.find(
@@ -19,4 +19,4 @@ const loginMiddleware = (req, res) => {
   res.send({ token });
 };
 
-module.exports = loginMiddleware;
+module.exports = handleLogin;
