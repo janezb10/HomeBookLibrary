@@ -3,15 +3,16 @@ const express = require("express");
 const app = express();
 
 const { verifyJWTToken } = require("./utils/authUtils");
-const handleLogin = require("./middleware/login");
+// const handleLogin = require("./middleware/login");
 const routes = require("./routes/api"); // routes
 const cors = require("cors");
+const authRoutes = require("./routes/auth");
 
 app.use(express.json());
 app.use(express.static("./static"));
 
 // Endpoint to login
-app.post("/login", handleLogin);
+app.use("/auth", authRoutes);
 
 // Enable CORS
 app.use(cors());

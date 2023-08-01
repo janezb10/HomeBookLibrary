@@ -1,8 +1,8 @@
 const { generateJWTToken } = require("../utils/authUtils");
 
 const users = [
-  { id: 1, username: "user1", password: "pass1" },
-  { id: 2, username: "user2", password: "pass2" },
+  { id: 1, email: "platinab10@gmail.com", password: "passw1" },
+  { id: 2, email: "sd@sd.si", password: "passw2" },
 ];
 
 const handleLogin = (req, res) => {
