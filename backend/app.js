@@ -9,13 +9,12 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 
 app.use(express.json());
+// Enable CORS
+app.use(cors());
 app.use(express.static("./static"));
 
 // Endpoint to login
 app.use("/auth", authRoutes);
-
-// Enable CORS
-app.use(cors());
 
 // Authenticate Users
 app.use(verifyJWTToken);

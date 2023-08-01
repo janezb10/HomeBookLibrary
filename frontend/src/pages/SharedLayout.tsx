@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar.tsx";
+import { AuthTokenInterface } from "../hooks/useToken.ts";
 
-const SharedLayout = () => {
+const SharedLayout = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   return (
     <>
-      <NavBar />
+      <NavBar authToken={authToken} setAuthToken={setAuthToken} />
       <Outlet />
     </>
   );
