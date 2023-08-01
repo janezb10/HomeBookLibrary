@@ -1,7 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { ReactNode } from "react";
-// import useToken from "../hooks/useToken.ts";
-// import { AuthTokenInterface } from "../hooks/useToken.ts";
 
 interface Props {
   children: ReactNode;
@@ -9,10 +7,6 @@ interface Props {
 }
 
 const ProtectedRoute = ({ children, authToken }: Props) => {
-  // const { token } = useToken();
-  // console.log(token);
-
-  // const token = sessionStorage.getItem("authToken");
   if (!authToken) {
     return <Navigate to="/" />;
   }

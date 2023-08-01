@@ -9,6 +9,10 @@ import useToken from "./hooks/useToken.ts";
 
 const App = () => {
   const { authToken, setAuthToken } = useToken();
+  const token = sessionStorage.getItem("authToken");
+  if (!authToken && token) {
+    setAuthToken(token);
+  }
 
   return (
     <BrowserRouter>

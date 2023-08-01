@@ -43,7 +43,7 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
       });
       const { token } = response.data;
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      // s
+      sessionStorage.setItem("authToken", token);
       setAuthToken(token);
 
       navigate("/library");

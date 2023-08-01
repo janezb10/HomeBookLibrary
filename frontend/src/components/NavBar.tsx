@@ -1,11 +1,7 @@
 import { NavLink } from "react-router-dom";
-// import useToken from "../hooks/useToken.ts";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 
 const NavBar = ({ authToken, setAuthToken }: AuthTokenInterface) => {
-  // const token = sessionStorage.getItem("authToken");
-  // const { token, setToken } = useToken();
-
   return (
     <nav>
       <NavLink to="/">Home</NavLink>
@@ -14,6 +10,7 @@ const NavBar = ({ authToken, setAuthToken }: AuthTokenInterface) => {
       {authToken && (
         <NavLink
           onClick={() => {
+            sessionStorage.removeItem("authToken");
             setAuthToken("");
           }}
           to="/"
