@@ -21,6 +21,17 @@ app.use(verifyJWTToken);
 // Only authenticated users have access
 app.use("/api", routes);
 
+// Global Error Handler.
+app.use((err, req, rest) => {
+  console.log("error: " + err.stack);
+  console.log("error: " + err.name);
+  console.log("error: " + err.code);
+
+  res.status(500).json({
+    errorMessage: err.message || "Something went realy wrong",
+  });
+});
+
 const port = 3001;
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);

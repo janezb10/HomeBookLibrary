@@ -2,6 +2,7 @@ import {
   Alert,
   AlertIcon,
   Button,
+  Box,
   FormControl,
   FormLabel,
   Input,
@@ -57,11 +58,21 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
   };
 
   return (
-    <div>
+    <Box
+      border="2px solid #DDD"
+      mt="1rem"
+      mx="1rem"
+      p="1rem"
+      borderRadius="1rem"
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl>
+        <FormControl p="0.5rem">
           <FormLabel>Email address</FormLabel>
-          <Input type="text" {...register("email")} />
+          <Input
+            type="text"
+            {...register("email")}
+            placeholder="janezNovak@domain.com"
+          />
           {errors.email && (
             <Alert status="error">
               <AlertIcon />
@@ -69,9 +80,13 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
             </Alert>
           )}
         </FormControl>
-        <FormControl>
+        <FormControl p="0.5rem">
           <FormControl>Password</FormControl>
-          <Input type="password" {...register("password")} />
+          <Input
+            type="password"
+            {...register("password")}
+            placeholder="*********"
+          />
           {errors.password && (
             <Alert status="error">
               <AlertIcon />
@@ -85,9 +100,11 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
             {authError}
           </Alert>
         )}
-        <Button type="submit">Login</Button>
+        <Button colorScheme="teal" variant="outline" type="submit" m="0.5rem">
+          Login
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 };
 
