@@ -34,7 +34,7 @@ const App = () => {
             path="/library"
             element={
               <ProtectedRoute authToken={authToken}>
-                <Library />
+                <Library authToken={authToken} />
               </ProtectedRoute>
             }
           />

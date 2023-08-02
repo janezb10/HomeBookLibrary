@@ -14,7 +14,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-interface BookInterface {
+export interface BookInterface {
   id: number;
   naslov: string;
   avtor: string;
@@ -22,10 +22,10 @@ interface BookInterface {
   podpodrocje: string;
   pozicija: string;
   jezik: string;
-  zbirka: string;
-  drzava: string;
-  leto: string;
-  opombe: string;
+  zbirka: string | null;
+  drzava: string | null;
+  leto: string | null;
+  opombe: string | null;
 }
 
 const Book = ({

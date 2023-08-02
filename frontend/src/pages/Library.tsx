@@ -1,12 +1,22 @@
 import { Box } from "@chakra-ui/react";
 import BookList from "../components/BookList.tsx";
+import SearchInput from "../components/SearchInput.tsx";
+import { useState } from "react";
+import { BookInterface } from "../components/Book.tsx";
+import { AuthTokenInterface } from "../hooks/useToken.ts";
 
-const Library = () => {
+const Library = ({ authToken }: AuthTokenInterface) => {
+  const [books, setBooks] = useState<BookInterface[]>([]);
+
+  const handleBookSearch = (books: BookInterface[]) => {
+    setBooks([...books]);
+  };
+
   return (
     <section>
-      <h4>Hello, Knjižnica not sm</h4>
+      <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
-        <BookList />
+        <BookList books={books} />
       </Box>
     </section>
   );

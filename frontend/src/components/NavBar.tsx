@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 import { Button, Flex } from "@chakra-ui/react";
-import SearchInput from "./SearchInput.tsx";
 
 const NavBar = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   return (
@@ -34,7 +33,6 @@ const NavBar = ({ authToken, setAuthToken }: AuthTokenInterface) => {
           </Button>
         )}
       </Flex>
-      <SearchInput />
     </>
   );
 };

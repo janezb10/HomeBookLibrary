@@ -45,7 +45,9 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
       const { token } = response.data;
       apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       sessionStorage.setItem("authToken", token);
-      setAuthToken(token);
+      if (setAuthToken) {
+        setAuthToken(token);
+      }
 
       navigate("/library");
     } catch (error) {

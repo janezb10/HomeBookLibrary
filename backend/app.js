@@ -13,6 +13,10 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("./static"));
 
+app.get("/test", (req, res) => {
+  res.send("aaaa neki neki dela");
+});
+
 // Endpoint to login
 app.use("/auth", authRoutes);
 

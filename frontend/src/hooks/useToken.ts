@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export interface AuthTokenInterface {
   authToken: string;
-  setAuthToken: (authToken: string) => void;
+  setAuthToken?: (authToken: string) => void;
 }
 
 const useToken = () => {
