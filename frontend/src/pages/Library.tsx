@@ -18,7 +18,8 @@ const Library = ({ authToken }: AuthTokenInterface) => {
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
         <Podrocja
-          // selected={3}
+          selected={3}
+          onSelect={(n) => console.log(n)}
           podrocja={[
             {
               id_podrocje: 1,
