@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 import Podrocja from "../components/Podrocja.tsx";
+import Podpodrocja from "../components/Podpodrocja.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -64,6 +65,87 @@ const Library = ({ authToken }: AuthTokenInterface) => {
             {
               id_podrocje: 11,
               podrocje: "drugo",
+            },
+          ]}
+        />
+        <Podpodrocja
+          selected={2}
+          onSelect={(n) => console.log(n)}
+          podpodrocja={[
+            {
+              id_podpodrocje: 1,
+              id_podrocje: 2,
+              podpodrocje: "NE VEM",
+            },
+            {
+              id_podpodrocje: 2,
+              id_podrocje: 2,
+              podpodrocje: "detektivka",
+            },
+            {
+              id_podpodrocje: 3,
+              id_podrocje: 2,
+              podpodrocje: "vojni",
+            },
+            {
+              id_podpodrocje: 4,
+              id_podrocje: 2,
+              podpodrocje: "humor, komedija",
+            },
+            {
+              id_podpodrocje: 5,
+              id_podrocje: 2,
+              podpodrocje: "ljubezenski",
+            },
+            {
+              id_podpodrocje: 6,
+              id_podrocje: 2,
+              podpodrocje: "biografija",
+            },
+            {
+              id_podpodrocje: 7,
+              id_podrocje: 2,
+              podpodrocje: "potopis, dnevnik",
+            },
+            {
+              id_podpodrocje: 8,
+              id_podrocje: 2,
+              podpodrocje: "kratko(pravljica, novela)",
+            },
+            {
+              id_podpodrocje: 9,
+              id_podrocje: 2,
+              podpodrocje: "družbeni roman",
+            },
+            {
+              id_podpodrocje: 10,
+              id_podrocje: 2,
+              podpodrocje: "grozljivka",
+            },
+            {
+              id_podpodrocje: 11,
+              id_podrocje: 2,
+              podpodrocje: "zf, utopija, distopija",
+            },
+            {
+              id_podpodrocje: 12,
+              id_podrocje: 2,
+              podpodrocje: "zgodovinski",
+            },
+            {
+              id_podpodrocje: 13,
+              id_podrocje: 2,
+              podpodrocje: "eksotični",
+            },
+            {
+              id_podpodrocje: 14,
+              id_podrocje: 2,
+              podpodrocje: "eksistencializem",
+            },
+            {
+              id_podpodrocje: 15,
+              id_podrocje: 2,
+              podpodrocje: "erotika",
             },
           ]}
         />

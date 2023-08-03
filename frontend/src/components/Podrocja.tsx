@@ -14,7 +14,7 @@ interface Props {
 const Podrocja = ({ podrocja, selected, onSelect }: Props) => {
   return (
     <Select
-      placeholder="Področja.."
+      placeholder="Področje..."
       defaultValue={selected || 0}
       onChange={(e) => onSelect(+e.target.value)}
     >
