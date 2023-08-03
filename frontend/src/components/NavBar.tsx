@@ -24,7 +24,9 @@ const NavBar = ({ authToken, setAuthToken }: AuthTokenInterface) => {
             <NavLink
               onClick={() => {
                 sessionStorage.removeItem("authToken");
-                setAuthToken("");
+                if (setAuthToken) {
+                  setAuthToken("");
+                }
               }}
               to="/"
             >
