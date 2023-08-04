@@ -6,6 +6,7 @@ import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 import Podrocja from "../components/Podrocja.tsx";
 import Podpodrocja from "../components/Podpodrocja.tsx";
+import Collections from "../components/Collections.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -18,6 +19,132 @@ const Library = ({ authToken }: AuthTokenInterface) => {
     <section>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
+        <Collections
+          selected="NE VEM"
+          onSelect={(a) => console.log(a)}
+          collections={[
+            {
+              id_zbirka: 1,
+              zbirka: "NE VEM",
+            },
+            {
+              id_zbirka: 3,
+              zbirka: "ABC",
+            },
+            {
+              id_zbirka: 13,
+              zbirka: "BISERI UMETNOSTI",
+            },
+            {
+              id_zbirka: 16,
+              zbirka: "ČKZ",
+            },
+            {
+              id_zbirka: 18,
+              zbirka: "CPP",
+            },
+            {
+              id_zbirka: 23,
+              zbirka: "FAVOURITE TALES",
+            },
+            {
+              id_zbirka: 27,
+              zbirka: "GUINNESS WORLD RECORDS",
+            },
+            {
+              id_zbirka: 29,
+              zbirka: "KROŽNIK OKUSOV",
+            },
+            {
+              id_zbirka: 31,
+              zbirka: "LIKOVNA PRIČEVANJA",
+            },
+            {
+              id_zbirka: 37,
+              zbirka: "LJUDSTVA SVETA",
+            },
+            {
+              id_zbirka: 40,
+              zbirka: "MALA SPLOŠNA ENCIKLOPEDIJA",
+            },
+            {
+              id_zbirka: 46,
+              zbirka: "MALA STOR",
+            },
+            {
+              id_zbirka: 48,
+              zbirka: "MATEMATIKA",
+            },
+            {
+              id_zbirka: 50,
+              zbirka: "MATEMATIKA=ZABAVA",
+            },
+            {
+              id_zbirka: 52,
+              zbirka: "MOJE VRTNE RASTLINE",
+            },
+            {
+              id_zbirka: 53,
+              zbirka: "NEBESNA ZNAMENJA",
+            },
+            {
+              id_zbirka: 89,
+              zbirka: "NOBELOVCI",
+            },
+            {
+              id_zbirka: 90,
+              zbirka: "NOSTALGIJA",
+            },
+            {
+              id_zbirka: 97,
+              zbirka: "NOVA OBZORJA",
+            },
+            {
+              id_zbirka: 99,
+              zbirka: "ODABERI SVOJU PUSTOLOVINU",
+            },
+            {
+              id_zbirka: 100,
+              zbirka: "POMOČ IZ",
+            },
+            {
+              id_zbirka: 102,
+              zbirka: "PREPOROSTE TEHNIKE",
+            },
+            {
+              id_zbirka: 109,
+              zbirka: "PREŠERNOVA DRUŽBA",
+            },
+            {
+              id_zbirka: 110,
+              zbirka: "SVETOVNA",
+            },
+            {
+              id_zbirka: 113,
+              zbirka: "TINTIN",
+            },
+            {
+              id_zbirka: 116,
+              zbirka: "UMETNOST V SLIKAH",
+            },
+            {
+              id_zbirka: 120,
+              zbirka: "V SVETU CANKARJEVE DRAMATIKE",
+            },
+            {
+              id_zbirka: 137,
+              zbirka: "VELIKA STOR",
+            },
+            {
+              id_zbirka: 145,
+              zbirka: "VRHUNCI STOLETJA",
+            },
+            {
+              id_zbirka: 160,
+              zbirka: "ZAKLADNICA USPEŠNIC",
+            },
+          ]}
+        />
         <Podrocja
           selected={3}
           onSelect={(n) => console.log(n)}

@@ -7,7 +7,7 @@ interface BookListInterface {
 
 const BookList = ({ books }: BookListInterface) => {
   return (
-    <Accordion defaultIndex={[1]} allowMultiple>
+    <Accordion defaultIndex={[-1]} allowMultiple>
       {books.map((book) => {
         return (
           <Book
