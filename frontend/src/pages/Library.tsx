@@ -4,10 +4,11 @@ import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
 import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
-import Podrocja from "../components/Podrocja.tsx";
-import Podpodrocja from "../components/Podpodrocja.tsx";
-import Collections from "../components/Collections.tsx";
-import Languages from "../components/Languages.tsx";
+import Podrocja from "../components/BookAtributes/Podrocja.tsx";
+import Podpodrocja from "../components/BookAtributes/Podpodrocja.tsx";
+import Collections from "../components/BookAtributes/Collections.tsx";
+import Languages from "../components/BookAtributes/Languages.tsx";
+import Year from "../components/BookAtributes/Year.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -20,6 +21,7 @@ const Library = ({ authToken }: AuthTokenInterface) => {
     <section>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
+        <Year year={null} onChange={(a) => console.log(a)} />
         <Languages
           selected={2}
           onSelect={(a) => console.log(a)}
