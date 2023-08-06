@@ -9,6 +9,7 @@ import Podpodrocja from "../components/BookAtributes/Podpodrocja.tsx";
 import Collections from "../components/BookAtributes/Collections.tsx";
 import Languages from "../components/BookAtributes/Languages.tsx";
 import Year from "../components/BookAtributes/Year.tsx";
+import Positions from "../components/BookAtributes/Positions.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -21,6 +22,36 @@ const Library = ({ authToken }: AuthTokenInterface) => {
     <section>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
+        <Positions
+          positions={[
+            {
+              id_pozicija: 1,
+              pozicija: "NEVEM",
+            },
+            {
+              id_pozicija: 2,
+              pozicija: "klet",
+            },
+            {
+              id_pozicija: 3,
+              pozicija: "dnevna",
+            },
+            {
+              id_pozicija: 4,
+              pozicija: "Adrian",
+            },
+            {
+              id_pozicija: 5,
+              pozicija: "oči",
+            },
+            {
+              id_pozicija: 6,
+              pozicija: "Leila",
+            },
+          ]}
+          selected={1}
+          onSelect={(n) => console.log(n)}
+        />
         <Year year={null} onChange={(a) => console.log(a)} />
         <Languages
           selected={2}
@@ -53,7 +84,7 @@ const Library = ({ authToken }: AuthTokenInterface) => {
           ]}
         />
         <Collections
-          selected="3"
+          selected={null}
           onSelect={(a) => console.log(a)}
           collections={[
             {

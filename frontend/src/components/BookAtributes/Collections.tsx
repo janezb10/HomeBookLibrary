@@ -7,14 +7,14 @@ interface CollectionInterface {
 
 interface Props {
   collections: CollectionInterface[];
-  selected: string;
+  selected: number | null;
   onSelect: (selectedId: number) => void;
 }
 
 const Collections = ({ collections, selected, onSelect }: Props) => {
   return (
     <Select
-      placeholder="Podpodročje..."
+      placeholder="Zbirke.."
       defaultValue={selected || 0}
       onChange={(e) => onSelect(+e.target.value)}
     >
