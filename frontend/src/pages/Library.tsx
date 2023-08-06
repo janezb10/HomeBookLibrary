@@ -10,6 +10,7 @@ import Collections from "../components/BookAtributes/Collections.tsx";
 import Languages from "../components/BookAtributes/Languages.tsx";
 import Year from "../components/BookAtributes/Year.tsx";
 import Positions from "../components/BookAtributes/Positions.tsx";
+import Authors from "../components/BookAtributes/Authors.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -22,6 +23,68 @@ const Library = ({ authToken }: AuthTokenInterface) => {
     <section>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
+        <Authors
+          selected={1}
+          onSelect={(n) => console.log(n)}
+          authors={[
+            {
+              id_avtor: 1,
+              avtor: "NE VEM",
+            },
+            {
+              id_avtor: 2,
+              avtor: "ACHEBE CHINUA",
+            },
+            {
+              id_avtor: 3,
+              avtor: "ADAMLJE BOGATAJ",
+            },
+            {
+              id_avtor: 4,
+              avtor: "ADAMS DOUGLAS",
+            },
+            {
+              id_avtor: 5,
+              avtor: "ADLER IRVING",
+            },
+            {
+              id_avtor: 6,
+              avtor: "ADRIANO CINGOLANI",
+            },
+            {
+              id_avtor: 7,
+              avtor: "AGNON ŠMUEL JOSEF",
+            },
+            {
+              id_avtor: 8,
+              avtor: "AJTMATOV ČINGIZ",
+            },
+            {
+              id_avtor: 10,
+              avtor: "ALLENDE ISABEL",
+            },
+            {
+              id_avtor: 11,
+              avtor: "AMBROŽ CIRIL",
+            },
+            {
+              id_avtor: 12,
+              avtor: "AMIN SAMIR",
+            },
+            {
+              id_avtor: 13,
+              avtor: "AMIRREZVANI ANITA",
+            },
+            {
+              id_avtor: 15,
+              avtor: "AMMANITI NICCOLO",
+            },
+            {
+              id_avtor: 17,
+              avtor: "AMZS",
+            },
+          ]}
+        />
         <Positions
           positions={[
             {
