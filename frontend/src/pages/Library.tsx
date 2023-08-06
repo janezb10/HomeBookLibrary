@@ -13,6 +13,7 @@ import Positions from "../components/BookAtributes/Positions.tsx";
 import Authors from "../components/BookAtributes/Authors.tsx";
 import Notes from "../components/BookAtributes/Notes.tsx";
 import Country from "../components/BookAtributes/Country.tsx";
+import Title from "../components/BookAtributes/Title.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -25,6 +26,7 @@ const Library = ({ authToken }: AuthTokenInterface) => {
     <section>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
+        <Title currentTitle="asd" onChange={(s) => console.log(s)} />
         <Country currentCountry="Slovenia" onChange={(s) => console.log(s)} />
         <Notes
           note="dlfkja sldkfjačlsdkf jalskdjf asd"
