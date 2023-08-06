@@ -1,5 +1,4 @@
-import { FormControl, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import { Select } from "@chakra-ui/react";
 
 interface CollectionInterface {
   id_zbirka: number;
@@ -9,32 +8,24 @@ interface CollectionInterface {
 interface Props {
   collections: CollectionInterface[];
   selected: string;
-  onSelect: (selectedId: string) => void;
+  onSelect: (selectedId: number) => void;
 }
 
 const Collections = ({ collections, selected, onSelect }: Props) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onSelect(inputValue);
-  };
-
   return (
-    <FormControl>
-      <Input
-        type="text"
-        list="collections"
-        placeholder={selected}
-        value={inputValue}
-        onChange={(e) => handleInputChange(e)}
-      />
-      <datalist id="collections">
-        {collections.map((collection) => (
-          <option value={collection.zbirka} key={collection.id_zbirka} />
-        ))}
-      </datalist>
-    </FormControl>
+    <Select
+      placeholder="Podpodročje..."
+      defaultValue={selected || 0}
+      onChange={(e) => onSelect(+e.target.value)}
+    >
+      {collections.map((collection) => {
+        return (
+          <option value={collection.id_zbirka} key={collection.id_zbirka}>
+            {collection.zbirka}
+          </option>
+        );
+      })}
+    </Select>
   );
 };
 

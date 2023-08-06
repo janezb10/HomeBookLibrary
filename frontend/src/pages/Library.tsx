@@ -7,6 +7,7 @@ import { AuthTokenInterface } from "../hooks/useToken.ts";
 import Podrocja from "../components/Podrocja.tsx";
 import Podpodrocja from "../components/Podpodrocja.tsx";
 import Collections from "../components/Collections.tsx";
+import Languages from "../components/Languages.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -19,8 +20,38 @@ const Library = ({ authToken }: AuthTokenInterface) => {
     <section>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
+        <Languages
+          selected={2}
+          onSelect={(a) => console.log(a)}
+          languages={[
+            {
+              id_jezik: 1,
+              jezik: "NE VEM",
+            },
+            {
+              id_jezik: 2,
+              jezik: "slovenščina",
+            },
+            {
+              id_jezik: 3,
+              jezik: "angleščina",
+            },
+            {
+              id_jezik: 4,
+              jezik: "hrvaščina",
+            },
+            {
+              id_jezik: 5,
+              jezik: "francoščina",
+            },
+            {
+              id_jezik: 6,
+              jezik: "italijanščina",
+            },
+          ]}
+        />
         <Collections
-          selected="NE VEM"
+          selected="3"
           onSelect={(a) => console.log(a)}
           collections={[
             {
