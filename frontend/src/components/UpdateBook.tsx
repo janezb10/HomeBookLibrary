@@ -1,7 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
+import Title from "./BookAtributes/Title.tsx";
 
 const UpdateBook = () => {
-  return <Box>Update Book</Box>;
+  return (
+    <Stack spacing={4}>
+      <Title currentTitle="aaa" onChange={(e) => console.log(e)} />
+    </Stack>
+  );
 };
 
 export default UpdateBook;

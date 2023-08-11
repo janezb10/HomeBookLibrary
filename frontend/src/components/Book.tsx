@@ -5,6 +5,12 @@ import {
   AccordionPanel,
   Box,
   Button,
+  Popover,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
+  Stack,
   Table,
   TableContainer,
   Tbody,
@@ -12,7 +18,11 @@ import {
   Tfoot,
   Th,
   Tr,
+  useDisclosure,
 } from "@chakra-ui/react";
+import Title from "./BookAtributes/Title.tsx";
+import Authors from "./BookAtributes/Authors.tsx";
+import Podrocja from "./BookAtributes/Podrocja.tsx";
 
 export interface BookInterface {
   id: number;
@@ -41,6 +51,19 @@ const Book = ({
   leto,
   opombe,
 }: BookInterface) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // const handleUpdateClick = () => {
+  //   onOpen();
+  // };
+  // const handleCancel = () => {
+  //   onClose();
+  // };
+  // const handleSave = () => {
+  //   //TODO Update logic here
+  //   onClose();
+  // };
+
   return (
     <AccordionItem>
       <h2>
@@ -109,7 +132,44 @@ const Book = ({
                   <Button>Delete book</Button>
                 </Th>
                 <Th>
-                  <Button>Update book</Button>
+                  <Popover
+                    isOpen={isOpen}
+                    onOpen={onOpen}
+                    onClose={onClose}
+                    placement="right"
+                    closeOnBlur={false}
+                  >
+                    <PopoverTrigger>
+                      <Button>Update</Button>
+                    </PopoverTrigger>
+                    <PopoverContent p={5}>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <Stack spacing={4}>
+                        <Title
+                          currentTitle={naslov}
+                          onChange={(e) => console.log(e)}
+                        />
+                        <Authors
+                          authors={[
+                            { id_avtor: 0, avtor: "aaaa" },
+                            { id_avtor: 1, avtor: "bbb" },
+                          ]}
+                          selected={1}
+                          onSelect={(e) => console.log(e)}
+                        />
+                        <Podrocja
+                          podrocja={[
+                            { id_podrocje: 0, podrocje: "aaa" },
+                            { id_podrocje: 1, podrocje: "bbb" },
+                          ]}
+                          onSelect={(e) => console.log(e)}
+                          selected={1}
+                        />
+                        <Button onClick={onClose}>Close</Button>
+                      </Stack>
+                    </PopoverContent>
+                  </Popover>
                 </Th>
               </Tr>
             </Tfoot>
