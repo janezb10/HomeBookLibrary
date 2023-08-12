@@ -183,6 +183,7 @@ const Book = ({
 export default Book;
 
 // moram dodati v api id avtorja oz idje
+// prvo spet backend lepo
 // [
 //   {
 //     "id": 55,
