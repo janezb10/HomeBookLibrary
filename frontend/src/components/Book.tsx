@@ -6,9 +6,9 @@ import {
   Box,
   Button,
   Popover,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverContent,
+  // PopoverArrow,
+  // PopoverCloseButton,
+  // PopoverContent,
   PopoverTrigger,
   Table,
   TableContainer,
@@ -20,6 +20,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import UpdateBook from "./UpdateBook.tsx";
+import { AuthorInterface } from "./BookAtributes/Authors.tsx";
+import { PodrocjeInterface } from "./BookAtributes/Podrocja.tsx";
+import { PositionInterface } from "./BookAtributes/Positions.tsx";
+import { LanguageInterface } from "./BookAtributes/Languages.tsx";
+import { CollectionInterface } from "./BookAtributes/Collections.tsx";
 
 export interface BookInterface {
   id: number;
@@ -44,9 +49,16 @@ export interface BookInterface {
 interface Props {
   book: BookInterface;
   authToken: string;
+  bookAttributes: {
+    authors: AuthorInterface[];
+    podrocja: PodrocjeInterface[];
+    positions: PositionInterface[];
+    languages: LanguageInterface[];
+    collections: CollectionInterface[];
+  };
 }
 
-const Book = ({ authToken, book }: Props) => {
+const Book = ({ authToken, book, bookAttributes }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // const handleUpdateClick = () => {
@@ -138,15 +150,13 @@ const Book = ({ authToken, book }: Props) => {
                     <PopoverTrigger>
                       <Button>Update</Button>
                     </PopoverTrigger>
-                    <PopoverContent p={5}>
-                      <PopoverArrow />
-                      <PopoverCloseButton />
-                      <UpdateBook
-                        book={book}
-                        authToken={authToken}
-                        onClose={onClose}
-                      />
-                    </PopoverContent>
+
+                    <UpdateBook
+                      bookAttributes={bookAttributes}
+                      book={book}
+                      authToken={authToken}
+                      onClose={onClose}
+                    />
                   </Popover>
                 </Th>
               </Tr>
