@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 
-interface CollectionInterface {
+export interface CollectionInterface {
   id_zbirka: number;
   zbirka: string;
 }

@@ -1,7 +1,7 @@
 import { NumberInput, NumberInputField } from "@chakra-ui/react";
 
 interface Props {
-  year: number | null;
+  year: string | null;
   onChange: (year: number | null) => void;
 }
 

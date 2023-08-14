@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 
-interface LanguageInterface {
+export interface LanguageInterface {
   id_jezik: number;
   jezik: string;
 }
