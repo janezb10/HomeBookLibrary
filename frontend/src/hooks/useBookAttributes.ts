@@ -6,6 +6,7 @@ import { LanguageInterface } from "../components/BookAtributes/Languages.tsx";
 import { CollectionInterface } from "../components/BookAtributes/Collections.tsx";
 import apiClient from "../services/api-client.ts";
 import { CanceledError } from "axios";
+import { PodpodrocjeInterface } from "../components/BookAtributes/Podpodrocja.tsx";
 
 const useBookAttributes = (authToken: string) => {
   const [authors, setAuthors] = useState<AuthorInterface[]>([]);
@@ -14,6 +15,7 @@ const useBookAttributes = (authToken: string) => {
   const [positions, setPositions] = useState<PositionInterface[]>([]);
   const [languages, setLanguages] = useState<LanguageInterface[]>([]);
   const [collections, setCollections] = useState<CollectionInterface[]>([]);
+  const [podpodrocja, setPodpodrocja] = useState<PodpodrocjeInterface[]>([]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -37,6 +39,18 @@ const useBookAttributes = (authToken: string) => {
       })
       .then((res) => {
         setPodrocja([...res.data]);
+      })
+      .catch((err) => {
+        if (err instanceof CanceledError) return;
+        console.log(err);
+      });
+
+    apiClient
+      .get("/api/v1/podpodrocja", {
+        signal: controller.signal,
+      })
+      .then((res) => {
+        setPodpodrocja([...res.data]);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
@@ -81,6 +95,6 @@ const useBookAttributes = (authToken: string) => {
       });
   }, []);
 
-  return { authors, podrocja, positions, languages, collections };
+  return { authors, podrocja, positions, languages, collections, podpodrocja };
 };
 export default useBookAttributes;

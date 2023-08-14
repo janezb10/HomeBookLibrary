@@ -8,7 +8,9 @@ import {
 import Title from "./BookAtributes/Title.tsx";
 import Authors, { AuthorInterface } from "./BookAtributes/Authors.tsx";
 import Podrocja, { PodrocjeInterface } from "./BookAtributes/Podrocja.tsx";
-import Podpodrocja from "./BookAtributes/Podpodrocja.tsx";
+import Podpodrocja, {
+  PodpodrocjeInterface,
+} from "./BookAtributes/Podpodrocja.tsx";
 import Positions, { PositionInterface } from "./BookAtributes/Positions.tsx";
 import { BookInterface } from "./Book.tsx";
 import Languages, { LanguageInterface } from "./BookAtributes/Languages.tsx";
@@ -18,6 +20,7 @@ import Collections, {
 import Country from "./BookAtributes/Country.tsx";
 import Year from "./BookAtributes/Year.tsx";
 import Notes from "./BookAtributes/Notes.tsx";
+import { useState } from "react";
 
 interface Props {
   book: BookInterface;
@@ -26,6 +29,7 @@ interface Props {
   bookAttributes: {
     authors: AuthorInterface[];
     podrocja: PodrocjeInterface[];
+    podpodrocja: PodpodrocjeInterface[];
     positions: PositionInterface[];
     languages: LanguageInterface[];
     collections: CollectionInterface[];
@@ -38,8 +42,11 @@ const UpdateBook = ({
   onClose,
   bookAttributes,
 }: Props) => {
-  const { authors, podrocja, positions, languages, collections } =
+  const { authors, podrocja, podpodrocja, positions, languages, collections } =
     bookAttributes;
+  const [moznaPodpodrocja, setMoznaPodpodrocja] = useState<
+    PodpodrocjeInterface[]
+  >(podpodrocja.filter((p) => p.id_podrocje === book.id_podrocje));
 
   return (
     <PopoverContent p={5}>
@@ -55,28 +62,15 @@ const UpdateBook = ({
         <Podrocja
           podrocja={podrocja}
           selected={book.id_podrocje}
-          onSelect={(e) => console.log(e)}
+          onSelect={(e) => {
+            console.log(e);
+            setMoznaPodpodrocja(podpodrocja.filter((p) => p.id_podrocje === e));
+          }}
         />
         <Podpodrocja
-          selected={0}
+          podpodrocja={moznaPodpodrocja}
+          selected={book.id_podpodrocje}
           onSelect={(e) => console.log(e)}
-          podpodrocja={[
-            {
-              id_podpodrocje: 1,
-              id_podrocje: 2,
-              podpodrocje: "NE VEM",
-            },
-            {
-              id_podpodrocje: 2,
-              id_podrocje: 2,
-              podpodrocje: "detektivka",
-            },
-            {
-              id_podpodrocje: 3,
-              id_podrocje: 2,
-              podpodrocje: "vojni",
-            },
-          ]}
         />
         <Positions
           positions={positions}

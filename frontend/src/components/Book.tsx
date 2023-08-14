@@ -25,6 +25,7 @@ import { PodrocjeInterface } from "./BookAtributes/Podrocja.tsx";
 import { PositionInterface } from "./BookAtributes/Positions.tsx";
 import { LanguageInterface } from "./BookAtributes/Languages.tsx";
 import { CollectionInterface } from "./BookAtributes/Collections.tsx";
+import { PodpodrocjeInterface } from "./BookAtributes/Podpodrocja.tsx";
 
 export interface BookInterface {
   id: number;
@@ -52,6 +53,7 @@ interface Props {
   bookAttributes: {
     authors: AuthorInterface[];
     podrocja: PodrocjeInterface[];
+    podpodrocja: PodpodrocjeInterface[];
     positions: PositionInterface[];
     languages: LanguageInterface[];
     collections: CollectionInterface[];

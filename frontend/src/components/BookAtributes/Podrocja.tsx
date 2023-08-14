@@ -16,7 +16,11 @@ const Podrocja = ({ podrocja, selected, onSelect }: Props) => {
     <Select
       placeholder="Področje..."
       defaultValue={selected || 0}
-      onChange={(e) => onSelect(+e.target.value)}
+      onChange={(e) => {
+        onSelect(0);
+        setTimeout(() => onSelect(+e.target.value), 100);
+        // onSelect(+e.target.value);
+      }}
     >
       {podrocja.map((podrocje) => {
         return (

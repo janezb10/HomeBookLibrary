@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const mysql = require("mysql2");
+// const mysql = require("mysql2");
 const db = require("../../config/SQLConfig");
 
 router.get("/test", (req, res, next) => {
@@ -306,19 +306,12 @@ router.post("/podrocja", async (req, res, next) => {
   }
 });
 
-router.get("/podpodrocja/:idPodrocje/:keyword?", async (req, res, next) => {
+router.get("/podpodrocja", async (req, res, next) => {
   try {
     const sql = `
         SELECT *
-        FROM podpodrocje
-        WHERE id_podrocje = ?
-        AND
-        podpodrocje
-        LIKE ?`;
-    const arr = req.params.keyword
-      ? [req.params.idPodrocje, `%${req.params.keyword}%`]
-      : [req.params.idPodrocje, "%%"];
-    const [rows] = await db.execute(sql, arr);
+        FROM podpodrocje`;
+    const [rows] = await db.execute(sql);
     res.send(rows);
   } catch (err) {
     next(err);
