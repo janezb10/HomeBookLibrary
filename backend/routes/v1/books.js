@@ -16,7 +16,7 @@ router.get("/test", (req, res, next) => {
 router.get("/search/:keyword", async (req, res, next) => {
   try {
     const sql = `
-        SELECT id, naslov, avtor, podrocje, podpodrocje, pozicija, jezik, zbirka, drzava, leto, opombe
+ SELECT id, naslov, avtor, knjige.id_avtor, podrocje, knjige.id_podrocje, podpodrocje, knjige.id_podpodrocje, pozicija, knjige.id_pozicija, jezik, knjige.id_jezik, zbirka, knjige.id_zbirka, drzava, leto, opombe
         FROM knjige
         LEFT JOIN avtor ON knjige.id_avtor = avtor.id_avtor
         LEFT JOIN podrocje ON knjige.id_podrocje = podrocje.id_podrocje

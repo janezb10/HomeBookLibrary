@@ -28,11 +28,17 @@ export interface BookInterface {
   id: number;
   naslov: string;
   avtor: string;
+  id_avtor: number;
   podrocje: string;
+  id_podrocje: number;
   podpodrocje: string;
+  id_podpodrocje: number;
   pozicija: string;
+  id_pozicija: number;
   jezik: string;
+  id_jezik: number;
   zbirka: string | null;
+  id_zbirka: number;
   drzava: string | null;
   leto: string | null;
   opombe: string | null;
@@ -181,21 +187,3 @@ const Book = ({
 };
 
 export default Book;
-
-// moram dodati v api id avtorja oz idje
-// prvo spet backend lepo
-// [
-//   {
-//     "id": 55,
-//     "naslov": "SLIKANJE NA KERAMIKO",
-//     "avtor": "VEČ",
-//     "podrocje": "dom",
-//     "podpodrocje": "ročna dela",
-//     "pozicija": "dnevna",
-//     "jezik": "slovenščina",
-//     "zbirka": "PREPOROSTE TEHNIKE",
-//     "drzava": null,
-//     "leto": null,
-//     "opombe": null
-//   }
-// ]
