@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 
-interface AuthorInterface {
+export interface AuthorInterface {
   id_avtor: number;
   avtor: string;
 }

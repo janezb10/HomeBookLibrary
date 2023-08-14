@@ -10,7 +10,6 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverTrigger,
-  Stack,
   Table,
   TableContainer,
   Tbody,
@@ -20,9 +19,7 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
-import Title from "./BookAtributes/Title.tsx";
-import Authors from "./BookAtributes/Authors.tsx";
-import Podrocja from "./BookAtributes/Podrocja.tsx";
+import UpdateBook from "./UpdateBook.tsx";
 
 export interface BookInterface {
   id: number;
@@ -44,19 +41,12 @@ export interface BookInterface {
   opombe: string | null;
 }
 
-const Book = ({
-  id,
-  naslov,
-  avtor,
-  podrocje,
-  podpodrocje,
-  pozicija,
-  jezik,
-  zbirka,
-  drzava,
-  leto,
-  opombe,
-}: BookInterface) => {
+interface Props {
+  book: BookInterface;
+  authToken: string;
+}
+
+const Book = ({ authToken, book }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // const handleUpdateClick = () => {
@@ -76,8 +66,8 @@ const Book = ({
         <AccordionButton>
           <Box as="span" flex="1" textAlign="left">
             <h3>
-              <span>ID: {id} </span> - <span>{naslov}</span> -
-              <span> avtor: {avtor}</span>
+              <span>ID: {book.id} </span> - <span>{book.naslov}</span> -
+              <span> avtor: {book.avtor}</span>
             </h3>
           </Box>
           <AccordionIcon />
@@ -89,47 +79,47 @@ const Book = ({
             <Tbody>
               <Tr>
                 <Td>ID:</Td>
-                <Td>{id}</Td>
+                <Td>{book.id}</Td>
               </Tr>
               <Tr>
                 <Td>Naslov:</Td>
-                <Td>{naslov}</Td>
+                <Td>{book.naslov}</Td>
               </Tr>
               <Tr>
                 <Td>Avtor</Td>
-                <Td>{avtor}</Td>
+                <Td>{book.avtor}</Td>
               </Tr>
               <Tr>
                 <Td>podrocje</Td>
-                <Td>{podrocje}</Td>
+                <Td>{book.podrocje}</Td>
               </Tr>
               <Tr>
                 <Td>podpodrocje</Td>
-                <Td>{podpodrocje}</Td>
+                <Td>{book.podpodrocje}</Td>
               </Tr>
               <Tr>
                 <Td>pozicija</Td>
-                <Td>{pozicija}</Td>
+                <Td>{book.pozicija}</Td>
               </Tr>
               <Tr>
                 <Td>jezik</Td>
-                <Td>{jezik}</Td>
+                <Td>{book.jezik}</Td>
               </Tr>
               <Tr>
                 <Td>zbirka</Td>
-                <Td>{zbirka}</Td>
+                <Td>{book.zbirka}</Td>
               </Tr>
               <Tr>
                 <Td>drzava</Td>
-                <Td>{drzava}</Td>
+                <Td>{book.drzava}</Td>
               </Tr>
               <Tr>
                 <Td>leto</Td>
-                <Td>{leto}</Td>
+                <Td>{book.leto}</Td>
               </Tr>
               <Tr>
                 <Td>opombe</Td>
-                <Td>{opombe}</Td>
+                <Td>{book.opombe}</Td>
               </Tr>
             </Tbody>
             <Tfoot>
@@ -151,29 +141,11 @@ const Book = ({
                     <PopoverContent p={5}>
                       <PopoverArrow />
                       <PopoverCloseButton />
-                      <Stack spacing={4}>
-                        <Title
-                          currentTitle={naslov}
-                          onChange={(e) => console.log(e)}
-                        />
-                        <Authors
-                          authors={[
-                            { id_avtor: 0, avtor: "aaaa" },
-                            { id_avtor: 1, avtor: "bbb" },
-                          ]}
-                          selected={1}
-                          onSelect={(e) => console.log(e)}
-                        />
-                        <Podrocja
-                          podrocja={[
-                            { id_podrocje: 0, podrocje: "aaa" },
-                            { id_podrocje: 1, podrocje: "bbb" },
-                          ]}
-                          onSelect={(e) => console.log(e)}
-                          selected={1}
-                        />
-                        <Button onClick={onClose}>Close</Button>
-                      </Stack>
+                      <UpdateBook
+                        book={book}
+                        authToken={authToken}
+                        onClose={onClose}
+                      />
                     </PopoverContent>
                   </Popover>
                 </Th>

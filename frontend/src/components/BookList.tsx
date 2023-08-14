@@ -3,28 +3,14 @@ import Book, { BookInterface } from "./Book.tsx";
 
 interface BookListInterface {
   books: BookInterface[];
+  authToken: string;
 }
 
-const BookList = ({ books }: BookListInterface) => {
+const BookList = ({ books, authToken }: BookListInterface) => {
   return (
     <Accordion defaultIndex={[-1]} allowMultiple>
       {books.map((book) => {
-        return (
-          <Book
-            key={book.id}
-            id={book.id}
-            naslov={book.naslov}
-            avtor={book.avtor}
-            podrocje={book.podrocje}
-            podpodrocje={book.podpodrocje}
-            pozicija={book.pozicija}
-            jezik={book.jezik}
-            zbirka={book.zbirka}
-            drzava={book.drzava}
-            leto={book.leto}
-            opombe={book.opombe}
-          />
-        );
+        return <Book authToken={authToken} book={book} key={book.id} />;
       })}
     </Accordion>
   );

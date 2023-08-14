@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 
-interface PodpodrocjeInterface {
+export interface PodpodrocjeInterface {
   id_podpodrocje: number;
   id_podrocje: number;
   podpodrocje: string;

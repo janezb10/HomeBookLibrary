@@ -412,7 +412,7 @@ const Library = ({ authToken }: AuthTokenInterface) => {
             },
           ]}
         />
-        <BookList books={books} />
+        <BookList books={books} authToken={authToken} />
       </Box>
     </section>
   );

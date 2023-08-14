@@ -1,6 +1,6 @@
 import { Select } from "@chakra-ui/react";
 
-interface PositionInterface {
+export interface PositionInterface {
   id_pozicija: number;
   pozicija: string;
 }
