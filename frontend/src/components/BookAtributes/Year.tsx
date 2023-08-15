@@ -7,7 +7,7 @@ import {
 
 interface Props {
   year: string | null;
-  onChange: (year: number | null) => void;
+  onChange: (year: string | null) => void;
 }
 
 const Year = ({ year, onChange }: Props) => {
@@ -17,7 +17,7 @@ const Year = ({ year, onChange }: Props) => {
       <NumberInput defaultValue={year || ""}>
         <NumberInputField
           onChange={(e) =>
-            onChange(e.target.value === "" ? null : +e.target.value)
+            onChange(e.target.value === "" ? null : e.target.value)
           }
         />
       </NumberInput>

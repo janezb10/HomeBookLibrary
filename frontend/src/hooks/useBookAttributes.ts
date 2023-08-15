@@ -87,7 +87,6 @@ const useBookAttributes = (authToken: string) => {
       })
       .then((res) => {
         setCollections([...res.data]);
-        console.log("da");
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
