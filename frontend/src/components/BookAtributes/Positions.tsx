@@ -1,4 +1,4 @@
-import { Select } from "@chakra-ui/react";
+import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 
 export interface PositionInterface {
   id_pozicija: number;
@@ -13,19 +13,22 @@ interface Props {
 
 const Positions = ({ positions, selected, onSelect }: Props) => {
   return (
-    <Select
-      placeholder="Pozicije... "
-      defaultValue={selected}
-      onChange={(e) => onSelect(+e.target.value)}
-    >
-      {positions.map((position) => {
-        return (
-          <option value={position.id_pozicija} key={position.id_pozicija}>
-            {position.pozicija}
-          </option>
-        );
-      })}
-    </Select>
+    <FormControl>
+      <FormLabel>Pozicija:</FormLabel>
+      <Select
+        placeholder="Pozicije... "
+        defaultValue={selected}
+        onChange={(e) => onSelect(+e.target.value)}
+      >
+        {positions.map((position) => {
+          return (
+            <option value={position.id_pozicija} key={position.id_pozicija}>
+              {position.pozicija}
+            </option>
+          );
+        })}
+      </Select>
+    </FormControl>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Textarea } from "@chakra-ui/react";
+import { FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 interface Props {
   note: string | null;
   onChange: (note: string) => void;
@@ -6,11 +6,14 @@ interface Props {
 
 const Notes = ({ note, onChange }: Props) => {
   return (
-    <Textarea
-      defaultValue={note || ""}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder="Notes..."
-    />
+    <FormControl>
+      <FormLabel>Opombe:</FormLabel>
+      <Textarea
+        defaultValue={note || ""}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Notes..."
+      />
+    </FormControl>
   );
 };
 

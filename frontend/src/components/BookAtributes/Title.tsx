@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 interface Props {
   currentTitle: string | null;
@@ -7,11 +7,14 @@ interface Props {
 
 const Title = ({ currentTitle, onChange }: Props) => {
   return (
-    <Input
-      defaultValue={currentTitle || ""}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder="Title"
-    />
+    <FormControl>
+      <FormLabel>Naslov:</FormLabel>
+      <Input
+        defaultValue={currentTitle || ""}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Title"
+      />
+    </FormControl>
   );
 };
 

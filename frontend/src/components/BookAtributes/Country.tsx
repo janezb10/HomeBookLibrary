@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 interface Props {
   currentCountry: string | null;
@@ -7,11 +7,14 @@ interface Props {
 
 const Country = ({ currentCountry, onChange }: Props) => {
   return (
-    <Input
-      defaultValue={currentCountry || ""}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder="Country"
-    />
+    <FormControl>
+      <FormLabel>Država:</FormLabel>
+      <Input
+        defaultValue={currentCountry || ""}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Country"
+      />
+    </FormControl>
   );
 };
 

@@ -1,4 +1,9 @@
-import { NumberInput, NumberInputField } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  NumberInput,
+  NumberInputField,
+} from "@chakra-ui/react";
 
 interface Props {
   year: string | null;
@@ -7,13 +12,16 @@ interface Props {
 
 const Year = ({ year, onChange }: Props) => {
   return (
-    <NumberInput defaultValue={year || ""}>
-      <NumberInputField
-        onChange={(e) =>
-          onChange(e.target.value === "" ? null : +e.target.value)
-        }
-      />
-    </NumberInput>
+    <FormControl>
+      <FormLabel>Leto:</FormLabel>
+      <NumberInput defaultValue={year || ""}>
+        <NumberInputField
+          onChange={(e) =>
+            onChange(e.target.value === "" ? null : +e.target.value)
+          }
+        />
+      </NumberInput>
+    </FormControl>
   );
 };
 

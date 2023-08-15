@@ -1,4 +1,4 @@
-import { Select } from "@chakra-ui/react";
+import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 
 export interface PodpodrocjeInterface {
   id_podpodrocje: number;
@@ -14,22 +14,25 @@ interface Props {
 
 const Podpodrocja = ({ selected, onSelect, podpodrocja }: Props) => {
   return (
-    <Select
-      placeholder="Podpodročje..."
-      defaultValue={selected || 0}
-      onChange={(e) => onSelect(+e.target.value)}
-    >
-      {podpodrocja.map((podpodrocje: PodpodrocjeInterface) => {
-        return (
-          <option
-            value={podpodrocje.id_podpodrocje}
-            key={podpodrocje.id_podpodrocje}
-          >
-            {podpodrocje.podpodrocje}
-          </option>
-        );
-      })}
-    </Select>
+    <FormControl>
+      <FormLabel>Podpodročje:</FormLabel>
+      <Select
+        placeholder="Podpodročje..."
+        defaultValue={selected || 0}
+        onChange={(e) => onSelect(+e.target.value)}
+      >
+        {podpodrocja.map((podpodrocje: PodpodrocjeInterface) => {
+          return (
+            <option
+              value={podpodrocje.id_podpodrocje}
+              key={podpodrocje.id_podpodrocje}
+            >
+              {podpodrocje.podpodrocje}
+            </option>
+          );
+        })}
+      </Select>
+    </FormControl>
   );
 };
 
