@@ -15,6 +15,11 @@ router.get("/test", (req, res, next) => {
 // /* trenutno samo po avtorju, bo treba dodelat*/
 router.get("/search/:keyword", async (req, res, next) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 25;
+
+    const offset = (page - 1) * limit;
+
     const sql = `
  SELECT id, naslov, avtor, knjige.id_avtor, podrocje, knjige.id_podrocje, podpodrocje, knjige.id_podpodrocje, pozicija, knjige.id_pozicija, jezik, knjige.id_jezik, zbirka, knjige.id_zbirka, drzava, leto, opombe
         FROM knjige
@@ -25,8 +30,14 @@ router.get("/search/:keyword", async (req, res, next) => {
         LEFT JOIN jezik ON knjige.id_jezik = jezik.id_jezik
         LEFT JOIN zbirka ON knjige.id_zbirka = zbirka.id_zbirka
         WHERE naslov
-        LIKE ?;`;
-    const [rows] = await db.execute(sql, [`%${req.params.keyword}%`]);
+        LIKE ?
+        LIMIT ? , ? ;`;
+
+    const [rows] = await db.execute(sql, [
+      `%${req.params.keyword}%`,
+      `${offset}`,
+      `${limit}`,
+    ]);
     if (rows.length === 0) throw new Error("Nothing was found");
     res.send(rows);
   } catch (err) {
