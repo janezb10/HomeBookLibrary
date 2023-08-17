@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 interface Props {
-  note: string | null;
+  note?: string | null;
   onChange: (note: string) => void;
 }
 

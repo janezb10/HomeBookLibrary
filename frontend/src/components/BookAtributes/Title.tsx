@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 interface Props {
-  currentTitle: string | null;
+  currentTitle?: string;
   onChange: (title: string) => void;
 }
 

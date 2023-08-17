@@ -4,6 +4,7 @@ import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
 import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
+import NewBook from "../components/NewBook.tsx";
 
 const Library = ({ authToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -14,6 +15,7 @@ const Library = ({ authToken }: AuthTokenInterface) => {
 
   return (
     <section>
+      <NewBook authToken={authToken} />
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
         <BookList books={books} authToken={authToken} />

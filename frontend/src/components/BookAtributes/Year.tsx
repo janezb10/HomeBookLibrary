@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/react";
 
 interface Props {
-  year: string | null;
+  year?: string | null;
   onChange: (year: string | null) => void;
 }
 

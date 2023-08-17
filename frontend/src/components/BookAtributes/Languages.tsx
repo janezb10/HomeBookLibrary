@@ -7,7 +7,7 @@ export interface LanguageInterface {
 
 interface Props {
   languages: LanguageInterface[];
-  selected: number;
+  selected?: number;
   onSelect: (selectedId: number) => void;
 }
 

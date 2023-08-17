@@ -7,7 +7,7 @@ export interface CollectionInterface {
 
 interface Props {
   collections: CollectionInterface[];
-  selected: number | null;
+  selected?: number;
   onSelect: (selectedId: number) => void;
 }
 

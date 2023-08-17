@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 interface Props {
-  currentCountry: string | null;
+  currentCountry?: string | null;
   onChange: (note: string) => void;
 }
 

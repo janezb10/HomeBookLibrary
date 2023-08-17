@@ -7,7 +7,7 @@ export interface AuthorInterface {
 
 interface Props {
   authors: AuthorInterface[];
-  selected: number;
+  selected?: number;
   onSelect: (selectedId: number) => void;
 }
 

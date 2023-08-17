@@ -19,6 +19,7 @@ const useBookAttributes = (authToken: string) => {
 
   useEffect(() => {
     const controller = new AbortController();
+
     apiClient.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
 
     apiClient

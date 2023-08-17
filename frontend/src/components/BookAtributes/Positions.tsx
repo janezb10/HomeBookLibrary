@@ -7,7 +7,7 @@ export interface PositionInterface {
 
 interface Props {
   positions: PositionInterface[];
-  selected: number;
+  selected?: number;
   onSelect: (selectedId: number) => void;
 }
 
@@ -17,7 +17,7 @@ const Positions = ({ positions, selected, onSelect }: Props) => {
       <FormLabel>Pozicija:</FormLabel>
       <Select
         placeholder="Pozicije... "
-        defaultValue={selected}
+        defaultValue={selected || 0}
         onChange={(e) => onSelect(+e.target.value)}
       >
         {positions.map((position) => {

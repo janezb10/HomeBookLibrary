@@ -7,7 +7,7 @@ export interface PodpodrocjeInterface {
 }
 
 interface Props {
-  selected: number;
+  selected?: number;
   onSelect: (selectedId: number) => void;
   podpodrocja: PodpodrocjeInterface[];
 }
