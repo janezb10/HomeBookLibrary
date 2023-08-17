@@ -48,7 +48,7 @@ router.get("/search/:keyword", async (req, res, next) => {
       `${limit}`,
     ]);
 
-    if (rows.length === 0) throw new Error("Nothing was found");
+    // if (rows.length === 0) throw new Error("Nothing was found");
     res.send({
       books: rows,
       numberOfPages: numberOfPages,

@@ -1,4 +1,12 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { BookInterface } from "./Book.tsx";
@@ -19,7 +27,7 @@ interface SearchInputProps {
 
 const SearchInput = ({ onBookSearch, authToken }: SearchInputProps) => {
   const ref = useRef<HTMLInputElement>(null);
-  const [numberOfPages, setNumberOfPages] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(-1);
   const [latestSearch, setLatestSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -71,6 +79,13 @@ const SearchInput = ({ onBookSearch, authToken }: SearchInputProps) => {
             handleBookSearch(latestSearch, pageNumber)
           }
         />
+      )}
+      {numberOfPages === 0 && (
+        <Alert status="warning">
+          <AlertIcon />
+          <AlertTitle>Nothing was found</AlertTitle>
+          <AlertDescription>Try different search keyword.</AlertDescription>
+        </Alert>
       )}
     </>
   );
