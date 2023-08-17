@@ -20,6 +20,15 @@ router.get("/search/:keyword", async (req, res, next) => {
 
     const offset = (page - 1) * limit;
 
+    const countSql = `
+    SELECT COUNT(*) AS totalCount
+    FROM knjige
+    WHERE naslov LIKE ?;
+    `;
+    const [countRows] = await db.execute(countSql, [`%${req.params.keyword}%`]);
+    const totalCount = countRows[0].totalCount;
+    const numberOfPages = Math.ceil(totalCount / limit);
+
     const sql = `
  SELECT id, naslov, avtor, knjige.id_avtor, podrocje, knjige.id_podrocje, podpodrocje, knjige.id_podpodrocje, pozicija, knjige.id_pozicija, jezik, knjige.id_jezik, zbirka, knjige.id_zbirka, drzava, leto, opombe
         FROM knjige
@@ -38,8 +47,12 @@ router.get("/search/:keyword", async (req, res, next) => {
       `${offset}`,
       `${limit}`,
     ]);
+
     if (rows.length === 0) throw new Error("Nothing was found");
-    res.send(rows);
+    res.send({
+      books: rows,
+      numberOfPages: numberOfPages,
+    });
   } catch (err) {
     next(err);
   }

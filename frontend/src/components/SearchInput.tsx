@@ -5,8 +5,13 @@ import { BookInterface } from "./Book.tsx";
 import { CanceledError } from "axios";
 import apiClient from "../services/api-client.ts";
 
+export interface SearchResponse {
+  books: BookInterface[];
+  numberOfPages: number;
+}
+
 interface SearchInputProps {
-  onBookSearch: (books: BookInterface[]) => void;
+  onBookSearch: ({ books, numberOfPages }: SearchResponse) => void;
   authToken: string;
 }
 
@@ -22,7 +27,10 @@ const SearchInput = ({ onBookSearch, authToken }: SearchInputProps) => {
         signal: controller.signal,
       })
       .then((res) => {
-        onBookSearch(res.data);
+        onBookSearch({
+          books: res.data.books,
+          numberOfPages: res.data.numberOfPages,
+        });
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;

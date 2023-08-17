@@ -1,7 +1,6 @@
 import { Accordion } from "@chakra-ui/react";
 import Book, { BookInterface } from "./Book.tsx";
 import useBookAttributes from "../hooks/useBookAttributes.ts";
-import PaginationList from "./PaginationList.tsx";
 
 interface BookListInterface {
   books: BookInterface[];
@@ -23,7 +22,6 @@ const BookList = ({ books, authToken }: BookListInterface) => {
           />
         );
       })}
-      {books.length > 1 && <PaginationList />}
     </Accordion>
   );
 };
