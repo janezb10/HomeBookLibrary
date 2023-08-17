@@ -1,36 +1,40 @@
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BookInterface } from "./Book.tsx";
-import { CanceledError } from "axios";
+import { AxiosResponse, CanceledError } from "axios";
 import apiClient from "../services/api-client.ts";
+import PaginationList from "./PaginationList.tsx";
 
-export interface SearchResponse {
+interface SearchResponse {
   books: BookInterface[];
   numberOfPages: number;
+  currentPage: number;
 }
 
 interface SearchInputProps {
-  onBookSearch: ({ books, numberOfPages }: SearchResponse) => void;
+  onBookSearch: (books: BookInterface[]) => void;
   authToken: string;
 }
 
 const SearchInput = ({ onBookSearch, authToken }: SearchInputProps) => {
   const ref = useRef<HTMLInputElement>(null);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+  const [latestSearch, setLatestSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleBookSearch = (searcString: string) => {
+  const handleBookSearch = (searcString: string, page?: number) => {
     const controller = new AbortController();
     apiClient.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
 
     apiClient
-      .get(`/api/v1/search/${searcString}`, {
+      .get(`/api/v1/search/${searcString}${page ? "?page=" + page : ""}`, {
         signal: controller.signal,
       })
-      .then((res) => {
-        onBookSearch({
-          books: res.data.books,
-          numberOfPages: res.data.numberOfPages,
-        });
+      .then((res: AxiosResponse<SearchResponse>) => {
+        setNumberOfPages(res.data.numberOfPages);
+        onBookSearch(res.data.books);
+        setCurrentPage(res.data.currentPage);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
@@ -39,22 +43,36 @@ const SearchInput = ({ onBookSearch, authToken }: SearchInputProps) => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (ref.current) handleBookSearch(ref.current.value);
-      }}
-    >
-      <InputGroup>
-        <InputLeftElement children={<BsSearch />} />
-        <Input
-          ref={ref}
-          borderRadius={20}
-          placeholder="Search books..."
-          variant="filled"
+    <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (ref.current) {
+            setLatestSearch(ref.current.value);
+            handleBookSearch(ref.current.value);
+          }
+        }}
+      >
+        <InputGroup>
+          <InputLeftElement children={<BsSearch />} />
+          <Input
+            ref={ref}
+            borderRadius={20}
+            placeholder="Search books..."
+            variant="filled"
+          />
+        </InputGroup>
+      </form>
+      {numberOfPages > 0 && (
+        <PaginationList
+          numberOfPages={numberOfPages}
+          currentPage={currentPage}
+          onSelectPage={(pageNumber) =>
+            handleBookSearch(latestSearch, pageNumber)
+          }
         />
-      </InputGroup>
-    </form>
+      )}
+    </>
   );
 };
 

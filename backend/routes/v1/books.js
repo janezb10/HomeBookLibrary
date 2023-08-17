@@ -52,6 +52,7 @@ router.get("/search/:keyword", async (req, res, next) => {
     res.send({
       books: rows,
       numberOfPages: numberOfPages,
+      currentPage: page,
     });
   } catch (err) {
     next(err);
