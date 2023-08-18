@@ -10,7 +10,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spacer,
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -184,11 +183,10 @@ const NewBook = ({ authToken }: Props) => {
                 Book created successfully
               </Alert>
             )}
-            <Flex>
+            <Flex justifyContent="space-around">
               <Button mr={4} onClick={onClose}>
                 Close
               </Button>
-              <Spacer />
               <Button onClick={saveBook}>Save Book</Button>
             </Flex>
           </ModalFooter>

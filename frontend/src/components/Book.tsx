@@ -26,6 +26,7 @@ import { PositionInterface } from "./BookAtributes/Positions.tsx";
 import { LanguageInterface } from "./BookAtributes/Languages.tsx";
 import { CollectionInterface } from "./BookAtributes/Collections.tsx";
 import { PodpodrocjeInterface } from "./BookAtributes/Podpodrocja.tsx";
+import DeleteBook from "./DeleteBook.tsx";
 
 export interface BookInterface {
   id: number;
@@ -62,17 +63,6 @@ interface Props {
 
 const Book = ({ authToken, book, bookAttributes }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // const handleUpdateClick = () => {
-  //   onOpen();
-  // };
-  // const handleCancel = () => {
-  //   onClose();
-  // };
-  // const handleSave = () => {
-  //   //TODO Update logic here
-  //   onClose();
-  // };
 
   return (
     <AccordionItem>
@@ -139,7 +129,7 @@ const Book = ({ authToken, book, bookAttributes }: Props) => {
             <Tfoot>
               <Tr>
                 <Th>
-                  <Button>Delete book</Button>
+                  <DeleteBook id={book.id} />
                 </Th>
                 <Th>
                   <Popover

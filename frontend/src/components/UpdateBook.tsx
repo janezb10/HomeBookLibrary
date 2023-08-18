@@ -6,7 +6,6 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   PopoverContent,
-  Spacer,
   Stack,
 } from "@chakra-ui/react";
 import Title from "./BookAtributes/Title.tsx";
@@ -191,9 +190,8 @@ const UpdateBook = ({
             Book updated successfully
           </Alert>
         )}
-        <Flex>
+        <Flex justifyContent="space-around">
           <Button onClick={update}>Update</Button>
-          <Spacer />
           <Button onClick={onClose}>Close</Button>
         </Flex>
       </Stack>
