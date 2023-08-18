@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Button,
   Flex,
   Modal,
@@ -8,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spacer,
   Stack,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -25,6 +28,7 @@ import Year from "./BookAtributes/Year.tsx";
 import Notes from "./BookAtributes/Notes.tsx";
 import { useState } from "react";
 import useBookAttributes from "../hooks/useBookAttributes.ts";
+import apiClient from "../services/api-client.ts";
 
 interface Props {
   authToken: string;
@@ -32,9 +36,11 @@ interface Props {
 
 const NewBook = ({ authToken }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // TODO PRINESI BOOKATTRIBUTES DO SM
   const { authors, podrocja, podpodrocja, positions, languages, collections } =
     useBookAttributes(authToken);
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const [moznaPodpodrocja, setMoznaPodpodrocja] = useState<
     PodpodrocjeInterface[]
@@ -64,7 +70,20 @@ const NewBook = ({ authToken }: Props) => {
       leto: novoLeto,
       opombe: noveOpombe,
     };
-    console.log(JSON.stringify(newBook));
+    // console.log(JSON.stringify(newBook));
+
+    apiClient
+      .post(`/api/v1/books`, newBook)
+      .then((res) => {
+        console.log("Book created successfully", res.data);
+        setSuccess(true);
+        setError(false);
+      })
+      .catch((err) => {
+        setError(true);
+        setSuccess(false);
+        console.log("Error creating book", err);
+      });
   };
 
   return (
@@ -153,8 +172,23 @@ const NewBook = ({ authToken }: Props) => {
             </Stack>
           </ModalBody>
           <ModalFooter>
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                Error creating book
+              </Alert>
+            )}
+            {success && (
+              <Alert status="success">
+                <AlertIcon />
+                Book created successfully
+              </Alert>
+            )}
             <Flex>
-              <Button onClick={onClose}>Close</Button>
+              <Button mr={4} onClick={onClose}>
+                Close
+              </Button>
+              <Spacer />
               <Button onClick={saveBook}>Save Book</Button>
             </Flex>
           </ModalFooter>
