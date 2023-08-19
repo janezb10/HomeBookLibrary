@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SharedLayout from "./pages/SharedLayout.tsx";
-import Home from "./pages/Home.tsx";
+// import SharedLayout from "./pages/SharedLayout.tsx";
+// import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Error from "./pages/Error.tsx";
 import Library from "./pages/Library.tsx";
@@ -17,29 +17,21 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/*<Route index element={<Home />} />*/}
         <Route
+          index
           path="/"
+          element={<Login authToken={authToken} setAuthToken={setAuthToken} />}
+        />
+        <Route
+          path="/library"
           element={
-            <SharedLayout authToken={authToken} setAuthToken={setAuthToken} />
+            <ProtectedRoute authToken={authToken}>
+              <Library authToken={authToken} setAuthToken={setAuthToken} />
+            </ProtectedRoute>
           }
-        >
-          <Route index element={<Home />} />
-          <Route
-            path="/login"
-            element={
-              <Login authToken={authToken} setAuthToken={setAuthToken} />
-            }
-          />
-          <Route
-            path="/library"
-            element={
-              <ProtectedRoute authToken={authToken}>
-                <Library authToken={authToken} />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Error />} />
-        </Route>
+        />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,10 +2,12 @@ import {
   Alert,
   AlertIcon,
   Button,
-  Box,
   FormControl,
   FormLabel,
   Input,
+  Grid,
+  GridItem,
+  Text,
 } from "@chakra-ui/react";
 import { z } from "zod";
 import { useForm, FieldValues } from "react-hook-form";
@@ -60,53 +62,64 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
   };
 
   return (
-    <Box
-      border="2px solid #DDD"
-      mt="1rem"
-      mx="1rem"
-      p="1rem"
-      borderRadius="1rem"
+    <Grid
+      templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+      gap={6}
+      p={4}
+      justifyItems="center"
+      alignItems="center"
+      height="100vh"
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl p="0.5rem">
-          <FormLabel>Email address</FormLabel>
-          <Input
-            type="text"
-            {...register("email")}
-            placeholder="janezNovak@domain.com"
-          />
-          {errors.email && (
+      <GridItem>
+        <Text fontSize="xl" fontWeight="bold">
+          Dobrodošli v knjižnici
+        </Text>
+        <Text>
+          Tu lahko najdete različne knjige, jih urejate in dodajate nove.
+        </Text>
+      </GridItem>
+      <GridItem border="2px solid #DDD" p="2rem" borderRadius="1rem">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl p="0.5rem">
+            <FormLabel>Email address</FormLabel>
+            <Input
+              type="text"
+              {...register("email")}
+              placeholder="janezNovak@domain.com"
+            />
+            {errors.email && (
+              <Alert status="error">
+                <AlertIcon />
+                {errors.email.message}
+              </Alert>
+            )}
+          </FormControl>
+          <FormControl p="0.5rem">
+            <FormControl>Password</FormControl>
+            <Input
+              type="password"
+              {...register("password")}
+              placeholder="*********"
+            />
+            {errors.password && (
+              <Alert status="error">
+                <AlertIcon />
+                {errors.password.message}
+              </Alert>
+            )}
+          </FormControl>
+          {authError && (
             <Alert status="error">
               <AlertIcon />
-              {errors.email.message}
+              {authError}
             </Alert>
           )}
-        </FormControl>
-        <FormControl p="0.5rem">
-          <FormControl>Password</FormControl>
-          <Input
-            type="password"
-            {...register("password")}
-            placeholder="*********"
-          />
-          {errors.password && (
-            <Alert status="error">
-              <AlertIcon />
-              {errors.password.message}
-            </Alert>
-          )}
-        </FormControl>
-        {authError && (
-          <Alert status="error">
-            <AlertIcon />
-            {authError}
-          </Alert>
-        )}
-        <Button colorScheme="teal" variant="outline" type="submit" m="0.5rem">
-          Login
-        </Button>
-      </form>
-    </Box>
+          <Button colorScheme="teal" variant="outline" type="submit" m="0.5rem">
+            Login
+          </Button>
+        </form>
+      </GridItem>
+    </Grid>
   );
 };
 
