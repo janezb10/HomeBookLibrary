@@ -5,8 +5,8 @@ router.get("/:keyword?", async (req, res, next) => {
   try {
     const sql = `
         SELECT *
-        FROM avtor
-        WHERE avtor
+        FROM authors
+        WHERE author
         LIKE ?`;
     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
     const [rows] = await db.execute(sql, arr);
@@ -19,7 +19,7 @@ router.get("/:keyword?", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const sql = `
-        INSERT INTO avtor (avtor)
+        INSERT INTO authors (author)
         VALUES (?)`;
     const [result] = await db.execute(sql, [req.body.author]);
     const newAuthor = {
