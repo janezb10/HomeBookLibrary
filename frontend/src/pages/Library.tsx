@@ -6,14 +6,11 @@ import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 import NewBook from "../components/NewBook.tsx";
 import { NavLink } from "react-router-dom";
-
-// interface Props {
-//   authToken: AuthTokenInterface;
-//   setAuthToken: (token: string) => void;
-// }
+import useBookAttributes from "../hooks/useBookAttributes.ts";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
+  const bookAttributes = useBookAttributes(authToken);
 
   const handleBookSearch = (books: BookInterface[]) => {
     setBooks([...books]);
@@ -35,7 +32,11 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
       </NavLink>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
-        <BookList books={books} authToken={authToken} />
+        <BookList
+          bookAttributes={bookAttributes}
+          books={books}
+          authToken={authToken}
+        />
       </Box>
     </section>
   );

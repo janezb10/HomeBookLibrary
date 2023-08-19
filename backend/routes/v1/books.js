@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const mysql = require("mysql2");
 const db = require("../../config/SQLConfig");
 
 router.get("/test", (req, res, next) => {
@@ -13,51 +12,51 @@ router.get("/test", (req, res, next) => {
 
 /* IŠČI KNJIGI IN DOBI SEZNAM KNJIG KI USTREZAJO KRITERIJU */
 // /* trenutno samo po avtorju, bo treba dodelat*/
-router.get("/search/:keyword", async (req, res, next) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 25;
-
-    const offset = (page - 1) * limit;
-
-    const countSql = `
-    SELECT COUNT(*) AS totalCount
-    FROM knjige
-    WHERE naslov LIKE ?;
-    `;
-    const [countRows] = await db.execute(countSql, [`%${req.params.keyword}%`]);
-    const totalCount = countRows[0].totalCount;
-    const numberOfPages = Math.ceil(totalCount / limit);
-
-    const sql = `
- SELECT id, naslov, avtor, knjige.id_avtor, podrocje, knjige.id_podrocje, podpodrocje, knjige.id_podpodrocje, pozicija, knjige.id_pozicija, jezik, knjige.id_jezik, zbirka, knjige.id_zbirka, drzava, leto, opombe
-        FROM knjige
-        LEFT JOIN avtor ON knjige.id_avtor = avtor.id_avtor
-        LEFT JOIN podrocje ON knjige.id_podrocje = podrocje.id_podrocje
-        LEFT JOIN podpodrocje ON knjige.id_podpodrocje = podpodrocje.id_podpodrocje AND knjige.id_podrocje = podpodrocje.id_podrocje
-        LEFT JOIN pozicija ON knjige.id_pozicija = pozicija.id_pozicija
-        LEFT JOIN jezik ON knjige.id_jezik = jezik.id_jezik
-        LEFT JOIN zbirka ON knjige.id_zbirka = zbirka.id_zbirka
-        WHERE naslov
-        LIKE ?
-        LIMIT ? , ? ;`;
-
-    const [rows] = await db.execute(sql, [
-      `%${req.params.keyword}%`,
-      `${offset}`,
-      `${limit}`,
-    ]);
-
-    // if (rows.length === 0) throw new Error("Nothing was found");
-    res.send({
-      books: rows,
-      numberOfPages: numberOfPages,
-      currentPage: page,
-    });
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get("/search/:keyword", async (req, res, next) => {
+//   try {
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = parseInt(req.query.limit) || 25;
+//
+//     const offset = (page - 1) * limit;
+//
+//     const countSql = `
+//     SELECT COUNT(*) AS totalCount
+//     FROM knjige
+//     WHERE naslov LIKE ?;
+//     `;
+//     const [countRows] = await db.execute(countSql, [`%${req.params.keyword}%`]);
+//     const totalCount = countRows[0].totalCount;
+//     const numberOfPages = Math.ceil(totalCount / limit);
+//
+//     const sql = `
+//  SELECT id, naslov, avtor, knjige.id_avtor, podrocje, knjige.id_podrocje, podpodrocje, knjige.id_podpodrocje, pozicija, knjige.id_pozicija, jezik, knjige.id_jezik, zbirka, knjige.id_zbirka, drzava, leto, opombe
+//         FROM knjige
+//         LEFT JOIN avtor ON knjige.id_avtor = avtor.id_avtor
+//         LEFT JOIN podrocje ON knjige.id_podrocje = podrocje.id_podrocje
+//         LEFT JOIN podpodrocje ON knjige.id_podpodrocje = podpodrocje.id_podpodrocje AND knjige.id_podrocje = podpodrocje.id_podrocje
+//         LEFT JOIN pozicija ON knjige.id_pozicija = pozicija.id_pozicija
+//         LEFT JOIN jezik ON knjige.id_jezik = jezik.id_jezik
+//         LEFT JOIN zbirka ON knjige.id_zbirka = zbirka.id_zbirka
+//         WHERE naslov
+//         LIKE ?
+//         LIMIT ? , ? ;`;
+//
+//     const [rows] = await db.execute(sql, [
+//       `%${req.params.keyword}%`,
+//       `${offset}`,
+//       `${limit}`,
+//     ]);
+//
+//     // if (rows.length === 0) throw new Error("Nothing was found");
+//     res.send({
+//       books: rows,
+//       numberOfPages: numberOfPages,
+//       currentPage: page,
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 /* NOVA KNJIGA */
 router.post("/books", async (req, res, next) => {
@@ -189,174 +188,175 @@ router.delete("/books/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+// router.get("/authors/:keyword?", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         SELECT *
+//         FROM avtor
+//         WHERE avtor
+//         LIKE ?`;
+//     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
+//     const [rows] = await db.execute(sql, arr);
+//     res.send(rows);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.post("/authors", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         INSERT INTO avtor (avtor)
+//         VALUES (?)`;
+//     const [rows] = await db.execute(sql, [req.body.avtor]);
+//     if (rows.affectedRows === 0) throw new Error("Something went wrong");
+//     res.send("new author added");
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.get("/positions/:keyword?", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         SELECT *
+//         FROM pozicija
+//         WHERE pozicija
+//         LIKE ?`;
+//     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
+//     const [rows] = await db.execute(sql, arr);
+//     res.send(rows);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.post("/positions", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         INSERT INTO pozicija (pozicija)
+//         VALUES (?)`;
+//     const [rows] = await db.execute(sql, [req.body.pozicija]);
+//     if (rows.affectedRows === 0) throw new Error("Something went wrong");
+//     res.send("new position added");
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.get("/languages/:keyword?", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         SELECT *
+//         FROM jezik
+//         WHERE jezik
+//         LIKE ?`;
+//     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
+//     const [rows] = await db.execute(sql, arr);
+//     res.send(rows);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.post("/languages", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         INSERT INTO jezik (jezik)
+//         VALUES (?)`;
+//     const [rows] = await db.execute(sql, [req.body.jezik]);
+//     if (rows.affectedRows === 0) throw new Error("Something went wrong");
+//     res.send("new language added");
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.get("/collections/:keyword?", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         SELECT *
+//         FROM zbirka
+//         WHERE zbirka
+//         LIKE ?`;
+//     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
+//     const [rows] = await db.execute(sql, arr);
+//     res.send(rows);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.post("/collections", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         INSERT INTO zbirka (zbirka)
+//         VALUES (?)`;
+//     const [rows] = await db.execute(sql, [req.body.zbirka]);
+//     if (rows.affectedRows === 0) throw new Error("Something went wrong");
+//     res.send("nova zbirka dodana");
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.get("/podrocja/:keyword?", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         SELECT *
+//         FROM podrocje
+//         WHERE podrocje
+//         LIKE ?`;
+//     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
+//     const [rows] = await db.execute(sql, arr);
+//     res.send(rows);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.post("/podrocja", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         INSERT INTO podrocje (podrocje)
+//         VALUES (?)`;
+//     const [rows] = await db.execute(sql, [req.body.podrocje]);
+//     if (rows.affectedRows === 0) throw new Error("Something went wrong");
+//     res.send("novo podrocje dodano");
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.get("/podpodrocja", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         SELECT *
+//         FROM podpodrocje`;
+//     const [rows] = await db.execute(sql);
+//     res.send(rows);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+//
+// router.post("/poodpodrocje", async (req, res, next) => {
+//   try {
+//     const sql = `
+//         INSERT INTO podpodrocje (id_podrocje, podpodrocje)
+//         VALUES(?, ?)`;
+//     const arr = [req.body.id_podrocje, req.body.podpodrocje];
+//     console.log(arr);
+//     const [rows] = await db.execute(sql, [
+//       req.body.id_podrocje,
+//       req.body.podpodrocje,
+//     ]);
+//     if (rows.affectedRows === 0) throw new Error("Something went wrong");
+//     res.send("novo podpodrocje dodano");
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
 module.exports = router;
-
-router.get("/authors/:keyword?", async (req, res, next) => {
-  try {
-    const sql = `
-        SELECT *
-        FROM avtor
-        WHERE avtor
-        LIKE ?`;
-    const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
-    const [rows] = await db.execute(sql, arr);
-    res.send(rows);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/authors", async (req, res, next) => {
-  try {
-    const sql = `
-        INSERT INTO avtor (avtor)
-        VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.avtor]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("new author added");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/positions/:keyword?", async (req, res, next) => {
-  try {
-    const sql = `
-        SELECT * 
-        FROM pozicija
-        WHERE pozicija
-        LIKE ?`;
-    const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
-    const [rows] = await db.execute(sql, arr);
-    res.send(rows);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/positions", async (req, res, next) => {
-  try {
-    const sql = `
-        INSERT INTO pozicija (pozicija)
-        VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.pozicija]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("new position added");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/languages/:keyword?", async (req, res, next) => {
-  try {
-    const sql = `
-        SELECT *
-        FROM jezik
-        WHERE jezik
-        LIKE ?`;
-    const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
-    const [rows] = await db.execute(sql, arr);
-    res.send(rows);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/languages", async (req, res, next) => {
-  try {
-    const sql = `
-        INSERT INTO jezik (jezik)
-        VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.jezik]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("new language added");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/collections/:keyword?", async (req, res, next) => {
-  try {
-    const sql = `
-        SELECT *
-        FROM zbirka
-        WHERE zbirka
-        LIKE ?`;
-    const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
-    const [rows] = await db.execute(sql, arr);
-    res.send(rows);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/collections", async (req, res, next) => {
-  try {
-    const sql = `
-        INSERT INTO zbirka (zbirka)
-        VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.zbirka]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("nova zbirka dodana");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/podrocja/:keyword?", async (req, res, next) => {
-  try {
-    const sql = `
-        SELECT *
-        FROM podrocje
-        WHERE podrocje
-        LIKE ?`;
-    const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
-    const [rows] = await db.execute(sql, arr);
-    res.send(rows);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/podrocja", async (req, res, next) => {
-  try {
-    const sql = `
-        INSERT INTO podrocje (podrocje)
-        VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.podrocje]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("novo podrocje dodano");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/podpodrocja", async (req, res, next) => {
-  try {
-    const sql = `
-        SELECT *
-        FROM podpodrocje`;
-    const [rows] = await db.execute(sql);
-    res.send(rows);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/novoPodpodrocje", async (req, res, next) => {
-  try {
-    const sql = `
-        INSERT INTO podpodrocje (id_podrocje, podpodrocje)
-        VALUES(?, ?)`;
-    const arr = [req.body.id_podrocje, req.body.podpodrocje];
-    console.log(arr);
-    const [rows] = await db.execute(sql, [
-      req.body.id_podrocje,
-      req.body.podpodrocje,
-    ]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("novo podpodrocje dodano");
-  } catch (err) {
-    next(err);
-  }
-});

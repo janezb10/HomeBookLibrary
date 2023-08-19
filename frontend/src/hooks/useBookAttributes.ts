@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { AuthorInterface } from "../components/BookAtributes/Authors.tsx";
+import authors, {
+  AuthorInterface,
+} from "../components/BookAtributes/Authors.tsx";
 import { PodrocjeInterface } from "../components/BookAtributes/Podrocja.tsx";
 import { PositionInterface } from "../components/BookAtributes/Positions.tsx";
 import { LanguageInterface } from "../components/BookAtributes/Languages.tsx";
