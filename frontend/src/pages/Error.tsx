@@ -1,12 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Flex, Text, Button, Link as ChakraLink } from "@chakra-ui/react";
 
 const Error = () => {
   return (
-    <section>
-      <h3>404</h3>
-      <p>page not found</p>
-      <Link to="/">Back home</Link>
-    </section>
+    <Flex justify="center" align="center" height="100vh">
+      <Box>
+        <Text fontSize="6xl" as="u">
+          404
+        </Text>
+        <Text fontSize="4xl">page not found</Text>
+        <ChakraLink as={RouterLink} to="/library" textDecoration="none">
+          <Button colorScheme="blue" mt={4}>
+            Back home
+          </Button>
+        </ChakraLink>
+      </Box>
+    </Flex>
   );
 };
 

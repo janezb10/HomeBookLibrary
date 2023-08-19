@@ -17,7 +17,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/*<Route index element={<Home />} />*/}
         <Route
           index
           path="/"

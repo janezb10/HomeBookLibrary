@@ -71,10 +71,10 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
       height="100vh"
     >
       <GridItem>
-        <Text fontSize="xl" fontWeight="bold">
+        <Text fontSize="5xl" fontWeight="bold" lineHeight="130%">
           Dobrodošli v knjižnici
         </Text>
-        <Text>
+        <Text mt={5}>
           Tu lahko najdete različne knjige, jih urejate in dodajate nove.
         </Text>
       </GridItem>
@@ -114,7 +114,7 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
               {authError}
             </Alert>
           )}
-          <Button colorScheme="teal" variant="outline" type="submit" m="0.5rem">
+          <Button colorScheme="blue" type="submit" m="0.5rem">
             Login
           </Button>
         </form>
