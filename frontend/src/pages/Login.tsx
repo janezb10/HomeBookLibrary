@@ -88,28 +88,28 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
               placeholder="janezNovak@domain.com"
             />
             {errors.email && (
-              <Alert status="error">
+              <Alert status="error" mt="0.5rem">
                 <AlertIcon />
                 {errors.email.message}
               </Alert>
             )}
           </FormControl>
           <FormControl p="0.5rem">
-            <FormControl>Password</FormControl>
+            <FormLabel>Password</FormLabel>
             <Input
               type="password"
               {...register("password")}
               placeholder="*********"
             />
             {errors.password && (
-              <Alert status="error">
+              <Alert status="error" mt="0.5rem">
                 <AlertIcon />
                 {errors.password.message}
               </Alert>
             )}
           </FormControl>
           {authError && (
-            <Alert status="error">
+            <Alert status="error" mx="0.5rem">
               <AlertIcon />
               {authError}
             </Alert>
