@@ -694,7 +694,7 @@ VALUES (6, 'poezija');
 INSERT INTO fields(id_field, field)
 VALUES (7, 'družboslovje');
 INSERT INTO fields(id_field, field)
-VALUES (8, 'languageoslovje');
+VALUES (8, 'jezikoslovje');
 INSERT INTO fields(id_field, field)
 VALUES (9, 'naravoslovje');
 INSERT INTO fields(id_field, field)
