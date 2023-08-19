@@ -22,10 +22,14 @@ router.post("/", async (req, res, next) => {
         INSERT INTO authors (author)
         VALUES (?)`;
     const [result] = await db.execute(sql, [req.body.author]);
-    const newAuthor = {
-      id: result.insertId,
-      author: req.body.author,
-    };
+
+    const sqlNewAuthor = `
+        SELECT *
+        FROM authors
+        WHERE id_author
+        LIKE ?`;
+    const [newAuthor] = await db.execute(sqlNewAuthor, [result.insertId]);
+
     res.json(newAuthor);
   } catch (err) {
     next(err);
