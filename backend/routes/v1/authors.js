@@ -22,7 +22,6 @@ router.post("/", async (req, res, next) => {
         INSERT INTO avtor (avtor)
         VALUES (?)`;
     const [result] = await db.execute(sql, [req.body.author]);
-    // if (rows.affectedRows === 0) throw new Error("Something went wrong");
     const newAuthor = {
       id: result.insertId,
       author: req.body.author,
