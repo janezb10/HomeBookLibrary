@@ -40,6 +40,7 @@ const Book = ({
     collectionsMap,
     languagesMap,
     fieldsMap,
+    fields,
   },
 }: Props) => {
   return (
@@ -77,7 +78,13 @@ const Book = ({
               </Tr>
               <Tr>
                 <Td>podpodrocje</Td>
-                <Td>{book.id_subfield}</Td>
+                <Td>
+                  {fields.find(
+                    (f) =>
+                      f.id_field === book.id_field &&
+                      f.id_subfield === book.id_subfield,
+                  )?.subfield || ""}
+                </Td>
               </Tr>
               <Tr>
                 <Td>pozicija</Td>
