@@ -5,7 +5,7 @@ const db = require("../../config/SQLConfig");
 router.get("/:keyword?", async (req, res, next) => {
   try {
     const sql = `
-        SELECT *
+        SELECT fields.id_field, id_subfield, field,  subfield
         FROM subfields
         LEFT JOIN fields ON fields.id_field = subfields.id_field
         WHERE subfields.subfield LIKE ?
