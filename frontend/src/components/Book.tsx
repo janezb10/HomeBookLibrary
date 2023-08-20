@@ -4,74 +4,46 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
-  Popover,
-  // PopoverArrow,
-  // PopoverCloseButton,
-  // PopoverContent,
-  PopoverTrigger,
   Table,
   TableContainer,
   Tbody,
   Td,
   Tfoot,
-  Th,
   Tr,
-  useDisclosure,
 } from "@chakra-ui/react";
-import UpdateBook from "./UpdateBook.tsx";
-import { AuthorInterface } from "./BookAtributes/Authors.tsx";
-import { PodrocjeInterface } from "./BookAtributes/Podrocja.tsx";
-import { PositionInterface } from "./BookAtributes/Positions.tsx";
-import { LanguageInterface } from "./BookAtributes/Languages.tsx";
-import { CollectionInterface } from "./BookAtributes/Collections.tsx";
-import { PodpodrocjeInterface } from "./BookAtributes/Podpodrocja.tsx";
-import DeleteBook from "./DeleteBook.tsx";
+import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 
 export interface BookInterface {
   id: number;
-  naslov: string;
-  avtor: string;
-  id_avtor: number;
-  podrocje: string;
-  id_podrocje: number;
-  podpodrocje: string;
-  id_podpodrocje: number;
-  pozicija: string;
-  id_pozicija: number;
-  jezik: string;
-  id_jezik: number;
-  zbirka: string | null;
-  id_zbirka: number;
-  drzava: string | null;
-  leto: string | null;
-  opombe: string | null;
+  title: string;
+  id_author: number;
+  id_field: number;
+  id_subfield: number;
+  id_position: number;
+  id_language: number;
+  id_collection: number;
+  country: string | null;
+  year: string | null;
+  notes: string | null;
 }
 
 interface Props {
   book: BookInterface;
-  authToken: string;
-  bookAttributes: {
-    authors: AuthorInterface[];
-    podrocja: PodrocjeInterface[];
-    podpodrocja: PodpodrocjeInterface[];
-    positions: PositionInterface[];
-    languages: LanguageInterface[];
-    collections: CollectionInterface[];
-  };
+  bookAttributes: BookAttributesInterface;
 }
 
-const Book = ({ authToken, book, bookAttributes }: Props) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+const Book = ({
+  book,
+  bookAttributes: { authorsMap, positionsMap, collectionsMap, languagesMap },
+}: Props) => {
   return (
     <AccordionItem>
       <h2>
         <AccordionButton>
           <Box as="span" flex="1" textAlign="left">
             <h3>
-              <span>ID: {book.id} </span> - <span>{book.naslov}</span> -
-              <span> avtor: {book.avtor}</span>
+              <span>ID: {book.id} </span> - <span>{book.title}</span> -
+              <span> avtor: {authorsMap.get(book.id_author)}</span>
             </h3>
           </Box>
           <AccordionIcon />
@@ -87,70 +59,70 @@ const Book = ({ authToken, book, bookAttributes }: Props) => {
               </Tr>
               <Tr>
                 <Td>Naslov:</Td>
-                <Td>{book.naslov}</Td>
+                <Td>{book.title}</Td>
               </Tr>
               <Tr>
                 <Td>Avtor</Td>
-                <Td>{book.avtor}</Td>
+                <Td>{authorsMap.get(book.id_author)}</Td>
               </Tr>
               <Tr>
                 <Td>podrocje</Td>
-                <Td>{book.podrocje}</Td>
+                <Td>{book.id_field}</Td>
               </Tr>
               <Tr>
                 <Td>podpodrocje</Td>
-                <Td>{book.podpodrocje}</Td>
+                <Td>{book.id_subfield}</Td>
               </Tr>
               <Tr>
                 <Td>pozicija</Td>
-                <Td>{book.pozicija}</Td>
+                <Td>{positionsMap.get(book.id_position)}</Td>
               </Tr>
               <Tr>
                 <Td>jezik</Td>
-                <Td>{book.jezik}</Td>
+                <Td>{languagesMap.get(book.id_language)}</Td>
               </Tr>
               <Tr>
                 <Td>zbirka</Td>
-                <Td>{book.zbirka}</Td>
+                <Td>{collectionsMap.get(book.id_collection)}</Td>
               </Tr>
               <Tr>
                 <Td>drzava</Td>
-                <Td>{book.drzava}</Td>
+                <Td>{book.country}</Td>
               </Tr>
               <Tr>
                 <Td>leto</Td>
-                <Td>{book.leto}</Td>
+                <Td>{book.year}</Td>
               </Tr>
               <Tr>
                 <Td>opombe</Td>
-                <Td>{book.opombe}</Td>
+                <Td>{book.notes}</Td>
               </Tr>
             </Tbody>
             <Tfoot>
               <Tr>
-                <Th>
-                  <DeleteBook id={book.id} />
-                </Th>
-                <Th>
-                  <Popover
-                    isOpen={isOpen}
-                    onOpen={onOpen}
-                    onClose={onClose}
-                    placement="right"
-                    closeOnBlur={false}
-                  >
-                    <PopoverTrigger>
-                      <Button>Update</Button>
-                    </PopoverTrigger>
+                {/*<Th>*/}
+                {/*  <DeleteBook id={book.id} />*/}
+                {/*</Th>*/}
+                {/*<Th>*/}
+                {/*  <Popover*/}
+                {/*    isOpen={isOpen}*/}
+                {/*    onOpen={onOpen}*/}
+                {/*    onClose={onClose}*/}
+                {/*    placement="right"*/}
+                {/*    closeOnBlur={false}*/}
+                {/*  >*/}
+                {/*    <PopoverTrigger>*/}
+                {/*      <Button>Update</Button>*/}
+                {/*    </PopoverTrigger>*/}
 
-                    <UpdateBook
-                      bookAttributes={bookAttributes}
-                      book={book}
-                      authToken={authToken}
-                      onClose={onClose}
-                    />
-                  </Popover>
-                </Th>
+                {/*    <UpdateBook*/}
+                {/*      bookAttributes={bookAttributes}*/}
+                {/*      book={book}*/}
+                {/*      authToken={authToken}*/}
+                {/*      onClose={onClose}*/}
+                {/*    />*/}
+                {/*  </Popover>*/}
+                {/*</Th>*/}
               </Tr>
             </Tfoot>
           </Table>

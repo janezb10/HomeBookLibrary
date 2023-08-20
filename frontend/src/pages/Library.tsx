@@ -4,7 +4,6 @@ import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
 import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
-import NewBook from "../components/NewBook.tsx";
 import { NavLink } from "react-router-dom";
 import useBookAttributes from "../hooks/useBookAttributes.ts";
 
@@ -18,7 +17,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
 
   return (
     <section>
-      <NewBook authToken={authToken} />
+      {/*<NewBook authToken={authToken} />*/}
       <NavLink
         onClick={() => {
           sessionStorage.removeItem("authToken");
@@ -32,11 +31,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
       </NavLink>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
-        <BookList
-          bookAttributes={bookAttributes}
-          books={books}
-          authToken={authToken}
-        />
+        <BookList bookAttributes={bookAttributes} books={books} />
       </Box>
     </section>
   );
