@@ -34,7 +34,13 @@ interface Props {
 
 const Book = ({
   book,
-  bookAttributes: { authorsMap, positionsMap, collectionsMap, languagesMap },
+  bookAttributes: {
+    authorsMap,
+    positionsMap,
+    collectionsMap,
+    languagesMap,
+    fieldsMap,
+  },
 }: Props) => {
   return (
     <AccordionItem>
@@ -67,7 +73,7 @@ const Book = ({
               </Tr>
               <Tr>
                 <Td>podrocje</Td>
-                <Td>{book.id_field}</Td>
+                <Td>{fieldsMap.get(book.id_field)}</Td>
               </Tr>
               <Tr>
                 <Td>podpodrocje</Td>

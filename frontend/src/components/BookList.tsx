@@ -2,12 +2,12 @@ import { Accordion } from "@chakra-ui/react";
 import Book, { BookInterface } from "./Book.tsx";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 
-interface BookListInterface {
-  bookAttributes: BookAttributesInterface;
+interface Props {
   books: BookInterface[];
+  bookAttributes: BookAttributesInterface;
 }
 
-const BookList = ({ books, bookAttributes }: BookListInterface) => {
+const BookList = ({ books, bookAttributes }: Props) => {
   return (
     <Accordion defaultIndex={[-1]} allowMultiple>
       {books.map((book) => {

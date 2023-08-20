@@ -18,6 +18,7 @@ export interface BookAttributesInterface {
   positionsMap: Map<number, string>;
   languagesMap: Map<number, string>;
   collectionsMap: Map<number, string>;
+  fieldsMap: Map<number, string>;
 }
 
 const useBookAttributes = (authToken: string) => {
@@ -27,19 +28,18 @@ const useBookAttributes = (authToken: string) => {
   const [collections, setCollections] = useState<CollectionInterface[]>([]);
   const [fields, setFields] = useState<AllFieldsInterface[]>([]);
 
-  const [authorsMap, setAuthorsMap] = useState<Map<number, AuthorInterface>>(
+  const [authorsMap, setAuthorsMap] = useState<Map<number, string>>(new Map());
+  const [positionsMap, setPositionsMap] = useState<Map<number, string>>(
     new Map(),
   );
-  const [positionsMap, setPositionsMap] = useState<
-    Map<number, PositionInterface>
-  >(new Map());
-  const [languagesMap, setLanguagesMap] = useState<
-    Map<number, LanguageInterface>
-  >(new Map());
-  const [collectionsMap, setCollectionsMap] = useState<
-    Map<number, CollectionInterface>
-  >(new Map());
-  // const [fieldsMap, setFieldsMap] = useState<Map<number, AllFieldsInterface>>(
+  const [languagesMap, setLanguagesMap] = useState<Map<number, string>>(
+    new Map(),
+  );
+  const [collectionsMap, setCollectionsMap] = useState<Map<number, string>>(
+    new Map(),
+  );
+  const [fieldsMap, setFieldsMap] = useState<Map<number, string>>(new Map());
+  // const [subfieldsMap, setSubfieldsMap] = useState<Map<number, string>>(
   //   new Map(),
   // );
 
@@ -77,6 +77,13 @@ const useBookAttributes = (authToken: string) => {
         const data = res.data;
         setFields(data);
         //TODO subfields: Map fields, Map subfields
+        const uniqueFieldsMap = new Map();
+        data.forEach((field: AllFieldsInterface) => {
+          if (!uniqueFieldsMap.has(field.id_field)) {
+            uniqueFieldsMap.set(field.id_field, field.field);
+          }
+        });
+        setFieldsMap(uniqueFieldsMap);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
@@ -157,6 +164,7 @@ const useBookAttributes = (authToken: string) => {
     positionsMap,
     languagesMap,
     collectionsMap,
+    fieldsMap,
   };
 };
 export default useBookAttributes;
