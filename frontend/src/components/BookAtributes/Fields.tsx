@@ -25,23 +25,18 @@ interface SelectedFields {
 interface Props {
   allFields: AllFieldsInterface[];
   onSelect: ({ id_field, id_subfield }: SelectedFields) => void;
-  selectedField?: number;
-  selectedSubfield?: number;
+  selectedFields: SelectedFields;
 }
 
 const Fields = ({
   allFields,
   onSelect,
-  selectedField = 0,
-  selectedSubfield = 0,
+  selectedFields = { id_field: 0, id_subfield: 0 },
 }: Props) => {
   const [fields, setFields] = useState<FieldInterface[]>([]);
   const [subfields, setSubfields] = useState<SubFieldInterface[]>([]);
 
-  const [newField, setNewField] = useState<SelectedFields>({
-    id_field: selectedField,
-    id_subfield: selectedSubfield,
-  });
+  const [newField, setNewField] = useState<SelectedFields>(selectedFields);
   const subfieldRef = useRef<HTMLSelectElement | null>(null);
 
   useEffect(() => {
