@@ -1,8 +1,8 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 
 export interface AuthorInterface {
-  id_avtor: number;
-  avtor: string;
+  id_author: number;
+  author: string;
 }
 
 interface Props {
@@ -16,14 +16,14 @@ const Authors = ({ authors, selected, onSelect }: Props) => {
     <FormControl>
       <FormLabel>Avtor:</FormLabel>
       <Select
-        placeholder="Authors..."
+        placeholder="Avtorji..."
         defaultValue={selected}
         onChange={(e) => onSelect(+e.target.value)}
       >
         {authors.map((author) => {
           return (
-            <option value={author.id_avtor} key={author.id_avtor}>
-              {author.avtor}
+            <option value={author.id_author} key={author.id_author}>
+              {author.author}
             </option>
           );
         })}

@@ -12,7 +12,7 @@ const Title = ({ currentTitle, onChange }: Props) => {
       <Input
         defaultValue={currentTitle || ""}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Title"
+        placeholder="Title..."
       />
     </FormControl>
   );

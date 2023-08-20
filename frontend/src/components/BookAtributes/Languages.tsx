@@ -1,8 +1,8 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 
 export interface LanguageInterface {
-  id_jezik: number;
-  jezik: string;
+  id_language: number;
+  language: string;
 }
 
 interface Props {
@@ -16,14 +16,14 @@ const Languages = ({ languages, onSelect, selected }: Props) => {
     <FormControl>
       <FormLabel>Jezik:</FormLabel>
       <Select
-        placeholder="Languages..."
+        placeholder="Jeziki..."
         defaultValue={selected || 0}
         onChange={(e) => onSelect(+e.target.value)}
       >
         {languages.map((language) => {
           return (
-            <option value={language.id_jezik} key={language.id_jezik}>
-              {language.jezik}
+            <option value={language.id_language} key={language.id_language}>
+              {language.language}
             </option>
           );
         })}

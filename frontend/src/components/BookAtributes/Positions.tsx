@@ -1,8 +1,8 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 
 export interface PositionInterface {
-  id_pozicija: number;
-  pozicija: string;
+  id_position: number;
+  position: string;
 }
 
 interface Props {
@@ -22,8 +22,8 @@ const Positions = ({ positions, selected, onSelect }: Props) => {
       >
         {positions.map((position) => {
           return (
-            <option value={position.id_pozicija} key={position.id_pozicija}>
-              {position.pozicija}
+            <option value={position.id_position} key={position.id_position}>
+              {position.position}
             </option>
           );
         })}

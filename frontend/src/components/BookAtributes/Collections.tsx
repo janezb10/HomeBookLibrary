@@ -1,8 +1,8 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 
 export interface CollectionInterface {
-  id_zbirka: number;
-  zbirka: string;
+  id_collection: number;
+  collection: string;
 }
 
 interface Props {
@@ -16,14 +16,17 @@ const Collections = ({ collections, selected, onSelect }: Props) => {
     <FormControl>
       <FormLabel>Zbirka:</FormLabel>
       <Select
-        placeholder="Zbirke.."
+        placeholder="Zbirke..."
         defaultValue={selected || 0}
         onChange={(e) => onSelect(+e.target.value)}
       >
         {collections.map((collection) => {
           return (
-            <option value={collection.id_zbirka} key={collection.id_zbirka}>
-              {collection.zbirka}
+            <option
+              value={collection.id_collection}
+              key={collection.id_collection}
+            >
+              {collection.collection}
             </option>
           );
         })}

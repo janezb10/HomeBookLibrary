@@ -12,7 +12,7 @@ const Country = ({ currentCountry, onChange }: Props) => {
       <Input
         defaultValue={currentCountry || ""}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Country"
+        placeholder="Drzava..."
       />
     </FormControl>
   );
