@@ -10,7 +10,7 @@ router.get("/:keyword?", async (req, res, next) => {
         LIKE ?`;
     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
     const [rows] = await db.execute(sql, arr);
-    res.send(rows);
+    res.json(rows);
   } catch (err) {
     next(err);
   }

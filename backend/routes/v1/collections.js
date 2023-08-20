@@ -11,7 +11,7 @@ router.get("/:keyword?", async (req, res, next) => {
         LIKE ?`;
     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
     const [result] = await db.execute(sql, arr);
-    res.send(result);
+    res.json(result);
   } catch (err) {
     next(err);
   }
@@ -33,7 +33,7 @@ router.post("/", async (req, res, next) => {
       result.insertId,
     ]);
 
-    res.send(newCollection);
+    res.json(newCollection);
   } catch (err) {
     next(err);
   }

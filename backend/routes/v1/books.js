@@ -16,7 +16,7 @@ router.get("/:id", async (req, res, next) => {
             LEFT JOIN collections ON books.id_collection = collections.id_collection
             WHERE id = ?;`;
     const [result] = await db.execute(sql, [req.params.id]);
-    res.send(result);
+    res.json(result);
   } catch (err) {
     next(err);
   }

@@ -6,8 +6,8 @@ router.get("/:keyword?", async (req, res, next) => {
   try {
     const sql = `
         SELECT * 
-        FROM pozicija
-        WHERE pozicija
+        FROM positions
+        WHERE position
         LIKE ?`;
     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
     const [rows] = await db.execute(sql, arr);
@@ -20,11 +20,17 @@ router.get("/:keyword?", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const sql = `
-        INSERT INTO pozicija (pozicija)
+        INSERT INTO positions (position)
         VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.pozicija]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("new position added");
+    const [result] = await db.execute(sql, [req.body.pozicija]);
+
+    const sqlNewPosition = `
+    SELECT *
+    FROM positions
+    WHERE id_position = ?`;
+    const [newPosition] = await db.execute(sqlNewPosition, [result.insertId]);
+
+    res.json(newPosition);
   } catch (err) {
     next(err);
   }

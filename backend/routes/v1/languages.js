@@ -6,12 +6,12 @@ router.get("/:keyword?", async (req, res, next) => {
   try {
     const sql = `
         SELECT *
-        FROM jezik
-        WHERE jezik
+        FROM languages
+        WHERE language
         LIKE ?`;
     const arr = req.params.keyword ? [`%${req.params.keyword}%`] : ["%%"];
     const [rows] = await db.execute(sql, arr);
-    res.send(rows);
+    res.json(rows);
   } catch (err) {
     next(err);
   }
@@ -20,11 +20,17 @@ router.get("/:keyword?", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const sql = `
-        INSERT INTO jezik (jezik)
+        INSERT INTO languages (language)
         VALUES (?)`;
-    const [rows] = await db.execute(sql, [req.body.jezik]);
-    if (rows.affectedRows === 0) throw new Error("Something went wrong");
-    res.send("new language added");
+    const [result] = await db.execute(sql, [req.body.language]);
+
+    const sqlNewLanguage = `
+    SELECT *
+    FROM languages
+    WHERE id_language = ?`;
+    const [newLanguage] = await db.execute(sqlNewLanguage, [result.insertId]);
+
+    res.json(newLanguage);
   } catch (err) {
     next(err);
   }
