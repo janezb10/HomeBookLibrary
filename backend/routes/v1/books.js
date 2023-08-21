@@ -146,7 +146,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 /* DELETE BOOK IF DOG EATS IT */
-router.delete("/books/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const sql = `
         DELETE FROM books WHERE id = ?;`;

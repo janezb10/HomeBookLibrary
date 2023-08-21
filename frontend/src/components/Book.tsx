@@ -4,14 +4,17 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   Table,
   TableContainer,
   Tbody,
   Td,
   Tfoot,
+  Th,
   Tr,
 } from "@chakra-ui/react";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
+import DeleteBook from "./DeleteBook.tsx";
 
 export interface BookInterface {
   id: number;
@@ -30,6 +33,7 @@ export interface BookInterface {
 interface Props {
   book: BookInterface;
   bookAttributes: BookAttributesInterface;
+  onDeleteBook: (id: number) => void;
 }
 
 const Book = ({
@@ -42,6 +46,7 @@ const Book = ({
     fieldsMap,
     fields,
   },
+  onDeleteBook,
 }: Props) => {
   return (
     <AccordionItem>
@@ -113,9 +118,14 @@ const Book = ({
             </Tbody>
             <Tfoot>
               <Tr>
-                {/*<Th>*/}
-                {/*  <DeleteBook id={book.id} />*/}
-                {/*</Th>*/}
+                <Th>
+                  <Button onClick={() => onDeleteBook(book.id)}>
+                    Delete Book
+                  </Button>
+                </Th>
+                <Th>
+                  <DeleteBook id={book.id} />
+                </Th>
                 {/*<Th>*/}
                 {/*  <Popover*/}
                 {/*    isOpen={isOpen}*/}

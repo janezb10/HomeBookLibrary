@@ -6,13 +6,22 @@ import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 import { NavLink } from "react-router-dom";
 import useBookAttributes from "../hooks/useBookAttributes.ts";
+import useDeleteBookLogic from "../hooks/useDeleteBookLogic.ts";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
+  const { deleteBook } = useDeleteBookLogic();
   const bookAttributes = useBookAttributes(authToken);
 
   const handleBookSearch = (books: BookInterface[]) => {
     setBooks([...books]);
+  };
+  const handleDeleteBook = (id: number) => {
+    deleteBook(
+      id,
+      () => console.log("sucesssss"),
+      () => console.log("faill"),
+    );
   };
 
   return (
@@ -31,7 +40,11 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
       </NavLink>
       <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
       <Box>
-        <BookList bookAttributes={bookAttributes} books={books} />
+        <BookList
+          bookAttributes={bookAttributes}
+          books={books}
+          onDeleteBook={handleDeleteBook}
+        />
       </Box>
     </section>
   );
