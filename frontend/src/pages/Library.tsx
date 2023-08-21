@@ -19,7 +19,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const handleDeleteBook = (id: number) => {
     deleteBook(
       id,
-      () => console.log("sucesssss"),
+      () => console.log("sucessss"),
       () => console.log("faill"),
     );
   };
