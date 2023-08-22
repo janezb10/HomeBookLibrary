@@ -16,7 +16,7 @@ import {
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 
 export interface BookInterface {
-  id: number;
+  id?: number;
   title: string;
   id_author: number;
   id_field: number;

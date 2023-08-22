@@ -17,7 +17,7 @@ interface SubFieldInterface {
   id_subfield: number;
   subfield: string;
 }
-interface SelectedFields {
+export interface SelectedFields {
   id_field: number;
   id_subfield: number;
 }
@@ -25,7 +25,7 @@ interface SelectedFields {
 interface Props {
   allFields: AllFieldsInterface[];
   onSelect: ({ id_field, id_subfield }: SelectedFields) => void;
-  selectedFields: SelectedFields;
+  selectedFields?: SelectedFields;
 }
 
 const Fields = ({
