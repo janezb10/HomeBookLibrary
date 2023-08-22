@@ -1,4 +1,4 @@
-import { Box, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import BookList from "../components/BookList.tsx";
 import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
@@ -15,26 +15,34 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const handleBookSearch = (books: BookInterface[]) => {
     setBooks([...books]);
   };
-  //
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
-  const handleDelete = (id: number) => {
-    setSelectedBookId(id);
+  // deleting book
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
+  const handleDelete = (book: BookInterface) => {
+    setSelectedBook(book);
     onOpen();
   };
-  //
+  const bookDeleted = (book: BookInterface) => {
+    setBooks(books.filter((b) => b.id !== book.id));
+  };
+
+  // /deleting book
 
   return (
     <section>
       {/*<NewBook authToken={authToken} />*/}
+
+      {/*Alert dialog for delleting a book*/}
       <DeleteBook
         isOpen={isOpen}
         onClose={onClose}
-        selectedBookId={selectedBookId}
-        setSelectedBookId={setSelectedBookId}
+        selectedBook={selectedBook}
+        setSelectedBook={setSelectedBook}
+        bookAttributes={bookAttributes}
+        bookDeleted={bookDeleted}
       />
-      <Button onClick={() => handleDelete(3)}>asdf</Button>
+
       <NavLink
         onClick={() => {
           sessionStorage.removeItem("authToken");

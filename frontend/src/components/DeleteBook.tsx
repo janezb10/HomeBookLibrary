@@ -7,27 +7,50 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
   Button,
+  UnorderedList,
+  ListItem,
+  AlertIcon,
+  Alert,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { BookInterface } from "./Book.tsx";
+import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
+import apiClient from "../services/api-client.ts";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  selectedBookId: number | null;
-  setSelectedBookId: (id: null) => void;
+  selectedBook: BookInterface | null;
+  setSelectedBook: (book: BookInterface | null) => void;
+  bookAttributes: BookAttributesInterface;
+  bookDeleted: (book: BookInterface) => void;
 }
 
 function DeleteBook({
   isOpen,
   onClose,
-  selectedBookId,
-  setSelectedBookId,
+  selectedBook,
+  setSelectedBook,
+  bookDeleted,
+  bookAttributes: { authorsMap },
 }: Props) {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const deleteBook = () => {
-    console.log("deleteing hehe");
+    apiClient
+      .delete(`/api/v1/books/${selectedBook!.id}`)
+      .then((res) => {
+        console.log("Book deleted successfully", res.data);
+        setSuccess(true);
+        setError(false);
+        bookDeleted(selectedBook!);
+      })
+      .catch((err) => {
+        console.log("Error deleting book", err);
+        setError(true);
+      });
   };
 
   return (
@@ -39,7 +62,9 @@ function DeleteBook({
           leastDestructiveRef={cancelRef}
           onClose={() => {
             onClose();
-            setSelectedBookId(null);
+            setError(false);
+            setSuccess(false);
+            setSelectedBook(null);
           }}
           isOpen={isOpen}
           isCentered
@@ -47,18 +72,48 @@ function DeleteBook({
           <AlertDialogOverlay />
 
           <AlertDialogContent>
-            <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+            <AlertDialogHeader>
+              Delete book: {selectedBook?.title}?
+            </AlertDialogHeader>
             <AlertDialogCloseButton />
             <AlertDialogBody>
-              Are you sure you want to delete this id: {selectedBookId}?
+              Are you sure you want to delete:
+              <UnorderedList>
+                <ListItem>id: {selectedBook?.id || ""}</ListItem>
+                <ListItem>naslov: {selectedBook?.title || ""}</ListItem>
+                <ListItem>
+                  Avtor:{" "}
+                  {selectedBook ? authorsMap.get(selectedBook!.id_author) : ""}
+                </ListItem>
+                <ListItem>{selectedBook?.notes || "no notes"}</ListItem>
+              </UnorderedList>
             </AlertDialogBody>
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={onClose} isDisabled={success}>
                 No
               </Button>
-              <Button colorScheme="red" ml={3} onClick={() => deleteBook()}>
+              <Button
+                isDisabled={success}
+                colorScheme="red"
+                ml={3}
+                onClick={() => deleteBook()}
+              >
                 Yes
               </Button>
+            </AlertDialogFooter>
+            <AlertDialogFooter>
+              {error && (
+                <Alert status="error">
+                  <AlertIcon />
+                  There was an error deleting a book.
+                </Alert>
+              )}
+              {success && (
+                <Alert status="success">
+                  <AlertIcon />
+                  Book deleted successfully.
+                </Alert>
+              )}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

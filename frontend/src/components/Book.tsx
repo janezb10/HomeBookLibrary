@@ -34,7 +34,7 @@ interface Props {
   book: BookInterface;
   bookAttributes: BookAttributesInterface;
   // onDeleteBook: (id: number) => void;
-  onDelete: (id: number) => void;
+  onDelete: (book: BookInterface) => void;
 }
 
 const Book = ({
@@ -120,7 +120,7 @@ const Book = ({
             <Tfoot>
               <Tr>
                 <Th>
-                  <Button onClick={() => onDelete(book.id)}>Delete Book</Button>
+                  <Button onClick={() => onDelete(book)}>Delete Book</Button>
                 </Th>
                 <Th></Th>
               </Tr>

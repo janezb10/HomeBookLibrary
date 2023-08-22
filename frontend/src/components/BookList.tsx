@@ -5,7 +5,7 @@ import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 interface Props {
   books: BookInterface[];
   bookAttributes: BookAttributesInterface;
-  onDelete: (id: number) => void;
+  onDelete: (book: BookInterface) => void;
 }
 
 const BookList = ({ books, bookAttributes, onDelete }: Props) => {
