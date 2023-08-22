@@ -7,6 +7,7 @@ import { AuthTokenInterface } from "../hooks/useToken.ts";
 import { NavLink } from "react-router-dom";
 import useBookAttributes from "../hooks/useBookAttributes.ts";
 import DeleteBook from "../components/DeleteBook.tsx";
+import BookForm from "../components/BookForm.tsx";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -54,6 +55,9 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookAttributes={bookAttributes}
         bookDeleted={bookDeleted}
       />
+      {/*end alert dialog for delleting a book*/}
+
+      <BookForm bookAttributes={bookAttributes} />
 
       <NavLink
         onClick={() => {
