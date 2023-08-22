@@ -36,15 +36,17 @@ function DeleteBook({
 }: Props) {
   const cancelRef = useRef(null);
   const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   const deleteBook = () => {
     apiClient
       .delete(`/api/v1/books/${selectedBook!.id}`)
       .then((res) => {
         console.log("Book deleted successfully", res.data);
-        setSuccess(true);
+        // setSuccess(true);
         setError(false);
+        // dela zapre ko se zbriše
+        onClose();
         bookDeleted(selectedBook!);
       })
       .catch((err) => {
@@ -55,69 +57,54 @@ function DeleteBook({
 
   return (
     <>
-      <>
-        {/*<Button onClick={onOpen}>Discard</Button>*/}
-        <AlertDialog
-          motionPreset="slideInBottom"
-          leastDestructiveRef={cancelRef}
-          onClose={() => {
-            onClose();
-            setError(false);
-            setSuccess(false);
-            setSelectedBook(null);
-          }}
-          isOpen={isOpen}
-          isCentered
-        >
-          <AlertDialogOverlay />
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef}
+        onClose={() => {
+          onClose();
+          setError(false);
+          setSelectedBook(null);
+        }}
+        isOpen={isOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
 
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              Delete book: {selectedBook?.title}?
-            </AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
-              Are you sure you want to delete:
-              <UnorderedList>
-                <ListItem>id: {selectedBook?.id || ""}</ListItem>
-                <ListItem>naslov: {selectedBook?.title || ""}</ListItem>
-                <ListItem>
-                  Avtor:{" "}
-                  {selectedBook ? authorsMap.get(selectedBook!.id_author) : ""}
-                </ListItem>
-                <ListItem>{selectedBook?.notes || "no notes"}</ListItem>
-              </UnorderedList>
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose} isDisabled={success}>
-                No
-              </Button>
-              <Button
-                isDisabled={success}
-                colorScheme="red"
-                ml={3}
-                onClick={() => deleteBook()}
-              >
-                Yes
-              </Button>
-            </AlertDialogFooter>
-            <AlertDialogFooter>
-              {error && (
-                <Alert status="error">
-                  <AlertIcon />
-                  There was an error deleting a book.
-                </Alert>
-              )}
-              {success && (
-                <Alert status="success">
-                  <AlertIcon />
-                  Book deleted successfully.
-                </Alert>
-              )}
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            Delete book: {selectedBook?.title}?
+          </AlertDialogHeader>
+          <AlertDialogCloseButton />
+          <AlertDialogBody>
+            Are you sure you want to delete:
+            <UnorderedList>
+              <ListItem>id: {selectedBook?.id || ""}</ListItem>
+              <ListItem>naslov: {selectedBook?.title || ""}</ListItem>
+              <ListItem>
+                Avtor:{" "}
+                {selectedBook ? authorsMap.get(selectedBook!.id_author) : ""}
+              </ListItem>
+              <ListItem>{selectedBook?.notes || "no notes"}</ListItem>
+            </UnorderedList>
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onClose}>
+              No
+            </Button>
+            <Button colorScheme="red" ml={3} onClick={() => deleteBook()}>
+              Yes
+            </Button>
+          </AlertDialogFooter>
+          <AlertDialogFooter>
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                There was an error deleting a book.
+              </Alert>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

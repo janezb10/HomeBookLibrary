@@ -1,4 +1,4 @@
-import { Box, useDisclosure } from "@chakra-ui/react";
+import { Box, useDisclosure, useToast } from "@chakra-ui/react";
 import BookList from "../components/BookList.tsx";
 import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
@@ -17,6 +17,8 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   };
 
   // deleting book
+  const toast = useToast();
+
   const {
     isOpen: isOpenDeletingBook,
     onOpen: onOpenDeletingBook,
@@ -28,6 +30,13 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     onOpenDeletingBook();
   };
   const bookDeleted = (book: BookInterface) => {
+    toast({
+      title: "Book Deleted!",
+      description: `${book.title} is deleted`,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
     setBooks(books.filter((b) => b.id !== book.id));
   };
   // /deleting book
