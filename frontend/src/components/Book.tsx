@@ -14,7 +14,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
-import DeleteBook from "./DeleteBook.tsx";
+// import DeleteBook from "./DeleteBook.tsx";
 
 export interface BookInterface {
   id: number;
@@ -33,7 +33,8 @@ export interface BookInterface {
 interface Props {
   book: BookInterface;
   bookAttributes: BookAttributesInterface;
-  onDeleteBook: (id: number) => void;
+  // onDeleteBook: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const Book = ({
@@ -46,7 +47,7 @@ const Book = ({
     fieldsMap,
     fields,
   },
-  onDeleteBook,
+  onDelete,
 }: Props) => {
   return (
     <AccordionItem>
@@ -119,33 +120,9 @@ const Book = ({
             <Tfoot>
               <Tr>
                 <Th>
-                  <Button onClick={() => onDeleteBook(book.id)}>
-                    Delete Book
-                  </Button>
+                  <Button onClick={() => onDelete(book.id)}>Delete Book</Button>
                 </Th>
-                <Th>
-                  <DeleteBook id={book.id} />
-                </Th>
-                {/*<Th>*/}
-                {/*  <Popover*/}
-                {/*    isOpen={isOpen}*/}
-                {/*    onOpen={onOpen}*/}
-                {/*    onClose={onClose}*/}
-                {/*    placement="right"*/}
-                {/*    closeOnBlur={false}*/}
-                {/*  >*/}
-                {/*    <PopoverTrigger>*/}
-                {/*      <Button>Update</Button>*/}
-                {/*    </PopoverTrigger>*/}
-
-                {/*    <UpdateBook*/}
-                {/*      bookAttributes={bookAttributes}*/}
-                {/*      book={book}*/}
-                {/*      authToken={authToken}*/}
-                {/*      onClose={onClose}*/}
-                {/*    />*/}
-                {/*  </Popover>*/}
-                {/*</Th>*/}
+                <Th></Th>
               </Tr>
             </Tfoot>
           </Table>
