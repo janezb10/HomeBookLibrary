@@ -14,7 +14,6 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
-// import DeleteBook from "./DeleteBook.tsx";
 
 export interface BookInterface {
   id: number;

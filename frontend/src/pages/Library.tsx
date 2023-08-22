@@ -17,16 +17,19 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   };
 
   // deleting book
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenDeletingBook,
+    onOpen: onOpenDeletingBook,
+    onClose: onCloseDeletingBook,
+  } = useDisclosure();
   const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
   const handleDelete = (book: BookInterface) => {
     setSelectedBook(book);
-    onOpen();
+    onOpenDeletingBook();
   };
   const bookDeleted = (book: BookInterface) => {
     setBooks(books.filter((b) => b.id !== book.id));
   };
-
   // /deleting book
 
   return (
@@ -35,8 +38,8 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
 
       {/*Alert dialog for delleting a book*/}
       <DeleteBook
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenDeletingBook}
+        onClose={onCloseDeletingBook}
         selectedBook={selectedBook}
         setSelectedBook={setSelectedBook}
         bookAttributes={bookAttributes}
