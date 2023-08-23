@@ -1,4 +1,6 @@
-const emptyBook = {
+import { BookInterface } from "../components/Book.tsx";
+
+const emptyBook: BookInterface = {
   title: "",
   id_author: 0,
   id_field: 0,

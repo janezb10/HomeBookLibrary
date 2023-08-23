@@ -50,27 +50,27 @@ const BookForm = ({
       apiClient
         .put(`/api/v1/books/${newBook.id}`, newBook)
         .then((res) => {
-          console.log("Book updated successfully", res.data);
+          // console.log("Book updated successfully", res.data);
           setError(false);
           onClose();
-          bookSaved(newBook);
+          bookSaved(res.data[0]);
         })
-        .catch((err) => {
+        .catch(() => {
           setError(true);
-          console.log("Error updating book", err);
+          // console.log("Error updating book", err);
         });
     } else {
       apiClient
         .post(`/api/v1/books`, newBook)
         .then((res) => {
-          console.log("Book created successfully", res.data);
+          // console.log("Book created successfully", res.data);
           setError(false);
           onClose();
-          bookSaved(newBook);
+          bookSaved(res.data[0]);
         })
-        .catch((err) => {
+        .catch(() => {
           setError(true);
-          console.log("Error creating book", err);
+          // console.log("Error creating book", err);
         });
     }
   };
@@ -95,7 +95,7 @@ const BookForm = ({
                 currentTitle={newBook?.title || ""}
                 onChange={(e) => {
                   setNewBook({ ...newBook, title: e });
-                  console.log("Naslov:", e);
+                  // console.log("Naslov:", e);
                 }}
               />
               <Authors
@@ -103,7 +103,7 @@ const BookForm = ({
                 authors={authors}
                 onSelect={(e) => {
                   setNewBook({ ...newBook, id_author: e });
-                  console.log("Avror:", e);
+                  // console.log("Avror:", e);
                 }}
               />
               <Fields
@@ -118,8 +118,8 @@ const BookForm = ({
                     id_field: o.id_field,
                     id_subfield: o.id_subfield,
                   });
-                  console.log("Field: ", o.id_field);
-                  console.log("Subfield: ", o.id_subfield);
+                  // console.log("Field: ", o.id_field);
+                  // console.log("Subfield: ", o.id_subfield);
                 }}
               />
               <Positions
@@ -127,7 +127,7 @@ const BookForm = ({
                 positions={positions}
                 onSelect={(e) => {
                   setNewBook({ ...newBook, id_position: e });
-                  console.log("Pozicija:", e);
+                  // console.log("Pozicija:", e);
                 }}
               />
               <Languages
@@ -135,7 +135,7 @@ const BookForm = ({
                 languages={languages}
                 onSelect={(e) => {
                   setNewBook({ ...newBook, id_language: e });
-                  console.log("Jezik", e);
+                  // console.log("Jezik", e);
                 }}
               />
               <Collections
@@ -143,28 +143,28 @@ const BookForm = ({
                 collections={collections}
                 onSelect={(e) => {
                   setNewBook({ ...newBook, id_collection: e });
-                  console.log("Zbirka:", e);
+                  // console.log("Zbirka:", e);
                 }}
               />
               <Country
                 currentCountry={newBook.country}
                 onChange={(e) => {
                   setNewBook({ ...newBook, country: e });
-                  console.log("Drzava:", e);
+                  // console.log("Drzava:", e);
                 }}
               />
               <Year
                 currentYear={newBook.year}
                 onChange={(e) => {
                   setNewBook({ ...newBook, year: e });
-                  console.log("Leto:", e);
+                  // console.log("Leto:", e);
                 }}
               />
               <Notes
                 currentNotes={newBook.notes}
                 onChange={(e) => {
                   setNewBook({ ...newBook, notes: e });
-                  console.log("Opombe", e);
+                  // console.log("Opombe", e);
                 }}
               />
             </Stack>

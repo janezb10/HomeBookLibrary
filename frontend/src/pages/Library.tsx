@@ -53,13 +53,19 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   } = useDisclosure();
 
   const handleBookUpdate = (book: BookInterface) => {
-    setNewBook({
-      ...book,
-    });
+    setNewBook({ ...book });
     onOpenBookForm();
   };
-
   const bookSaved = (book: BookInterface) => {
+    const index = books.findIndex((b) => b.id === book.id);
+    if (index < 0) {
+      setBooks([book]);
+    } else {
+      const arr = [...books];
+      arr[index] = book;
+      setBooks(arr);
+    }
+
     toast({
       title: "Book Saved",
       description: `${book.title} is saved`,
