@@ -5,10 +5,11 @@ import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 interface Props {
   books: BookInterface[];
   bookAttributes: BookAttributesInterface;
+  onUpdate: (book: BookInterface) => void;
   onDelete: (book: BookInterface) => void;
 }
 
-const BookList = ({ books, bookAttributes, onDelete }: Props) => {
+const BookList = ({ books, bookAttributes, onUpdate, onDelete }: Props) => {
   return (
     <Accordion defaultIndex={[-1]} allowMultiple>
       {books.map((book) => {
@@ -17,6 +18,7 @@ const BookList = ({ books, bookAttributes, onDelete }: Props) => {
             bookAttributes={bookAttributes}
             book={book}
             key={book.id}
+            onUpdate={onUpdate}
             onDelete={onDelete}
           />
         );

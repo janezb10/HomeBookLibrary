@@ -1,4 +1,4 @@
-import { Box, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Button, useDisclosure, useToast } from "@chakra-ui/react";
 import BookList from "../components/BookList.tsx";
 import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
@@ -19,13 +19,13 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
 
   // deleting book
   const toast = useToast();
+  const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
 
   const {
     isOpen: isOpenDeletingBook,
     onOpen: onOpenDeletingBook,
     onClose: onCloseDeletingBook,
   } = useDisclosure();
-  const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
   const handleDelete = (book: BookInterface) => {
     setSelectedBook(book);
     onOpenDeletingBook();
@@ -41,10 +41,45 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     setBooks(books.filter((b) => b.id !== book.id));
   };
   // /deleting book
+  // new/update book
+  // TODO updateBook initializes at start of the app and sets the states. need to
+  // maybe I can change selectedBook Directly
+  const {
+    isOpen: isOpenBookForm,
+    onOpen: onOpenBookForm,
+    onClose: onCloseBookForm,
+  } = useDisclosure();
+
+  const handleBookUpdate = (book: BookInterface) => {
+    setSelectedBook(book);
+    // console.log(selectedBook);
+    // console.log(book);
+    onOpenBookForm();
+  };
+
+  const bookSaved = (book: BookInterface) => {
+    toast({
+      title: "Book Saved",
+      description: `${book.title} is saved`,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+    //TODO setBooks() update books on frontend
+  };
+  // /new/update book
 
   return (
     <section>
       {/*<NewBook authToken={authToken} />*/}
+      <BookForm
+        isOpen={isOpenBookForm}
+        onClose={onCloseBookForm}
+        book={selectedBook}
+        setSelectedBook={setSelectedBook}
+        bookAttributes={bookAttributes}
+        bookSaved={bookSaved}
+      />
 
       {/*Alert dialog for delleting a book*/}
       <DeleteBook
@@ -56,9 +91,13 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookDeleted={bookDeleted}
       />
       {/*end alert dialog for delleting a book*/}
-
-      <BookForm bookAttributes={bookAttributes} />
-
+      <Button
+        onClick={() => {
+          onOpenBookForm();
+        }}
+      >
+        New Book
+      </Button>
       <NavLink
         onClick={() => {
           sessionStorage.removeItem("authToken");
@@ -75,6 +114,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         <BookList
           bookAttributes={bookAttributes}
           books={books}
+          onUpdate={handleBookUpdate}
           onDelete={handleDelete}
         />
       </Box>

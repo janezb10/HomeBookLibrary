@@ -32,7 +32,7 @@ export interface BookInterface {
 interface Props {
   book: BookInterface;
   bookAttributes: BookAttributesInterface;
-  // onDeleteBook: (id: number) => void;
+  onUpdate: (book: BookInterface) => void;
   onDelete: (book: BookInterface) => void;
 }
 
@@ -46,6 +46,7 @@ const Book = ({
     fieldsMap,
     fields,
   },
+  onUpdate,
   onDelete,
 }: Props) => {
   return (
@@ -121,7 +122,9 @@ const Book = ({
                 <Th>
                   <Button onClick={() => onDelete(book)}>Delete Book</Button>
                 </Th>
-                <Th></Th>
+                <Th>
+                  <Button onClick={() => onUpdate(book)}>Update Book</Button>
+                </Th>
               </Tr>
             </Tfoot>
           </Table>

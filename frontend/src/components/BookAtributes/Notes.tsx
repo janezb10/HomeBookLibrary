@@ -1,15 +1,15 @@
 import { FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 interface Props {
-  notes?: string | null;
+  currentNotes?: string | null;
   onChange: (note: string) => void;
 }
 
-const Notes = ({ notes, onChange }: Props) => {
+const Notes = ({ currentNotes, onChange }: Props) => {
   return (
     <FormControl>
       <FormLabel>Opombe:</FormLabel>
       <Textarea
-        defaultValue={notes || ""}
+        defaultValue={currentNotes || ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Opombe..."
       />

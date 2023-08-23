@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Button,
   Modal,
   ModalBody,
@@ -8,7 +10,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BookInterface } from "./Book.tsx";
@@ -22,15 +23,24 @@ import Country from "./BookAtributes/Country.tsx";
 import Year from "./BookAtributes/Year.tsx";
 import Notes from "./BookAtributes/Notes.tsx";
 import Fields from "./BookAtributes/Fields.tsx";
+import apiClient from "../services/api-client.ts";
 
 interface Props {
-  book?: BookInterface;
+  isOpen: boolean;
+  onClose: () => void;
+  book: BookInterface | null;
+  setSelectedBook: (book: BookInterface | null) => void;
   bookAttributes: BookAttributesInterface;
+  bookSaved: (book: BookInterface) => void;
 }
 
 const BookForm = ({
   book,
   bookAttributes: { authors, positions, languages, collections, fields },
+  bookSaved,
+  isOpen,
+  onClose,
+  setSelectedBook,
 }: Props) => {
   const [newTitle, setNewTitle] = useState(book?.title || "");
   const [newAuthor, setNewAuthor] = useState(book?.id_author || 0);
@@ -43,7 +53,8 @@ const BookForm = ({
   const [newYear, setNewYear] = useState(book?.year || null);
   const [newNotes, setNewNotes] = useState(book?.notes || null);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [error, setError] = useState(false);
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   const saveBook = () => {
     const newBook: BookInterface = {
@@ -60,26 +71,61 @@ const BookForm = ({
       notes: newNotes,
     };
     console.log(JSON.stringify(newBook));
+    if (newBook.id) {
+      apiClient
+        .put(`/api/v1/books/${newBook.id}`, newBook)
+        .then((res) => {
+          console.log("Book updated successfully", res.data);
+          setError(false);
+          onClose();
+          bookSaved(newBook);
+        })
+        .catch((err) => {
+          setError(true);
+          console.log("Error updating book", err);
+        });
+    } else {
+      apiClient
+        .post(`/api/v1/books`, newBook)
+        .then((res) => {
+          console.log("Book created successfully", res.data);
+          setError(false);
+          onClose();
+          bookSaved(newBook);
+        })
+        .catch((err) => {
+          setError(true);
+          console.log("Error creating book", err);
+        });
+    }
   };
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+          setError(false);
+          setSelectedBook(null);
+        }}
+        size="full"
+      >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>asdf</ModalHeader>
+          <ModalHeader>{newTitle || "Book Form"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing={4}>
               <Title
+                currentTitle={newTitle}
                 onChange={(e) => {
                   setNewTitle(e);
                   console.log("Naslov:", e);
                 }}
               />
               <Authors
+                selected={newAuthor}
                 authors={authors}
                 onSelect={(e) => {
                   setNewAuthor(e);
@@ -87,6 +133,10 @@ const BookForm = ({
                 }}
               />
               <Fields
+                selectedFields={{
+                  id_field: newField,
+                  id_subfield: newSubfield,
+                }}
                 allFields={fields}
                 onSelect={(o) => {
                   setNewField(o.id_field);
@@ -96,6 +146,7 @@ const BookForm = ({
                 }}
               />
               <Positions
+                selected={newPosition}
                 positions={positions}
                 onSelect={(e) => {
                   setNewPosition(e);
@@ -103,6 +154,7 @@ const BookForm = ({
                 }}
               />
               <Languages
+                selected={newLanguage}
                 languages={languages}
                 onSelect={(e) => {
                   setNewLanguage(e);
@@ -110,6 +162,7 @@ const BookForm = ({
                 }}
               />
               <Collections
+                selected={newCollection}
                 collections={collections}
                 onSelect={(e) => {
                   setNewCollection(e);
@@ -117,18 +170,21 @@ const BookForm = ({
                 }}
               />
               <Country
+                currentCountry={newCountry}
                 onChange={(e) => {
                   setNewCountry(e);
                   console.log("Drzava:", e);
                 }}
               />
               <Year
+                currentYear={newYear}
                 onChange={(e) => {
                   setNewYear(e);
                   console.log("Leto:", e);
                 }}
               />
               <Notes
+                currentNotes={newNotes}
                 onChange={(e) => {
                   setNewNotes(e);
                   console.log("Opombe", e);
@@ -136,6 +192,14 @@ const BookForm = ({
               />
             </Stack>
           </ModalBody>
+          <ModalFooter>
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                There was an error deleting a book.
+              </Alert>
+            )}
+          </ModalFooter>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close

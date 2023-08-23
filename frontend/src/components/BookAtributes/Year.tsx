@@ -6,15 +6,15 @@ import {
 } from "@chakra-ui/react";
 
 interface Props {
-  year?: string | null;
+  currentYear?: string | null;
   onChange: (year: string | null) => void;
 }
 
-const Year = ({ year, onChange }: Props) => {
+const Year = ({ currentYear, onChange }: Props) => {
   return (
     <FormControl>
       <FormLabel>Leto:</FormLabel>
-      <NumberInput defaultValue={year || ""}>
+      <NumberInput defaultValue={currentYear || ""}>
         <NumberInputField
           onChange={(e) =>
             onChange(e.target.value === "" ? null : e.target.value)
