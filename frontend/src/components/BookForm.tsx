@@ -28,49 +28,24 @@ import apiClient from "../services/api-client.ts";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  book: BookInterface | null;
-  setSelectedBook: (book: BookInterface | null) => void;
   bookAttributes: BookAttributesInterface;
   bookSaved: (book: BookInterface) => void;
+  newBook: BookInterface;
+  setNewBook: (book: BookInterface) => void;
 }
 
 const BookForm = ({
-  book,
+  // book,
   bookAttributes: { authors, positions, languages, collections, fields },
   bookSaved,
   isOpen,
   onClose,
-  setSelectedBook,
+  newBook,
+  setNewBook,
 }: Props) => {
-  const [newTitle, setNewTitle] = useState(book?.title || "");
-  const [newAuthor, setNewAuthor] = useState(book?.id_author || 0);
-  const [newPosition, setNewPosition] = useState(book?.id_position || 0);
-  const [newLanguage, setNewLanguage] = useState(book?.id_language || 0);
-  const [newCollection, setNewCollection] = useState(book?.id_collection || 0);
-  const [newField, setNewField] = useState(book?.id_field || 0);
-  const [newSubfield, setNewSubfield] = useState(book?.id_subfield || 0);
-  const [newCountry, setNewCountry] = useState(book?.country || null);
-  const [newYear, setNewYear] = useState(book?.year || null);
-  const [newNotes, setNewNotes] = useState(book?.notes || null);
-
   const [error, setError] = useState(false);
-  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   const saveBook = () => {
-    const newBook: BookInterface = {
-      id: book?.id,
-      title: newTitle,
-      id_author: newAuthor,
-      id_position: newPosition,
-      id_language: newLanguage,
-      id_collection: newCollection,
-      id_field: newField,
-      id_subfield: newSubfield,
-      country: newCountry,
-      year: newYear,
-      notes: newNotes,
-    };
-    console.log(JSON.stringify(newBook));
     if (newBook.id) {
       apiClient
         .put(`/api/v1/books/${newBook.id}`, newBook)
@@ -107,86 +82,88 @@ const BookForm = ({
         onClose={() => {
           onClose();
           setError(false);
-          setSelectedBook(null);
         }}
         size="full"
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{newTitle || "Book Form"}</ModalHeader>
+          <ModalHeader>{newBook?.title || "Book Form"}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing={4}>
               <Title
-                currentTitle={newTitle}
+                currentTitle={newBook?.title || ""}
                 onChange={(e) => {
-                  setNewTitle(e);
+                  setNewBook({ ...newBook, title: e });
                   console.log("Naslov:", e);
                 }}
               />
               <Authors
-                selected={newAuthor}
+                selected={newBook?.id_author || 0}
                 authors={authors}
                 onSelect={(e) => {
-                  setNewAuthor(e);
+                  setNewBook({ ...newBook, id_author: e });
                   console.log("Avror:", e);
                 }}
               />
               <Fields
                 selectedFields={{
-                  id_field: newField,
-                  id_subfield: newSubfield,
+                  id_field: newBook.id_field,
+                  id_subfield: newBook.id_subfield,
                 }}
                 allFields={fields}
                 onSelect={(o) => {
-                  setNewField(o.id_field);
-                  setNewSubfield(o.id_subfield);
+                  setNewBook({
+                    ...newBook,
+                    id_field: o.id_field,
+                    id_subfield: o.id_subfield,
+                  });
                   console.log("Field: ", o.id_field);
                   console.log("Subfield: ", o.id_subfield);
                 }}
               />
               <Positions
-                selected={newPosition}
+                selected={newBook.id_position}
                 positions={positions}
                 onSelect={(e) => {
-                  setNewPosition(e);
+                  setNewBook({ ...newBook, id_position: e });
                   console.log("Pozicija:", e);
                 }}
               />
               <Languages
-                selected={newLanguage}
+                selected={newBook.id_language}
                 languages={languages}
                 onSelect={(e) => {
-                  setNewLanguage(e);
+                  setNewBook({ ...newBook, id_language: e });
                   console.log("Jezik", e);
                 }}
               />
               <Collections
-                selected={newCollection}
+                selected={newBook.id_collection}
                 collections={collections}
                 onSelect={(e) => {
-                  setNewCollection(e);
+                  setNewBook({ ...newBook, id_collection: e });
                   console.log("Zbirka:", e);
                 }}
               />
               <Country
-                currentCountry={newCountry}
+                currentCountry={newBook.country}
                 onChange={(e) => {
-                  setNewCountry(e);
+                  setNewBook({ ...newBook, country: e });
                   console.log("Drzava:", e);
                 }}
               />
               <Year
-                currentYear={newYear}
+                currentYear={newBook.year}
                 onChange={(e) => {
-                  setNewYear(e);
+                  setNewBook({ ...newBook, year: e });
                   console.log("Leto:", e);
                 }}
               />
               <Notes
-                currentNotes={newNotes}
+                currentNotes={newBook.notes}
                 onChange={(e) => {
-                  setNewNotes(e);
+                  setNewBook({ ...newBook, notes: e });
                   console.log("Opombe", e);
                 }}
               />
