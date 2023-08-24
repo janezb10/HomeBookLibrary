@@ -1,4 +1,12 @@
-import { Box, Button, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Icon,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import BookList from "../components/BookList.tsx";
 import SearchInput from "../components/SearchInput.tsx";
 import { useState } from "react";
@@ -9,6 +17,8 @@ import useBookAttributes from "../hooks/useBookAttributes.ts";
 import DeleteBook from "../components/DeleteBook.tsx";
 import BookForm from "../components/BookForm.tsx";
 import emptyBook from "../helper/emptyBook.ts";
+import { FiLogOut } from "react-icons/fi";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
@@ -75,7 +85,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   };
 
   return (
-    <section>
+    <Container maxW="6xl">
       <BookForm
         isOpen={isOpenBookForm}
         onClose={onCloseBookForm}
@@ -91,37 +101,37 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookAttributes={bookAttributes}
         bookDeleted={bookDeleted}
       />
-      <Button
-        onClick={() => {
-          setNewBook({
-            title: "",
-            id_author: 0,
-            id_field: 0,
-            id_subfield: 0,
-            id_position: 0,
-            id_language: 0,
-            id_collection: 0,
-            country: null,
-            year: null,
-            notes: null,
-          });
-          onOpenBookForm();
-        }}
-      >
-        New Book
-      </Button>
-      <NavLink
-        onClick={() => {
-          sessionStorage.removeItem("authToken");
-          if (setAuthToken) {
-            setAuthToken("");
-          }
-        }}
-        to="/"
-      >
-        Log out
-      </NavLink>
-      <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
+
+      <Flex align="center">
+        <Box flex="1">
+          <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
+        </Box>
+        <Box ml={2}>
+          <Button
+            onClick={() => {
+              setNewBook(emptyBook);
+              onOpenBookForm();
+            }}
+          >
+            <Icon as={AiOutlinePlusCircle} fontSize="24px" />
+          </Button>
+        </Box>
+        <Box ml={2}>
+          <Button
+            as={NavLink}
+            onClick={() => {
+              sessionStorage.removeItem("authToken");
+              if (setAuthToken) {
+                setAuthToken("");
+              }
+            }}
+            to="/"
+          >
+            {/*NavLink*/}
+            <Icon as={FiLogOut} fontSize="24px" />
+          </Button>
+        </Box>
+      </Flex>
       <Box>
         <BookList
           bookAttributes={bookAttributes}
@@ -130,7 +140,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
           onDelete={handleDelete}
         />
       </Box>
-    </section>
+    </Container>
   );
 };
 

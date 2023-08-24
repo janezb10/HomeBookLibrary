@@ -2,6 +2,7 @@ import {
   Alert,
   AlertIcon,
   Button,
+  Container,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -124,89 +125,91 @@ const BookForm = ({
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{newBook?.title || "Book Form"}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Stack spacing={4}>
-              <Title
-                currentTitle={newBook?.title || ""}
-                onChange={(e) => {
-                  setNewTitle(e);
-                }}
-              />
-              <Authors
-                selected={newBook?.id_author || 0}
-                authors={authors}
-                onSelect={(e) => {
-                  setNewAuthor(e);
-                }}
-              />
-              <Fields
-                selectedFields={{
-                  id_field: newBook.id_field,
-                  id_subfield: newBook.id_subfield,
-                }}
-                allFields={fields}
-                onSelect={(o) => {
-                  setNewField(o.id_field);
-                  setNewSubfield(o.id_subfield);
-                }}
-              />
-              <Positions
-                selected={newBook.id_position}
-                positions={positions}
-                onSelect={(e) => {
-                  setNewPosition(e);
-                }}
-              />
-              <Languages
-                selected={newBook.id_language}
-                languages={languages}
-                onSelect={(e) => {
-                  setNewLanguage(e);
-                }}
-              />
-              <Collections
-                selected={newBook.id_collection}
-                collections={collections}
-                onSelect={(e) => {
-                  setNewCollection(e);
-                }}
-              />
-              <Country
-                currentCountry={newBook.country}
-                onChange={(e) => {
-                  setNewCountry(e);
-                }}
-              />
-              <Year
-                currentYear={newBook.year}
-                onChange={(e) => {
-                  setNewYear(e);
-                }}
-              />
-              <Notes
-                currentNotes={newBook.notes}
-                onChange={(e) => {
-                  setNewNotes(e);
-                }}
-              />
-            </Stack>
-          </ModalBody>
-          <ModalFooter>
-            {error && (
-              <Alert status="error">
-                <AlertIcon />
-                There was an error deleting a book.
-              </Alert>
-            )}
-          </ModalFooter>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button onClick={saveBook}>Save Book</Button>
-          </ModalFooter>
+          <Container maxW="4xl">
+            <ModalHeader>{newBook?.title || "Book Form"}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Stack spacing={4}>
+                <Title
+                  currentTitle={newBook?.title || ""}
+                  onChange={(e) => {
+                    setNewTitle(e);
+                  }}
+                />
+                <Authors
+                  selected={newBook?.id_author || 0}
+                  authors={authors}
+                  onSelect={(e) => {
+                    setNewAuthor(e);
+                  }}
+                />
+                <Fields
+                  selectedFields={{
+                    id_field: newBook.id_field,
+                    id_subfield: newBook.id_subfield,
+                  }}
+                  allFields={fields}
+                  onSelect={(o) => {
+                    setNewField(o.id_field);
+                    setNewSubfield(o.id_subfield);
+                  }}
+                />
+                <Positions
+                  selected={newBook.id_position}
+                  positions={positions}
+                  onSelect={(e) => {
+                    setNewPosition(e);
+                  }}
+                />
+                <Languages
+                  selected={newBook.id_language}
+                  languages={languages}
+                  onSelect={(e) => {
+                    setNewLanguage(e);
+                  }}
+                />
+                <Collections
+                  selected={newBook.id_collection}
+                  collections={collections}
+                  onSelect={(e) => {
+                    setNewCollection(e);
+                  }}
+                />
+                <Country
+                  currentCountry={newBook.country}
+                  onChange={(e) => {
+                    setNewCountry(e);
+                  }}
+                />
+                <Year
+                  currentYear={newBook.year}
+                  onChange={(e) => {
+                    setNewYear(e);
+                  }}
+                />
+                <Notes
+                  currentNotes={newBook.notes}
+                  onChange={(e) => {
+                    setNewNotes(e);
+                  }}
+                />
+              </Stack>
+            </ModalBody>
+            <ModalFooter>
+              {error && (
+                <Alert status="error">
+                  <AlertIcon />
+                  There was an error deleting a book.
+                </Alert>
+              )}
+            </ModalFooter>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button onClick={saveBook}>Save Book</Button>
+            </ModalFooter>
+          </Container>
         </ModalContent>
       </Modal>
     </>

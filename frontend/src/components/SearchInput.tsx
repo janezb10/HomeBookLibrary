@@ -3,9 +3,10 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Button,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import { useRef, useState } from "react";
@@ -19,7 +20,6 @@ interface SearchResponse {
   numberOfPages: number;
   currentPage: number;
 }
-
 interface SearchInputProps {
   onBookSearch: (books: BookInterface[]) => void;
   authToken: string;
@@ -50,24 +50,41 @@ const SearchInput = ({ onBookSearch, authToken }: SearchInputProps) => {
       });
   };
 
+  const handleSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    if (ref.current) {
+      setLatestSearch(ref.current.value);
+      handleBookSearch(ref.current.value);
+    }
+  };
+  const handleSearchClick = () => {
+    if (ref.current) {
+      setLatestSearch(ref.current.value);
+      handleBookSearch(ref.current.value);
+    }
+  };
+
   return (
     <>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (ref.current) {
-            setLatestSearch(ref.current.value);
-            handleBookSearch(ref.current.value);
-          }
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <InputGroup>
-          <InputLeftElement children={<BsSearch />} />
           <Input
             ref={ref}
             borderRadius={20}
             placeholder="Search books..."
             variant="filled"
+          />
+          <InputRightElement
+            children={
+              <Button
+                p={0}
+                onClick={handleSearchClick}
+                borderRadius={20}
+                size="sm"
+              >
+                <BsSearch />
+              </Button>
+            }
           />
         </InputGroup>
       </form>
