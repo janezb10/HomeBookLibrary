@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   Stack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookInterface } from "./Book.tsx";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 import Title from "./BookAtributes/Title.tsx";
@@ -44,6 +44,11 @@ const BookForm = ({
   setNewBook,
 }: Props) => {
   const [error, setError] = useState(false);
+  useEffect(() => {
+    if (isOpen) {
+      console.log("open");
+    }
+  }, [isOpen]);
 
   const saveBook = () => {
     if (newBook.id) {

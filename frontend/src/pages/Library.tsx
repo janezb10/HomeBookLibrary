@@ -43,8 +43,6 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   // /deleting book
 
   // new/update book
-  // TODO updateBook initializes at start of the app and sets the states. need to
-  // maybe I can change selectedBook -> makeAnother one..
   const [newBook, setNewBook] = useState<BookInterface>(emptyBook);
   const {
     isOpen: isOpenBookForm,
@@ -74,7 +72,6 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
       isClosable: true,
     });
     setNewBook(emptyBook);
-    //TODO setBooks() update books on frontend
   };
 
   return (

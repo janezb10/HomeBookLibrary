@@ -76,7 +76,6 @@ const useBookAttributes = (authToken: string) => {
       .then((res) => {
         const data = res.data;
         setFields(data);
-        //TODO subfields: Map fields, Map subfields
         const uniqueFieldsMap = new Map();
         data.forEach((field: AllFieldsInterface) => {
           if (!uniqueFieldsMap.has(field.id_field)) {
