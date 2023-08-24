@@ -3,6 +3,7 @@ import {
   AlertIcon,
   Button,
   Container,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -129,6 +130,10 @@ const BookForm = ({
             <ModalHeader>{newBook?.title || "Book Form"}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
+              <Flex justifyContent="flex-end">
+                <Button onClick={saveBook}>Save Book</Button>
+              </Flex>
+
               <Stack spacing={4}>
                 <Title
                   currentTitle={newBook?.title || ""}
@@ -199,7 +204,7 @@ const BookForm = ({
               {error && (
                 <Alert status="error">
                   <AlertIcon />
-                  There was an error deleting a book.
+                  There was an saving a book.
                 </Alert>
               )}
             </ModalFooter>

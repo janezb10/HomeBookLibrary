@@ -102,7 +102,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookDeleted={bookDeleted}
       />
 
-      <Flex align="center">
+      <Flex>
         <Box flex="1">
           <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
         </Box>
