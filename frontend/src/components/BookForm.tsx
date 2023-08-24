@@ -31,7 +31,6 @@ interface Props {
   bookAttributes: BookAttributesInterface;
   bookSaved: (book: BookInterface) => void;
   newBook: BookInterface;
-  setNewBook: (book: BookInterface) => void;
 }
 
 const BookForm = ({
@@ -41,19 +40,52 @@ const BookForm = ({
   isOpen,
   onClose,
   newBook,
-  setNewBook,
 }: Props) => {
+  const [newTitle, setNewTitle] = useState("");
+  const [newAuthor, setNewAuthor] = useState(0);
+  const [newPosition, setNewPosition] = useState(0);
+  const [newLanguage, setNewLanguage] = useState(0);
+  const [newCollection, setNewCollection] = useState(0);
+  const [newField, setNewField] = useState(0);
+  const [newSubfield, setNewSubfield] = useState(0);
+  const [newCountry, setNewCountry] = useState<string | null>("");
+  const [newYear, setNewYear] = useState<string | null>("");
+  const [newNotes, setNewNotes] = useState<string | null>("");
+
   const [error, setError] = useState(false);
   useEffect(() => {
     if (isOpen) {
-      console.log("open");
+      setNewTitle(newBook.title);
+      setNewAuthor(newBook.id_author);
+      setNewPosition(newBook.id_position);
+      setNewLanguage(newBook.id_language);
+      setNewCollection(newBook.id_collection);
+      setNewField(newBook.id_field);
+      setNewSubfield(newBook.id_subfield);
+      setNewCountry(newBook.country);
+      setNewYear(newBook.year);
+      setNewNotes(newBook.notes);
     }
   }, [isOpen]);
 
   const saveBook = () => {
+    const book = {
+      ...newBook,
+      title: newTitle,
+      id_author: newAuthor,
+      id_position: newPosition,
+      id_language: newLanguage,
+      id_collection: newCollection,
+      id_field: newField,
+      id_subfield: newSubfield,
+      country: newCountry,
+      year: newYear,
+      notes: newNotes,
+    };
+
     if (newBook.id) {
       apiClient
-        .put(`/api/v1/books/${newBook.id}`, newBook)
+        .put(`/api/v1/books/${newBook.id}`, book)
         .then((res) => {
           // console.log("Book updated successfully", res.data);
           setError(false);
@@ -66,7 +98,7 @@ const BookForm = ({
         });
     } else {
       apiClient
-        .post(`/api/v1/books`, newBook)
+        .post(`/api/v1/books`, book)
         .then((res) => {
           // console.log("Book created successfully", res.data);
           setError(false);
@@ -99,16 +131,14 @@ const BookForm = ({
               <Title
                 currentTitle={newBook?.title || ""}
                 onChange={(e) => {
-                  setNewBook({ ...newBook, title: e });
-                  // console.log("Naslov:", e);
+                  setNewTitle(e);
                 }}
               />
               <Authors
                 selected={newBook?.id_author || 0}
                 authors={authors}
                 onSelect={(e) => {
-                  setNewBook({ ...newBook, id_author: e });
-                  // console.log("Avror:", e);
+                  setNewAuthor(e);
                 }}
               />
               <Fields
@@ -118,58 +148,47 @@ const BookForm = ({
                 }}
                 allFields={fields}
                 onSelect={(o) => {
-                  setNewBook({
-                    ...newBook,
-                    id_field: o.id_field,
-                    id_subfield: o.id_subfield,
-                  });
-                  // console.log("Field: ", o.id_field);
-                  // console.log("Subfield: ", o.id_subfield);
+                  setNewField(o.id_field);
+                  setNewSubfield(o.id_subfield);
                 }}
               />
               <Positions
                 selected={newBook.id_position}
                 positions={positions}
                 onSelect={(e) => {
-                  setNewBook({ ...newBook, id_position: e });
-                  // console.log("Pozicija:", e);
+                  setNewPosition(e);
                 }}
               />
               <Languages
                 selected={newBook.id_language}
                 languages={languages}
                 onSelect={(e) => {
-                  setNewBook({ ...newBook, id_language: e });
-                  // console.log("Jezik", e);
+                  setNewLanguage(e);
                 }}
               />
               <Collections
                 selected={newBook.id_collection}
                 collections={collections}
                 onSelect={(e) => {
-                  setNewBook({ ...newBook, id_collection: e });
-                  // console.log("Zbirka:", e);
+                  setNewCollection(e);
                 }}
               />
               <Country
                 currentCountry={newBook.country}
                 onChange={(e) => {
-                  setNewBook({ ...newBook, country: e });
-                  // console.log("Drzava:", e);
+                  setNewCountry(e);
                 }}
               />
               <Year
                 currentYear={newBook.year}
                 onChange={(e) => {
-                  setNewBook({ ...newBook, year: e });
-                  // console.log("Leto:", e);
+                  setNewYear(e);
                 }}
               />
               <Notes
                 currentNotes={newBook.notes}
                 onChange={(e) => {
-                  setNewBook({ ...newBook, notes: e });
-                  // console.log("Opombe", e);
+                  setNewNotes(e);
                 }}
               />
             </Stack>

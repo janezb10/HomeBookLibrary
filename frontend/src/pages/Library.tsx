@@ -82,7 +82,6 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookAttributes={bookAttributes}
         bookSaved={bookSaved}
         newBook={newBook}
-        setNewBook={setNewBook}
       />
       <DeleteBook
         isOpen={isOpenDeletingBook}
