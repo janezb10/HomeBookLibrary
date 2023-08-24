@@ -33,56 +33,102 @@ interface Props {
   bookAttributes: BookAttributesInterface;
   bookSaved: (book: BookInterface) => void;
   newBook: BookInterface;
+  addedAttributes: () => void;
 }
 
 const BookForm = ({
   // book,
-  bookAttributes: { authors, positions, languages, collections, fields },
+  bookAttributes: {
+    authors,
+    positions,
+    languages,
+    collections,
+    fields,
+    authorsMap,
+  },
+  addedAttributes,
   bookSaved,
   isOpen,
   onClose,
   newBook,
 }: Props) => {
-  const [newTitle, setNewTitle] = useState("");
-  const [newAuthor, setNewAuthor] = useState(0);
-  const [newPosition, setNewPosition] = useState(0);
-  const [newLanguage, setNewLanguage] = useState(0);
-  const [newCollection, setNewCollection] = useState(0);
-  const [newField, setNewField] = useState(0);
-  const [newSubfield, setNewSubfield] = useState(0);
-  const [newCountry, setNewCountry] = useState<string | null>("");
-  const [newYear, setNewYear] = useState<string | null>("");
-  const [newNotes, setNewNotes] = useState<string | null>("");
-
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState<string | number>(0);
+  const [position, setPosition] = useState(0);
+  const [language, setLanguage] = useState(0);
+  const [collection, setCollection] = useState(0);
+  const [field, setField] = useState(0);
+  const [subfield, setSubfield] = useState(0);
+  const [country, setCountry] = useState<string | null>("");
+  const [year, setYear] = useState<string | null>("");
+  const [notes, setNotes] = useState<string | null>("");
+  //
+  const [authorIsListed, setAuthorIsListed] = useState(true);
+  //
   const [error, setError] = useState(false);
   useEffect(() => {
     if (isOpen) {
-      setNewTitle(newBook.title);
-      setNewAuthor(newBook.id_author);
-      setNewPosition(newBook.id_position);
-      setNewLanguage(newBook.id_language);
-      setNewCollection(newBook.id_collection);
-      setNewField(newBook.id_field);
-      setNewSubfield(newBook.id_subfield);
-      setNewCountry(newBook.country);
-      setNewYear(newBook.year);
-      setNewNotes(newBook.notes);
+      setTitle(newBook.title);
+      setAuthor(newBook.id_author);
+      setPosition(newBook.id_position);
+      setLanguage(newBook.id_language);
+      setCollection(newBook.id_collection);
+      setField(newBook.id_field);
+      setSubfield(newBook.id_subfield);
+      setCountry(newBook.country);
+      setYear(newBook.year);
+      setNotes(newBook.notes);
+
+      setAuthorIsListed(true);
     }
   }, [isOpen]);
 
-  const saveBook = () => {
+  // const saveMissing = async () => {
+  //   if (!authorIsListed) {
+  //     await apiClient
+  //       .post(`/api/v1/authors/`, { author: author })
+  //       .then((res) => {
+  //         console.log("Author added successfully", res.data);
+  //         setError(false);
+  //         setAuthor(res.data[0].id_author);
+  //         addedAttributes();
+  //       })
+  //       .catch(() => {
+  //         setError(true);
+  //       });
+  //   }
+  //   saveBook();
+  // };
+
+  const saveBook = async () => {
+    let authorId = authors.find((a) => a.author === author)?.id_author;
+
+    if (!authorIsListed) {
+      await apiClient
+        .post(`/api/v1/authors/`, { author: author })
+        .then((res) => {
+          // console.log("Author added successfully", res.data);
+          setError(false);
+          authorId = res.data[0].id_author;
+          addedAttributes();
+        })
+        .catch(() => {
+          setError(true);
+        });
+    }
+
     const book = {
       ...newBook,
-      title: newTitle,
-      id_author: newAuthor,
-      id_position: newPosition,
-      id_language: newLanguage,
-      id_collection: newCollection,
-      id_field: newField,
-      id_subfield: newSubfield,
-      country: newCountry,
-      year: newYear,
-      notes: newNotes,
+      title: title,
+      id_author: authorId,
+      id_position: position,
+      id_language: language,
+      id_collection: collection,
+      id_field: field,
+      id_subfield: subfield,
+      country: country,
+      year: year,
+      notes: notes,
     };
 
     if (newBook.id) {
@@ -138,14 +184,17 @@ const BookForm = ({
                 <Title
                   currentTitle={newBook?.title || ""}
                   onChange={(e) => {
-                    setNewTitle(e);
+                    setTitle(e);
                   }}
                 />
                 <Authors
-                  selected={newBook?.id_author || 0}
+                  selected={authorsMap.get(newBook?.id_author) || ""}
                   authors={authors}
-                  onSelect={(e) => {
-                    setNewAuthor(e);
+                  authorIsListed={authorIsListed}
+                  setAuthorIsListed={setAuthorIsListed}
+                  onSelect={(s: string) => {
+                    console.log(s);
+                    setAuthor(s);
                   }}
                 />
                 <Fields
@@ -155,47 +204,47 @@ const BookForm = ({
                   }}
                   allFields={fields}
                   onSelect={(o) => {
-                    setNewField(o.id_field);
-                    setNewSubfield(o.id_subfield);
+                    setField(o.id_field);
+                    setSubfield(o.id_subfield);
                   }}
                 />
                 <Positions
                   selected={newBook.id_position}
                   positions={positions}
                   onSelect={(e) => {
-                    setNewPosition(e);
+                    setPosition(e);
                   }}
                 />
                 <Languages
                   selected={newBook.id_language}
                   languages={languages}
                   onSelect={(e) => {
-                    setNewLanguage(e);
+                    setLanguage(e);
                   }}
                 />
                 <Collections
                   selected={newBook.id_collection}
                   collections={collections}
                   onSelect={(e) => {
-                    setNewCollection(e);
+                    setCollection(e);
                   }}
                 />
                 <Country
                   currentCountry={newBook.country}
                   onChange={(e) => {
-                    setNewCountry(e);
+                    setCountry(e);
                   }}
                 />
                 <Year
                   currentYear={newBook.year}
                   onChange={(e) => {
-                    setNewYear(e);
+                    setYear(e);
                   }}
                 />
                 <Notes
                   currentNotes={newBook.notes}
                   onChange={(e) => {
-                    setNewNotes(e);
+                    setNotes(e);
                   }}
                 />
               </Stack>
@@ -204,7 +253,7 @@ const BookForm = ({
               {error && (
                 <Alert status="error">
                   <AlertIcon />
-                  There was an saving a book.
+                  Something went wrong...
                 </Alert>
               )}
             </ModalFooter>

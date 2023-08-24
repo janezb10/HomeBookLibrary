@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
 
 export interface AuthorInterface {
   id_author: number;
@@ -7,28 +7,64 @@ export interface AuthorInterface {
 
 interface Props {
   authors: AuthorInterface[];
-  selected?: number;
-  onSelect: (selectedId: number) => void;
+  selected?: string;
+  onSelect: (author: string) => void;
+  authorIsListed: boolean;
+  setAuthorIsListed: (b: boolean) => void;
 }
 
-const Authors = ({ authors, selected, onSelect }: Props) => {
+const Authors = ({
+  authors,
+  selected,
+  onSelect,
+  authorIsListed,
+  setAuthorIsListed,
+}: Props) => {
+  const handleChange = (s: string) => {
+    if (authors.find((e) => e.author === s)) {
+      setAuthorIsListed(true);
+    } else {
+      setAuthorIsListed(false);
+    }
+    onSelect(s);
+  };
+
   return (
-    <FormControl>
-      <FormLabel>Avtor:</FormLabel>
-      <Select
-        placeholder="Avtorji..."
-        defaultValue={selected}
-        onChange={(e) => onSelect(+e.target.value)}
-      >
-        {authors.map((author) => {
-          return (
-            <option value={author.id_author} key={author.id_author}>
-              {author.author}
-            </option>
-          );
-        })}
-      </Select>
-    </FormControl>
+    <>
+      {/*<FormControl>*/}
+      {/*  <FormLabel>Avtor:</FormLabel>*/}
+      {/*  <Select*/}
+      {/*    placeholder="Avtorji..."*/}
+      {/*    defaultValue={selected}*/}
+      {/*    onChange={(e) => onSelect(+e.target.value)}*/}
+      {/*  >*/}
+      {/*    {authors.map((author) => {*/}
+      {/*      return (*/}
+      {/*        <option value={author.id_author} key={author.id_author}>*/}
+      {/*          {author.author}*/}
+      {/*        </option>*/}
+      {/*      );*/}
+      {/*    })}*/}
+      {/*  </Select>*/}
+      {/*</FormControl>*/}
+      <FormControl>
+        <FormLabel>Avtor:</FormLabel>
+        <Input
+          bgColor={authorIsListed ? "white" : "yellow.100"}
+          defaultValue={selected}
+          type="text"
+          list="authorList"
+          placeholder="Avtorji..."
+          onChange={(e) => handleChange(e.target.value)}
+        />
+        <datalist id="authorList">
+          {authors.map((author) => {
+            return <option key={author.id_author}>{author.author}</option>;
+          })}
+        </datalist>
+        {!authorIsListed && <Text color="orange.500">Dodan bo nov avtor</Text>}
+      </FormControl>
+    </>
   );
 };
 

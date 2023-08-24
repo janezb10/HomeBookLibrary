@@ -22,7 +22,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
-  const bookAttributes = useBookAttributes(authToken);
+  let bookAttributes = useBookAttributes(authToken);
   const toast = useToast();
 
   const handleBookSearch = (books: BookInterface[]) => {
@@ -84,6 +84,10 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     setNewBook(emptyBook);
   };
 
+  const addedAttributes = () => {
+    bookAttributes = useBookAttributes(authToken);
+  };
+
   return (
     <Container maxW="6xl">
       <BookForm
@@ -92,6 +96,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookAttributes={bookAttributes}
         bookSaved={bookSaved}
         newBook={newBook}
+        addedAttributes={addedAttributes}
       />
       <DeleteBook
         isOpen={isOpenDeletingBook}
