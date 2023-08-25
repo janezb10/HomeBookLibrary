@@ -63,7 +63,6 @@ const BookForm = ({
   const [country, setCountry] = useState<string | null>("");
   const [year, setYear] = useState<string | null>("");
   const [notes, setNotes] = useState<string | null>("");
-  // todo string | null ???
   const [authorIsListed, setAuthorIsListed] = useState(true);
   const [languageIsListed, setLanguageIsListed] = useState(true);
   const [collectionIsListed, setCollectionIsListed] = useState(true);
@@ -138,9 +137,6 @@ const BookForm = ({
           setError(true);
         });
     }
-
-    // todo if empty string, does it show if it is listed? does it need to send null?
-    // right now I cant set collection to null
 
     const book = {
       ...newBook,
