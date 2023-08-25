@@ -121,9 +121,11 @@ const BookForm = ({
         });
     }
 
-    let collectionId = collections.find((c) => c.collection === collection)
-      ?.id_collection;
-    if (!collectionIsListed) {
+    let collectionId: number | undefined | null = collections.find(
+      (c) => c.collection === collection,
+    )?.id_collection;
+    if (collection === "") collectionId = null;
+    else if (!collectionIsListed) {
       await apiClient
         .post(`/api/v1/collections/`, { collection: collection })
         .then((res) => {
@@ -138,6 +140,7 @@ const BookForm = ({
     }
 
     // todo if empty string, does it show if it is listed? does it need to send null?
+    // right now I cant set collection to null
 
     const book = {
       ...newBook,
@@ -199,7 +202,9 @@ const BookForm = ({
             <ModalCloseButton />
             <ModalBody>
               <Flex justifyContent="flex-end">
-                <Button onClick={saveBook}>Save Book</Button>
+                <Button isDisabled={title === ""} onClick={saveBook}>
+                  Save Book
+                </Button>
               </Flex>
 
               <Stack spacing={4}>
@@ -286,7 +291,9 @@ const BookForm = ({
               <Button colorScheme="blue" mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button onClick={saveBook}>Save Book</Button>
+              <Button isDisabled={title === ""} onClick={saveBook}>
+                Save Book
+              </Button>
             </ModalFooter>
           </Container>
         </ModalContent>

@@ -53,25 +53,6 @@ const Collections = ({
         <Text color="orange.500">Dodana bo nova zbirka</Text>
       )}
     </FormControl>
-    // <FormControl>
-    //   <FormLabel>Zbirka:</FormLabel>
-    //   <Select
-    //     placeholder="Zbirke..."
-    //     defaultValue={selected || 0}
-    //     onChange={(e) => onSelect(+e.target.value)}
-    //   >
-    //     {collections.map((collection) => {
-    //       return (
-    //         <option
-    //           value={collection.id_collection}
-    //           key={collection.id_collection}
-    //         >
-    //           {collection.collection}
-    //         </option>
-    //       );
-    //     })}
-    //   </Select>
-    // </FormControl>
   );
 };
 

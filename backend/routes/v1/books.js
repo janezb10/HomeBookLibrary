@@ -44,7 +44,11 @@ router.post("/", async (req, res, next) => {
                 ${req.body.id_subfield ? ", ?" : ""}
                 ${req.body.id_position ? ", ?" : ""}
                 ${req.body.id_language ? ", ?" : ""}
-                ${req.body.id_collection ? ", ?" : ""}
+                ${
+                  req.body.id_collection || req.body.id_collection === null
+                    ? ", ?"
+                    : ""
+                }
                 ${req.body.country ? ", ?" : ""}
                 ${req.body.year ? ", ?" : ""}
                 ${req.body.notes ? ", ?" : ""}
@@ -57,7 +61,8 @@ router.post("/", async (req, res, next) => {
     if (req.body.id_subfield) ar.push(req.body.id_subfield);
     if (req.body.id_position) ar.push(req.body.id_position);
     if (req.body.id_language) ar.push(req.body.id_language);
-    if (req.body.id_collection) ar.push(req.body.id_collection);
+    if (req.body.id_collection || req.body.id_collection === null)
+      ar.push(req.body.id_collection);
     if (req.body.country) ar.push(req.body.country);
     if (req.body.year) ar.push(req.body.year);
     if (req.body.notes) ar.push(req.body.notes);
@@ -105,7 +110,11 @@ router.put("/:id", async (req, res, next) => {
             ${req.body.id_subfield ? ", id_subfield = ?" : ""}
             ${req.body.id_position ? ", id_position = ?" : ""}
             ${req.body.id_language ? ", id_language = ?" : ""}
-            ${req.body.id_collection ? ", id_collection = ?" : ""}
+            ${
+              req.body.id_collection || req.body.id_collection === null
+                ? ", id_collection = ?"
+                : ""
+            }
             ${req.body.country ? ", country = ?" : ""}
             ${req.body.year ? ", year = ?" : ""}
             ${req.body.notes ? ", notes = ?" : ""}
@@ -119,7 +128,8 @@ router.put("/:id", async (req, res, next) => {
     if (req.body.id_subfield) ar.push(req.body.id_subfield);
     if (req.body.id_position) ar.push(req.body.id_position);
     if (req.body.id_language) ar.push(req.body.id_language);
-    if (req.body.id_collection) ar.push(req.body.id_collection);
+    if (req.body.id_collection || req.body.id_collection === null)
+      ar.push(req.body.id_collection);
     if (req.body.country) ar.push(req.body.country);
     if (req.body.year) ar.push(req.body.year);
     if (req.body.notes) ar.push(req.body.notes);
