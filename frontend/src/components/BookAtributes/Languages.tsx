@@ -8,7 +8,7 @@ export interface LanguageInterface {
 interface Props {
   languages: LanguageInterface[];
   selected?: string;
-  onSelect: (lang: string) => void;
+  onSelect: (language: string) => void;
   languageIsListed: boolean;
   setLanguageIsListed: (b: boolean) => void;
 }
@@ -21,7 +21,7 @@ const Languages = ({
   setLanguageIsListed,
 }: Props) => {
   const handleChange = (s: string) => {
-    if (languages.find((e) => e.language === s)) {
+    if (languages.find((e) => e.language === s) || s == "") {
       setLanguageIsListed(true);
     } else {
       setLanguageIsListed(false);

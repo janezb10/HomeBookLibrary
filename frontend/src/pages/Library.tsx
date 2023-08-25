@@ -84,10 +84,6 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     setNewBook(emptyBook);
   };
 
-  // const addedAttributes = () => {
-  //bookAttributes = useBookAttributes(authToken);
-  // };
-
   return (
     <Container maxW="6xl">
       <BookForm
@@ -96,7 +92,6 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
         bookAttributes={bookAttributes}
         bookSaved={bookSaved}
         newBook={newBook}
-        // addedAttributes={addedAttributes}
       />
       <DeleteBook
         isOpen={isOpenDeletingBook}

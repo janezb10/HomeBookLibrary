@@ -45,6 +45,7 @@ const BookForm = ({
     fields,
     authorsMap,
     languagesMap,
+    collectionsMap,
     refetch,
   },
   bookSaved,
@@ -56,15 +57,16 @@ const BookForm = ({
   const [author, setAuthor] = useState<string | number>(0);
   const [position, setPosition] = useState(0);
   const [language, setLanguage] = useState<string | number>(0);
-  const [collection, setCollection] = useState(0);
+  const [collection, setCollection] = useState<string | number>(0);
   const [field, setField] = useState(0);
   const [subfield, setSubfield] = useState(0);
   const [country, setCountry] = useState<string | null>("");
   const [year, setYear] = useState<string | null>("");
   const [notes, setNotes] = useState<string | null>("");
-  //
+  // todo string | null ???
   const [authorIsListed, setAuthorIsListed] = useState(true);
   const [languageIsListed, setLanguageIsListed] = useState(true);
+  const [collectionIsListed, setCollectionIsListed] = useState(true);
   //
   const [error, setError] = useState(false);
   useEffect(() => {
@@ -82,6 +84,7 @@ const BookForm = ({
 
       setAuthorIsListed(true);
       setLanguageIsListed(true);
+      setCollectionIsListed(true);
     }
   }, [isOpen]);
 
@@ -118,13 +121,31 @@ const BookForm = ({
         });
     }
 
+    let collectionId = collections.find((c) => c.collection === collection)
+      ?.id_collection;
+    if (!collectionIsListed) {
+      await apiClient
+        .post(`/api/v1/collections/`, { collection: collection })
+        .then((res) => {
+          setError(false);
+          collectionId = res.data[0].id_collection;
+          refetch();
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(true);
+        });
+    }
+
+    // todo if empty string, does it show if it is listed? does it need to send null?
+
     const book = {
       ...newBook,
       title: title,
       id_author: authorId,
       id_position: position,
       id_language: languageId,
-      id_collection: collection,
+      id_collection: collectionId,
       id_field: field,
       id_subfield: subfield,
       country: country,
@@ -225,10 +246,12 @@ const BookForm = ({
                   }}
                 />
                 <Collections
-                  selected={newBook.id_collection}
+                  selected={collectionsMap.get(newBook?.id_collection) || ""}
                   collections={collections}
-                  onSelect={(e) => {
-                    setCollection(e);
+                  collectionIsListed={collectionIsListed}
+                  setCollectionIsListed={setCollectionIsListed}
+                  onSelect={(s) => {
+                    setCollection(s);
                   }}
                 />
                 <Country

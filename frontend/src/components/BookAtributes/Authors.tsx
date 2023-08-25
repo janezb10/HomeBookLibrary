@@ -21,7 +21,7 @@ const Authors = ({
   setAuthorIsListed,
 }: Props) => {
   const handleChange = (s: string) => {
-    if (authors.find((e) => e.author === s)) {
+    if (authors.find((e) => e.author === s) || s == "") {
       setAuthorIsListed(true);
     } else {
       setAuthorIsListed(false);
