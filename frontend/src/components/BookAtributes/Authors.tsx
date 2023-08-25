@@ -31,22 +31,6 @@ const Authors = ({
 
   return (
     <>
-      {/*<FormControl>*/}
-      {/*  <FormLabel>Avtor:</FormLabel>*/}
-      {/*  <Select*/}
-      {/*    placeholder="Avtorji..."*/}
-      {/*    defaultValue={selected}*/}
-      {/*    onChange={(e) => onSelect(+e.target.value)}*/}
-      {/*  >*/}
-      {/*    {authors.map((author) => {*/}
-      {/*      return (*/}
-      {/*        <option value={author.id_author} key={author.id_author}>*/}
-      {/*          {author.author}*/}
-      {/*        </option>*/}
-      {/*      );*/}
-      {/*    })}*/}
-      {/*  </Select>*/}
-      {/*</FormControl>*/}
       <FormControl>
         <FormLabel>Avtor:</FormLabel>
         <Input

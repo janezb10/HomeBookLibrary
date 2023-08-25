@@ -33,7 +33,7 @@ interface Props {
   bookAttributes: BookAttributesInterface;
   bookSaved: (book: BookInterface) => void;
   newBook: BookInterface;
-  addedAttributes: () => void;
+  // addedAttributes: () => void;
 }
 
 const BookForm = ({
@@ -45,8 +45,8 @@ const BookForm = ({
     collections,
     fields,
     authorsMap,
+    refetch,
   },
-  addedAttributes,
   bookSaved,
   isOpen,
   onClose,
@@ -83,23 +83,6 @@ const BookForm = ({
     }
   }, [isOpen]);
 
-  // const saveMissing = async () => {
-  //   if (!authorIsListed) {
-  //     await apiClient
-  //       .post(`/api/v1/authors/`, { author: author })
-  //       .then((res) => {
-  //         console.log("Author added successfully", res.data);
-  //         setError(false);
-  //         setAuthor(res.data[0].id_author);
-  //         addedAttributes();
-  //       })
-  //       .catch(() => {
-  //         setError(true);
-  //       });
-  //   }
-  //   saveBook();
-  // };
-
   const saveBook = async () => {
     let authorId = authors.find((a) => a.author === author)?.id_author;
 
@@ -110,7 +93,7 @@ const BookForm = ({
           // console.log("Author added successfully", res.data);
           setError(false);
           authorId = res.data[0].id_author;
-          addedAttributes();
+          refetch();
         })
         .catch(() => {
           setError(true);
@@ -193,7 +176,6 @@ const BookForm = ({
                   authorIsListed={authorIsListed}
                   setAuthorIsListed={setAuthorIsListed}
                   onSelect={(s: string) => {
-                    console.log(s);
                     setAuthor(s);
                   }}
                 />

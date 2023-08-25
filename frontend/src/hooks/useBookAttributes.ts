@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AuthorInterface } from "../components/BookAtributes/Authors.tsx";
 import { PositionInterface } from "../components/BookAtributes/Positions.tsx";
 import { LanguageInterface } from "../components/BookAtributes/Languages.tsx";
@@ -19,6 +19,8 @@ export interface BookAttributesInterface {
   languagesMap: Map<number, string>;
   collectionsMap: Map<number, string>;
   fieldsMap: Map<number, string>;
+
+  refetch: () => void;
 }
 
 const useBookAttributes = (authToken: string) => {
@@ -39,11 +41,8 @@ const useBookAttributes = (authToken: string) => {
     new Map(),
   );
   const [fieldsMap, setFieldsMap] = useState<Map<number, string>>(new Map());
-  // const [subfieldsMap, setSubfieldsMap] = useState<Map<number, string>>(
-  //   new Map(),
-  // );
 
-  useEffect(() => {
+  const refetch = async () => {
     const controller = new AbortController();
 
     apiClient.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
@@ -151,7 +150,8 @@ const useBookAttributes = (authToken: string) => {
         if (err instanceof CanceledError) return;
         console.log(err);
       });
-  }, []);
+  };
+  refetch();
 
   return {
     authors,
@@ -164,6 +164,7 @@ const useBookAttributes = (authToken: string) => {
     languagesMap,
     collectionsMap,
     fieldsMap,
+    refetch,
   };
 };
 export default useBookAttributes;
