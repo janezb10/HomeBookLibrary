@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
 
 export interface LanguageInterface {
   id_language: number;
@@ -7,27 +7,47 @@ export interface LanguageInterface {
 
 interface Props {
   languages: LanguageInterface[];
-  selected?: number;
-  onSelect: (selectedId: number) => void;
+  selected?: string;
+  onSelect: (lang: string) => void;
+  languageIsListed: boolean;
+  setLanguageIsListed: (b: boolean) => void;
 }
 
-const Languages = ({ languages, onSelect, selected }: Props) => {
+const Languages = ({
+  languages,
+  onSelect,
+  selected,
+  languageIsListed,
+  setLanguageIsListed,
+}: Props) => {
+  const handleChange = (s: string) => {
+    if (languages.find((e) => e.language === s)) {
+      setLanguageIsListed(true);
+    } else {
+      setLanguageIsListed(false);
+    }
+    onSelect(s);
+  };
+
   return (
     <FormControl>
       <FormLabel>Jezik:</FormLabel>
-      <Select
+      <Input
+        bgColor={languageIsListed ? "white" : "yellow.100"}
+        defaultValue={selected}
+        type="text"
+        list="languageList"
         placeholder="Jeziki..."
-        defaultValue={selected || 0}
-        onChange={(e) => onSelect(+e.target.value)}
-      >
+        onChange={(e) => handleChange(e.target.value)}
+      />
+      <datalist id="languageList">
         {languages.map((language) => {
           return (
-            <option value={language.id_language} key={language.id_language}>
-              {language.language}
-            </option>
+            <option key={language.id_language}>{language.language}</option>
           );
         })}
-      </Select>
+      </datalist>
+      {!languageIsListed && <Text color="orange.500">Dodan bo nov jezik</Text>}
     </FormControl>
   );
 };

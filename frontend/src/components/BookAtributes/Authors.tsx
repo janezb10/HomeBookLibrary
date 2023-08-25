@@ -30,25 +30,23 @@ const Authors = ({
   };
 
   return (
-    <>
-      <FormControl>
-        <FormLabel>Avtor:</FormLabel>
-        <Input
-          bgColor={authorIsListed ? "white" : "yellow.100"}
-          defaultValue={selected}
-          type="text"
-          list="authorList"
-          placeholder="Avtorji..."
-          onChange={(e) => handleChange(e.target.value)}
-        />
-        <datalist id="authorList">
-          {authors.map((author) => {
-            return <option key={author.id_author}>{author.author}</option>;
-          })}
-        </datalist>
-        {!authorIsListed && <Text color="orange.500">Dodan bo nov avtor</Text>}
-      </FormControl>
-    </>
+    <FormControl>
+      <FormLabel>Avtor:</FormLabel>
+      <Input
+        bgColor={authorIsListed ? "white" : "yellow.100"}
+        defaultValue={selected}
+        type="text"
+        list="authorList"
+        placeholder="Avtorji..."
+        onChange={(e) => handleChange(e.target.value)}
+      />
+      <datalist id="authorList">
+        {authors.map((author) => {
+          return <option key={author.id_author}>{author.author}</option>;
+        })}
+      </datalist>
+      {!authorIsListed && <Text color="orange.500">Dodan bo nov avtor</Text>}
+    </FormControl>
   );
 };
 

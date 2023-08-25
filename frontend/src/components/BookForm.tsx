@@ -33,7 +33,6 @@ interface Props {
   bookAttributes: BookAttributesInterface;
   bookSaved: (book: BookInterface) => void;
   newBook: BookInterface;
-  // addedAttributes: () => void;
 }
 
 const BookForm = ({
@@ -45,6 +44,7 @@ const BookForm = ({
     collections,
     fields,
     authorsMap,
+    languagesMap,
     refetch,
   },
   bookSaved,
@@ -55,7 +55,7 @@ const BookForm = ({
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState<string | number>(0);
   const [position, setPosition] = useState(0);
-  const [language, setLanguage] = useState(0);
+  const [language, setLanguage] = useState<string | number>(0);
   const [collection, setCollection] = useState(0);
   const [field, setField] = useState(0);
   const [subfield, setSubfield] = useState(0);
@@ -64,6 +64,7 @@ const BookForm = ({
   const [notes, setNotes] = useState<string | null>("");
   //
   const [authorIsListed, setAuthorIsListed] = useState(true);
+  const [languageIsListed, setLanguageIsListed] = useState(true);
   //
   const [error, setError] = useState(false);
   useEffect(() => {
@@ -80,12 +81,12 @@ const BookForm = ({
       setNotes(newBook.notes);
 
       setAuthorIsListed(true);
+      setLanguageIsListed(true);
     }
   }, [isOpen]);
 
   const saveBook = async () => {
     let authorId = authors.find((a) => a.author === author)?.id_author;
-
     if (!authorIsListed) {
       await apiClient
         .post(`/api/v1/authors/`, { author: author })
@@ -95,7 +96,24 @@ const BookForm = ({
           authorId = res.data[0].id_author;
           refetch();
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
+          setError(true);
+        });
+    }
+
+    let languageId = languages.find((l) => l.language === language)
+      ?.id_language;
+    if (!languageIsListed) {
+      await apiClient
+        .post(`/api/v1/languages/`, { language: language })
+        .then((res) => {
+          setError(false);
+          languageId = res.data[0].id_language;
+          refetch();
+        })
+        .catch((err) => {
+          console.log(err);
           setError(true);
         });
     }
@@ -105,7 +123,7 @@ const BookForm = ({
       title: title,
       id_author: authorId,
       id_position: position,
-      id_language: language,
+      id_language: languageId,
       id_collection: collection,
       id_field: field,
       id_subfield: subfield,
@@ -198,10 +216,12 @@ const BookForm = ({
                   }}
                 />
                 <Languages
-                  selected={newBook.id_language}
+                  selected={languagesMap.get(newBook?.id_language) || ""}
                   languages={languages}
-                  onSelect={(e) => {
-                    setLanguage(e);
+                  languageIsListed={languageIsListed}
+                  setLanguageIsListed={setLanguageIsListed}
+                  onSelect={(s) => {
+                    setLanguage(s);
                   }}
                 />
                 <Collections
