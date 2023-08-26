@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import BookList from "../components/BookList.tsx";
-import SearchInput from "../components/SearchInput.tsx";
+import SearchInput, { SearchResponse } from "../components/SearchInput.tsx";
 import { useState } from "react";
 import { BookInterface } from "../components/Book.tsx";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
@@ -19,15 +19,16 @@ import BookForm from "../components/BookForm.tsx";
 import emptyBook from "../helper/emptyBook.ts";
 import { FiLogOut } from "react-icons/fi";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import usePagination from "../hooks/usePagination.ts";
+import PaginationList from "../components/PaginationList.tsx";
+import apiClient from "../services/api-client.ts";
+import { AxiosResponse, CanceledError } from "axios";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
   const bookAttributes = useBookAttributes(authToken);
   const toast = useToast();
-
-  const handleBookSearch = (books: BookInterface[]) => {
-    setBooks([...books]);
-  };
+  const pagination = usePagination();
 
   // deleting book
   const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
@@ -84,6 +85,25 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     setNewBook(emptyBook);
   };
 
+  const handleBookSearch = (searcString: string, page?: number) => {
+    const controller = new AbortController();
+    apiClient.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
+
+    apiClient
+      .get(`/api/v1/search/${searcString}${page ? "?page=" + page : ""}`, {
+        signal: controller.signal,
+      })
+      .then((res: AxiosResponse<SearchResponse>) => {
+        pagination.setNumberOfPages(res.data.numberOfPages);
+        setBooks(res.data.books);
+        pagination.setCurrentPage(res.data.currentPage);
+      })
+      .catch((err) => {
+        if (err instanceof CanceledError) return;
+        console.log(err);
+      });
+  };
+
   return (
     <Container maxW="6xl">
       <BookForm
@@ -104,7 +124,10 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
 
       <Flex>
         <Box flex="1">
-          <SearchInput authToken={authToken} onBookSearch={handleBookSearch} />
+          <SearchInput
+            onBookSearch={handleBookSearch}
+            pagination={pagination}
+          />
         </Box>
         <Box ml={2}>
           <Button
@@ -132,6 +155,12 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
           </Button>
         </Box>
       </Flex>
+      <PaginationList
+        pagination={pagination}
+        onSelectPage={(pageNumber) =>
+          handleBookSearch(pagination.latestSearch, pageNumber)
+        }
+      />
       <Box>
         <BookList
           bookAttributes={bookAttributes}

@@ -1,15 +1,21 @@
-import { Box, Button } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Button,
+} from "@chakra-ui/react";
+import { paginationInterface } from "../hooks/usePagination.ts";
 
 interface Props {
-  numberOfPages: number;
+  pagination: paginationInterface;
   onSelectPage: (n: number) => void;
-  currentPage: number;
 }
 
 const PaginationList = ({
-  numberOfPages,
   onSelectPage,
-  currentPage,
+  pagination: { numberOfPages, currentPage },
 }: Props) => {
   const pages = [];
   for (let i = 1; i <= numberOfPages; i++) {
@@ -27,7 +33,18 @@ const PaginationList = ({
     );
   }
 
-  return <Box m={2}>pages: {pages}</Box>;
+  if (numberOfPages === 0) {
+    return (
+      <>
+        <Alert status="warning">
+          <AlertIcon />
+          <AlertTitle>Nothing was found</AlertTitle>
+          <AlertDescription>Try different search keyword.</AlertDescription>
+        </Alert>
+      </>
+    );
+  } else if (numberOfPages > 1) return <Box m={2}>pages: {pages}</Box>;
+  else return null;
 };
 
 export default PaginationList;
