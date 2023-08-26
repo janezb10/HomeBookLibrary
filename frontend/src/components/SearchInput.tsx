@@ -38,9 +38,8 @@ const SearchInput = ({
     }
   };
 
-  //
+  // Filters
   const [selectedPosition, setSelectedPosition] = useState<number[]>([]);
-
   const handleSelectPosition = (selected: number[]) => {
     setSelectedPosition(selected);
     console.log(selected);

@@ -1,57 +1,81 @@
-import {
-  Box,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Checkbox,
-  Button,
-} from "@chakra-ui/react";
 import { useState } from "react";
+import {
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  Divider,
+  Select,
+  Text,
+} from "@chakra-ui/react";
 import { AuthorInterface } from "../BookAtributes/Authors.tsx";
 
 interface Props {
   options: AuthorInterface[];
   selectedOptions: number[];
-  onSelect: (s: number[]) => void;
+  onSelect: (n: number[]) => void;
+  authorsMap: Map<number, string>;
 }
 
-const DropdownCheckbox = ({ options, selectedOptions, onSelect }: Props) => {
+// todo badge for selected authors
+
+const AuthorFilter = ({
+  options,
+  selectedOptions,
+  onSelect,
+  authorsMap,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const togglemenu = () => {
-    setIsOpen(!isOpen);
+  const handleSelectAuthor = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedAuthorId = event.target.value;
+    console.log("selectedAuthorId", selectedAuthorId);
+    if (!selectedOptions.includes(+selectedAuthorId)) {
+      onSelect([...selectedOptions, +selectedAuthorId]);
+    }
+    // console.log(authorId);
   };
 
-  const handleCheckboxChange = (option: number) => {
-    const updatedSelection = selectedOptions.includes(option)
-      ? selectedOptions.filter((selected) => selected !== option)
-      : [...selectedOptions, option];
-
-    onSelect(updatedSelection);
+  const handleClickRemove = (n: number) => {
+    onSelect(selectedOptions.filter((au) => au !== n));
   };
 
   return (
-    <Box p={4}>
-      <Menu isOpen={isOpen}>
-        <MenuButton as={Button} onClick={togglemenu}>
-          Avtorji
-        </MenuButton>
-        <MenuList>
-          {options.map((option) => (
-            <MenuItem key={option.id_author}>
-              <Checkbox
-                isChecked={selectedOptions.includes(option.id_author)}
-                onChange={() => handleCheckboxChange(option.id_author)}
-              >
-                {option.author}
-              </Checkbox>
-            </MenuItem>
+    <Popover
+      isOpen={isOpen}
+      onOpen={() => setIsOpen(true)}
+      onClose={() => setIsOpen(false)}
+    >
+      <PopoverTrigger>
+        <Button m={1}>Avtorji</Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverCloseButton />
+        <PopoverHeader>Izberi Avtorje</PopoverHeader>
+        <PopoverBody>
+          {selectedOptions.map((so) => (
+            <Text key={so}>
+              {authorsMap.get(so)} {/*todo icon*/}
+              <span onClick={() => handleClickRemove(so)}>X</span>
+            </Text>
           ))}
-        </MenuList>
-      </Menu>
-    </Box>
+          <Divider />
+          <Select onChange={handleSelectAuthor}>
+            {options.map((author) => (
+              <option key={author.id_author} value={author.id_author}>
+                {author.author}
+              </option>
+            ))}
+          </Select>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
   );
 };
 
-export default DropdownCheckbox;
+export default AuthorFilter;

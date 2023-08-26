@@ -19,11 +19,7 @@ interface Props {
   onSelect: (n: number[]) => void;
 }
 
-const DropdownCheckbox: React.FC<Props> = ({
-  options,
-  selectedOptions,
-  onSelect,
-}) => {
+const PositionFilter = ({ options, selectedOptions, onSelect }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCheckboxChange = (option: number) => {
@@ -65,4 +61,4 @@ const DropdownCheckbox: React.FC<Props> = ({
   );
 };
 
-export default DropdownCheckbox;
+export default PositionFilter;
