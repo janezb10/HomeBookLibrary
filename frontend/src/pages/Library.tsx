@@ -69,6 +69,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     const index = books.findIndex((b) => b.id === book.id);
     if (index < 0) {
       setBooks([book]);
+      pagination.setNumberOfPages(1);
     } else {
       const arr = [...books];
       arr[index] = book;
