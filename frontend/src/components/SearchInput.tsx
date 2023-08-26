@@ -3,7 +3,7 @@ import { BsSearch } from "react-icons/bs";
 import { useRef } from "react";
 import { BookInterface } from "./Book.tsx";
 import { paginationInterface } from "../hooks/usePagination.ts";
-// import SearchFilters from "./SearchFilters.tsx";
+import SearchFilters from "./SearchFilters.tsx";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 
 export interface SearchResponse {
@@ -18,7 +18,7 @@ interface SearchInputProps {
 }
 
 const SearchInput = ({
-  // bookAttributes,
+  bookAttributes,
   onBookSearch,
   pagination: { setLatestSearch },
 }: SearchInputProps) => {
@@ -61,7 +61,7 @@ const SearchInput = ({
             }
           />
         </InputGroup>
-        {/*<SearchFilters bookAttributes={bookAttributes} />*/}
+        <SearchFilters bookAttributes={bookAttributes} />
       </form>
     </>
   );
