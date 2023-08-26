@@ -1,6 +1,6 @@
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BookInterface } from "./Book.tsx";
 import { paginationInterface } from "../hooks/usePagination.ts";
 import SearchFilters from "./SearchFilters.tsx";
@@ -38,6 +38,14 @@ const SearchInput = ({
     }
   };
 
+  //
+  const [selectedPosition, setSelectedPosition] = useState<number[]>([]);
+
+  const handleSelectPosition = (selected: number[]) => {
+    setSelectedPosition(selected);
+    console.log(selected);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -61,7 +69,11 @@ const SearchInput = ({
             }
           />
         </InputGroup>
-        <SearchFilters bookAttributes={bookAttributes} />
+        <SearchFilters
+          bookAttributes={bookAttributes}
+          selectedPosition={selectedPosition}
+          handleSelectPosition={handleSelectPosition}
+        />
       </form>
     </>
   );
