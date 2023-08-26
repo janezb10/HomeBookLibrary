@@ -8,7 +8,7 @@ export interface AllFieldsInterface {
   subfield: string;
 }
 
-interface FieldInterface {
+export interface FieldInterface {
   id_field: number;
   field: string;
 }

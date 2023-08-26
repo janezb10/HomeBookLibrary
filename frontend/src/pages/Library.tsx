@@ -128,6 +128,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
           <SearchInput
             onBookSearch={handleBookSearch}
             pagination={pagination}
+            bookAttributes={bookAttributes}
           />
         </Box>
         <Box ml={2}>
