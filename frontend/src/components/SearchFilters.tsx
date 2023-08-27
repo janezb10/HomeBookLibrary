@@ -3,6 +3,7 @@ import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 import PositionFilter from "./Filters/PositionFilter.tsx";
 import AuthorFilter from "./Filters/AuthorFilter.tsx";
 import { TiDelete } from "react-icons/ti";
+import LanguageFilter from "./Filters/LanguageFilter.tsx";
 
 interface Props {
   bookAttributes: BookAttributesInterface;
@@ -10,18 +11,29 @@ interface Props {
   handleSelectPositions: (n: number[]) => void;
   selectedAuthors: number[];
   handleSelectAuthors: (n: number[]) => void;
+  selectedLanguages: number[];
+  hancleSelectLanguages: (n: number[]) => void;
 }
 
 const SearchFilters = ({
-  bookAttributes: { positions, authors, authorsMap, positionsMap },
+  bookAttributes: {
+    positions,
+    authors,
+    authorsMap,
+    positionsMap,
+    languages,
+    languagesMap,
+  },
   selectedPositions,
   handleSelectPositions,
   selectedAuthors,
   handleSelectAuthors,
+  selectedLanguages,
+  hancleSelectLanguages,
 }: Props) => {
   return (
     <Box m={1}>
-      <Text>
+      <Text overflow="hidden">
         Filtri:
         {selectedPositions.map((sp) => (
           <Badge colorScheme="green" fontSize="1rem" m={1} key={`p${sp}`}>
@@ -47,6 +59,18 @@ const SearchFilters = ({
             />
           </Badge>
         ))}
+        {selectedLanguages.map((sl) => (
+          <Badge colorScheme="yellow" fontSize="1rem" m={1} key={`l${sl}`}>
+            {languagesMap.get(sl)}
+            <Icon
+              as={TiDelete}
+              fontSize="1.3rem"
+              onClick={() =>
+                hancleSelectLanguages(selectedLanguages.filter((l) => l !== sl))
+              }
+            />
+          </Badge>
+        ))}
       </Text>
       <PositionFilter
         options={positions}
@@ -58,6 +82,11 @@ const SearchFilters = ({
         selectedOptions={selectedAuthors}
         onSelect={handleSelectAuthors}
         authorsMap={authorsMap}
+      />
+      <LanguageFilter
+        options={languages}
+        selectedOptions={selectedLanguages}
+        onSelect={hancleSelectLanguages}
       />
     </Box>
   );
