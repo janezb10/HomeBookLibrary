@@ -17,8 +17,8 @@ interface Props {
   hancleSelectLanguages: (n: number[]) => void;
   selectedCollections: number[];
   handleSelectCollections: (n: number[]) => void;
-  selectedFields: number[][];
-  handleSelectFields: (n: number[][]) => void;
+  selectedFields: number[];
+  handleSelectFields: (n: number[]) => void;
 }
 
 const SearchFilters = ({
@@ -100,18 +100,14 @@ const SearchFilters = ({
           </Badge>
         ))}
         {selectedFields.map((sf) => (
-          <Badge
-            m={1}
-            key={`${sf[0]}${sf[1]}`}
-            colorScheme="teal"
-            fontSize="1rem"
-          >
-            {fieldsMap.get(sf[0])}-
-            {fields.find((f) => f.id_field === sf[0])?.subfield || ""}
+          <Badge m={1} key={`f${sf}`} colorScheme="teal" fontSize="1rem">
+            {fieldsMap.get(sf)}
             <Icon
               as={TiDelete}
               fontSize="1.3rem"
-              // onClick={() => handleClickRemove(sf)}
+              onClick={() =>
+                handleSelectFields(selectedFields.filter((f) => f !== sf))
+              }
             />
           </Badge>
         ))}
@@ -139,7 +135,18 @@ const SearchFilters = ({
         collectionMap={collectionsMap}
       />
       <FieldsFilter
-        options={fields}
+        options={fields.reduce<{ id_field: number; field: string }[]>(
+          (acc, item) => {
+            const existingField = acc.find(
+              (field) => field.id_field === item.id_field,
+            );
+            if (!existingField) {
+              acc.push({ id_field: item.id_field, field: item.field });
+            }
+            return acc;
+          },
+          [],
+        )}
         selectedOptions={selectedFields}
         onSelect={handleSelectFields}
         fieldsMap={fieldsMap}

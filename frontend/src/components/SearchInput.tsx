@@ -43,7 +43,7 @@ const SearchInput = ({
   const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
   const [selectedCollections, setSelectedCollections] = useState<number[]>([]);
-  const [selectedFields, setSelectedFields] = useState<number[][]>([]);
+  const [selectedFields, setSelectedFields] = useState<number[]>([]);
 
   return (
     <>

@@ -14,12 +14,12 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import { TiDelete } from "react-icons/ti";
-import { AllFieldsInterface } from "../BookAtributes/Fields.tsx";
+import { FieldInterface } from "../BookAtributes/Fields.tsx";
 
 interface Props {
-  options: AllFieldsInterface[];
-  selectedOptions: number[][];
-  onSelect: (t: number[][]) => void;
+  options: FieldInterface[];
+  selectedOptions: number[];
+  onSelect: (n: number[]) => void;
   fieldsMap: Map<number, string>;
 }
 
@@ -31,21 +31,16 @@ const FieldsFilter = ({
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelectFields = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    const selectedFieldsId: number[] = value.split(",").map((e) => +e);
-    const found = selectedOptions.find(
-      (e) => e[0] === selectedFieldsId[0] && e[1] === selectedFieldsId[1],
-    );
-    if (!found) {
-      onSelect([...selectedOptions, selectedFieldsId]);
+  const handleSelectAuthor = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedFieldId = event.target.value;
+    if (!selectedOptions.includes(+selectedFieldId)) {
+      onSelect([...selectedOptions, +selectedFieldId]);
     }
+    // console.log(authorId);
   };
 
-  const handleClickRemove = (n: number[]) => {
-    console.log(n);
-    // todo check if includes same tuple and remove
-    // onSelect(selectedOptions.filter((au) => au !== n));
+  const handleClickRemove = (n: number) => {
+    onSelect(selectedOptions.filter((fi) => fi !== n));
   };
 
   return (
@@ -55,22 +50,16 @@ const FieldsFilter = ({
       onClose={() => setIsOpen(false)}
     >
       <PopoverTrigger>
-        <Button m={1}>Podrocja</Button>
+        <Button m={1}>Področja</Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Izberi Podrocja</PopoverHeader>
+        <PopoverHeader>Izberi Področja</PopoverHeader>
         <PopoverBody>
           {selectedOptions.map((sf) => (
-            <Badge
-              m={1}
-              key={`${sf[0]}${sf[1]}`}
-              colorScheme="teal"
-              fontSize="1rem"
-            >
-              {fieldsMap.get(sf[0])}-
-              {options.find((f) => f.id_field === sf[0])?.subfield || ""}
+            <Badge m={1} key={sf} colorScheme="teal" fontSize="1rem">
+              {fieldsMap.get(sf)}
               <Icon
                 as={TiDelete}
                 fontSize="1.3rem"
@@ -79,13 +68,10 @@ const FieldsFilter = ({
             </Badge>
           ))}
           <Divider />
-          <Select onChange={handleSelectFields}>
-            {options.map((f) => (
-              <option
-                key={`${f.id_field}${f.id_subfield}`}
-                value={`${f.id_field},${f.id_subfield}`}
-              >
-                {f.field}-{f.subfield}
+          <Select onChange={handleSelectAuthor}>
+            {options.map((field) => (
+              <option key={field.id_field} value={field.id_field}>
+                {field.field}
               </option>
             ))}
           </Select>
