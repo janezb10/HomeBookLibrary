@@ -23,8 +23,6 @@ interface Props {
   authorsMap: Map<number, string>;
 }
 
-// todo badge for selected authors
-
 const AuthorFilter = ({
   options,
   selectedOptions,
