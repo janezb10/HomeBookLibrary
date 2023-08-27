@@ -13,34 +13,33 @@ import {
   Icon,
   Badge,
 } from "@chakra-ui/react";
-import { AuthorInterface } from "../BookAtributes/Authors.tsx";
 import { TiDelete } from "react-icons/ti";
+import { CollectionInterface } from "../BookAtributes/Collections.tsx";
 
 interface Props {
-  options: AuthorInterface[];
+  options: CollectionInterface[];
   selectedOptions: number[];
   onSelect: (n: number[]) => void;
-  authorsMap: Map<number, string>;
+  collectionMap: Map<number, string>;
 }
 
-const AuthorFilter = ({
+const CollectionFilter = ({
   options,
   selectedOptions,
   onSelect,
-  authorsMap,
+  collectionMap,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelectAuthor = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedAuthorId = event.target.value;
-    if (!selectedOptions.includes(+selectedAuthorId)) {
-      onSelect([...selectedOptions, +selectedAuthorId]);
+    const selectedCollectionId = event.target.value;
+    if (!selectedOptions.includes(+selectedCollectionId)) {
+      onSelect([...selectedOptions, +selectedCollectionId]);
     }
-    // console.log(authorId);
   };
 
   const handleClickRemove = (n: number) => {
-    onSelect(selectedOptions.filter((au) => au !== n));
+    onSelect(selectedOptions.filter((cf) => cf !== n));
   };
 
   return (
@@ -50,28 +49,31 @@ const AuthorFilter = ({
       onClose={() => setIsOpen(false)}
     >
       <PopoverTrigger>
-        <Button m={1}>Avtorji</Button>
+        <Button m={1}>Zbirke</Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Izberi Avtorje</PopoverHeader>
+        <PopoverHeader>Izberi zbirke</PopoverHeader>
         <PopoverBody>
-          {selectedOptions.map((so) => (
-            <Badge m={1} key={so} colorScheme="purple" fontSize="1rem">
-              {authorsMap.get(so)}
+          {selectedOptions.map((sc) => (
+            <Badge m={1} key={sc} colorScheme="orange" fontSize="1rem">
+              {collectionMap.get(sc)}
               <Icon
                 as={TiDelete}
                 fontSize="1.3rem"
-                onClick={() => handleClickRemove(so)}
+                onClick={() => handleClickRemove(sc)}
               />
             </Badge>
           ))}
           <Divider />
           <Select onChange={handleSelectAuthor}>
-            {options.map((author) => (
-              <option key={author.id_author} value={author.id_author}>
-                {author.author}
+            {options.map((collection) => (
+              <option
+                key={collection.id_collection}
+                value={collection.id_collection}
+              >
+                {collection.collection}
               </option>
             ))}
           </Select>
@@ -81,4 +83,4 @@ const AuthorFilter = ({
   );
 };
 
-export default AuthorFilter;
+export default CollectionFilter;

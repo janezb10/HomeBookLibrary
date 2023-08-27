@@ -47,11 +47,11 @@ const SearchInput = ({
   const handleSelectAuthors = (authors: number[]) => {
     setSelectedAuthors(authors);
   };
-
   const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
   const handleSelectLanguages = (selected: number[]) => {
     setSelectedLanguages(selected);
   };
+  const [selectedCollections, setSelectedCollections] = useState<number[]>([]);
 
   return (
     <>
@@ -84,6 +84,8 @@ const SearchInput = ({
           handleSelectAuthors={handleSelectAuthors}
           selectedLanguages={selectedLanguages}
           hancleSelectLanguages={handleSelectLanguages}
+          selectedCollections={selectedCollections}
+          handleSelectCollections={setSelectedCollections}
         />
       </form>
     </>

@@ -4,6 +4,7 @@ import PositionFilter from "./Filters/PositionFilter.tsx";
 import AuthorFilter from "./Filters/AuthorFilter.tsx";
 import { TiDelete } from "react-icons/ti";
 import LanguageFilter from "./Filters/LanguageFilter.tsx";
+import CollectionFilter from "./Filters/CollectionFilter.tsx";
 
 interface Props {
   bookAttributes: BookAttributesInterface;
@@ -13,6 +14,8 @@ interface Props {
   handleSelectAuthors: (n: number[]) => void;
   selectedLanguages: number[];
   hancleSelectLanguages: (n: number[]) => void;
+  selectedCollections: number[];
+  handleSelectCollections: (n: number[]) => void;
 }
 
 const SearchFilters = ({
@@ -23,6 +26,8 @@ const SearchFilters = ({
     positionsMap,
     languages,
     languagesMap,
+    collections,
+    collectionsMap,
   },
   selectedPositions,
   handleSelectPositions,
@@ -30,6 +35,8 @@ const SearchFilters = ({
   handleSelectAuthors,
   selectedLanguages,
   hancleSelectLanguages,
+  selectedCollections,
+  handleSelectCollections,
 }: Props) => {
   return (
     <Box m={1}>
@@ -71,6 +78,20 @@ const SearchFilters = ({
             />
           </Badge>
         ))}
+        {selectedCollections.map((sc) => (
+          <Badge colorScheme="orange" fontSize="1rem" m={1} key={`c${sc}`}>
+            {collectionsMap.get(sc)}
+            <Icon
+              as={TiDelete}
+              fontSize="1.3rem"
+              onClick={() =>
+                handleSelectCollections(
+                  selectedCollections.filter((c) => c !== sc),
+                )
+              }
+            />
+          </Badge>
+        ))}
       </Text>
       <PositionFilter
         options={positions}
@@ -87,6 +108,12 @@ const SearchFilters = ({
         options={languages}
         selectedOptions={selectedLanguages}
         onSelect={hancleSelectLanguages}
+      />
+      <CollectionFilter
+        options={collections}
+        selectedOptions={selectedCollections}
+        onSelect={handleSelectCollections}
+        collectionMap={collectionsMap}
       />
     </Box>
   );
