@@ -40,17 +40,8 @@ const SearchInput = ({
 
   // Filters
   const [selectedPositions, setSelectedPositions] = useState<number[]>([]);
-  const handleSelectPositions = (selected: number[]) => {
-    setSelectedPositions(selected);
-  };
   const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
-  const handleSelectAuthors = (authors: number[]) => {
-    setSelectedAuthors(authors);
-  };
   const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
-  const handleSelectLanguages = (selected: number[]) => {
-    setSelectedLanguages(selected);
-  };
   const [selectedCollections, setSelectedCollections] = useState<number[]>([]);
 
   return (
@@ -79,11 +70,11 @@ const SearchInput = ({
         <SearchFilters
           bookAttributes={bookAttributes}
           selectedPositions={selectedPositions}
-          handleSelectPositions={handleSelectPositions}
+          handleSelectPositions={setSelectedPositions}
           selectedAuthors={selectedAuthors}
-          handleSelectAuthors={handleSelectAuthors}
+          handleSelectAuthors={setSelectedAuthors}
           selectedLanguages={selectedLanguages}
-          hancleSelectLanguages={handleSelectLanguages}
+          hancleSelectLanguages={setSelectedLanguages}
           selectedCollections={selectedCollections}
           handleSelectCollections={setSelectedCollections}
         />
