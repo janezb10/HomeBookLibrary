@@ -10,9 +10,11 @@ import {
   PopoverBody,
   Divider,
   Select,
-  Text,
+  Icon,
+  Badge,
 } from "@chakra-ui/react";
 import { AuthorInterface } from "../BookAtributes/Authors.tsx";
+import { TiDelete } from "react-icons/ti";
 
 interface Props {
   options: AuthorInterface[];
@@ -59,10 +61,14 @@ const AuthorFilter = ({
         <PopoverHeader>Izberi Avtorje</PopoverHeader>
         <PopoverBody>
           {selectedOptions.map((so) => (
-            <Text key={so}>
-              {authorsMap.get(so)} {/*todo icon*/}
-              <span onClick={() => handleClickRemove(so)}>X</span>
-            </Text>
+            <Badge m={1} key={so} colorScheme="purple" fontSize="1rem">
+              {authorsMap.get(so)}
+              <Icon
+                as={TiDelete}
+                fontSize="1.3rem"
+                onClick={() => handleClickRemove(so)}
+              />
+            </Badge>
           ))}
           <Divider />
           <Select onChange={handleSelectAuthor}>

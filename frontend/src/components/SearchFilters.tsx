@@ -1,38 +1,62 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Badge, Box, Icon, Text } from "@chakra-ui/react";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 import PositionFilter from "./Filters/PositionFilter.tsx";
 import AuthorFilter from "./Filters/AuthorFilter.tsx";
-import { useState } from "react";
+import { TiDelete } from "react-icons/ti";
 
 interface Props {
   bookAttributes: BookAttributesInterface;
-  selectedPosition: number[];
-  handleSelectPosition: (n: number[]) => void;
+  selectedPositions: number[];
+  handleSelectPositions: (n: number[]) => void;
+  selectedAuthors: number[];
+  handleSelectAuthors: (n: number[]) => void;
 }
 
 const SearchFilters = ({
-  bookAttributes: { positions, authors, authorsMap },
-  selectedPosition,
-  handleSelectPosition,
+  bookAttributes: { positions, authors, authorsMap, positionsMap },
+  selectedPositions,
+  handleSelectPositions,
+  selectedAuthors,
+  handleSelectAuthors,
 }: Props) => {
-  const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
-  const handleSelectAuthor = (authors: number[]) => {
-    setSelectedAuthors(authors);
-    // console.log(selectedAuthors);
-  };
-
   return (
     <Box m={1}>
-      <Text>Filtri:</Text>
+      <Text>
+        Filtri:
+        {selectedPositions.map((sp) => (
+          <Badge colorScheme="green" fontSize="1rem" m={1} key={`p${sp}`}>
+            {positionsMap.get(sp)}
+            <Icon
+              as={TiDelete}
+              fontSize="1.3rem"
+              onClick={() =>
+                handleSelectPositions(selectedPositions.filter((p) => p !== sp))
+              }
+            />
+          </Badge>
+        ))}
+        {selectedAuthors.map((sa) => (
+          <Badge colorScheme="purple" fontSize="1rem" m={1} key={`a${sa}`}>
+            {authorsMap.get(sa)}
+            <Icon
+              as={TiDelete}
+              fontSize="1.3rem"
+              onClick={() =>
+                handleSelectAuthors(selectedAuthors.filter((a) => a !== sa))
+              }
+            />
+          </Badge>
+        ))}
+      </Text>
       <PositionFilter
         options={positions}
-        selectedOptions={selectedPosition}
-        onSelect={handleSelectPosition}
+        selectedOptions={selectedPositions}
+        onSelect={handleSelectPositions}
       />
       <AuthorFilter
         options={authors}
         selectedOptions={selectedAuthors}
-        onSelect={handleSelectAuthor}
+        onSelect={handleSelectAuthors}
         authorsMap={authorsMap}
       />
     </Box>

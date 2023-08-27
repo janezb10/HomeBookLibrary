@@ -39,10 +39,14 @@ const SearchInput = ({
   };
 
   // Filters
-  const [selectedPosition, setSelectedPosition] = useState<number[]>([]);
-  const handleSelectPosition = (selected: number[]) => {
-    setSelectedPosition(selected);
+  const [selectedPositions, setSelectedPositions] = useState<number[]>([]);
+  const handleSelectPositions = (selected: number[]) => {
+    setSelectedPositions(selected);
     console.log(selected);
+  };
+  const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
+  const handleSelectAuthors = (authors: number[]) => {
+    setSelectedAuthors(authors);
   };
 
   return (
@@ -70,8 +74,10 @@ const SearchInput = ({
         </InputGroup>
         <SearchFilters
           bookAttributes={bookAttributes}
-          selectedPosition={selectedPosition}
-          handleSelectPosition={handleSelectPosition}
+          selectedPositions={selectedPositions}
+          handleSelectPositions={handleSelectPositions}
+          selectedAuthors={selectedAuthors}
+          handleSelectAuthors={handleSelectAuthors}
         />
       </form>
     </>
