@@ -5,6 +5,7 @@ import AuthorFilter from "./Filters/AuthorFilter.tsx";
 import { TiDelete } from "react-icons/ti";
 import LanguageFilter from "./Filters/LanguageFilter.tsx";
 import CollectionFilter from "./Filters/CollectionFilter.tsx";
+import FieldsFilter from "./Filters/FieldsFilter.tsx";
 
 interface Props {
   bookAttributes: BookAttributesInterface;
@@ -16,6 +17,8 @@ interface Props {
   hancleSelectLanguages: (n: number[]) => void;
   selectedCollections: number[];
   handleSelectCollections: (n: number[]) => void;
+  selectedFields: number[][];
+  handleSelectFields: (n: number[][]) => void;
 }
 
 const SearchFilters = ({
@@ -28,6 +31,8 @@ const SearchFilters = ({
     languagesMap,
     collections,
     collectionsMap,
+    fields,
+    fieldsMap,
   },
   selectedPositions,
   handleSelectPositions,
@@ -37,6 +42,8 @@ const SearchFilters = ({
   hancleSelectLanguages,
   selectedCollections,
   handleSelectCollections,
+  selectedFields,
+  handleSelectFields,
 }: Props) => {
   return (
     <Box m={1}>
@@ -92,6 +99,22 @@ const SearchFilters = ({
             />
           </Badge>
         ))}
+        {selectedFields.map((sf) => (
+          <Badge
+            m={1}
+            key={`${sf[0]}${sf[1]}`}
+            colorScheme="teal"
+            fontSize="1rem"
+          >
+            {fieldsMap.get(sf[0])}-
+            {fields.find((f) => f.id_field === sf[0])?.subfield || ""}
+            <Icon
+              as={TiDelete}
+              fontSize="1.3rem"
+              // onClick={() => handleClickRemove(sf)}
+            />
+          </Badge>
+        ))}
       </Text>
       <PositionFilter
         options={positions}
@@ -114,6 +137,12 @@ const SearchFilters = ({
         selectedOptions={selectedCollections}
         onSelect={handleSelectCollections}
         collectionMap={collectionsMap}
+      />
+      <FieldsFilter
+        options={fields}
+        selectedOptions={selectedFields}
+        onSelect={handleSelectFields}
+        fieldsMap={fieldsMap}
       />
     </Box>
   );

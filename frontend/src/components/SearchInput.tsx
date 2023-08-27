@@ -43,6 +43,7 @@ const SearchInput = ({
   const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
   const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
   const [selectedCollections, setSelectedCollections] = useState<number[]>([]);
+  const [selectedFields, setSelectedFields] = useState<number[][]>([]);
 
   return (
     <>
@@ -77,6 +78,8 @@ const SearchInput = ({
           hancleSelectLanguages={setSelectedLanguages}
           selectedCollections={selectedCollections}
           handleSelectCollections={setSelectedCollections}
+          selectedFields={selectedFields}
+          handleSelectFields={setSelectedFields}
         />
       </form>
     </>
