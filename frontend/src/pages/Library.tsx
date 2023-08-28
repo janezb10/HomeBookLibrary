@@ -93,10 +93,39 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     const controller = new AbortController();
     apiClient.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
 
+    const {
+      selectedPositions,
+      selectedAuthors,
+      selectedLanguages,
+      selectedCollections,
+      selectedFields,
+    } = filters;
+    const positionFilter =
+      selectedPositions.length > 0
+        ? "positions=" + selectedPositions.join(",")
+        : "";
+    const authorFilter =
+      selectedAuthors.length > 0 ? "authors=" + selectedAuthors.join(",") : "";
+    const languageFilter =
+      selectedLanguages.length > 0
+        ? "languages=" + selectedLanguages.join(",")
+        : "";
+    const collectionFilter =
+      selectedCollections.length > 0
+        ? "collections=" + selectedCollections.join(",")
+        : "";
+    const fieldsFilter =
+      selectedFields.length > 0 ? "fields=" + selectedFields.join(",") : "";
+
+    const pageFilter = page ? "page=" + page : "";
+
     apiClient
-      .get(`/api/v1/search/${searcString}${page ? "?page=" + page : ""}`, {
-        signal: controller.signal,
-      })
+      .get(
+        `/api/v1/search/${searcString}?${positionFilter}&${authorFilter}&${languageFilter}&${collectionFilter}&${fieldsFilter}&${pageFilter}`,
+        {
+          signal: controller.signal,
+        },
+      )
       .then((res: AxiosResponse<SearchResponse>) => {
         pagination.setNumberOfPages(res.data.numberOfPages);
         setBooks(res.data.books);
