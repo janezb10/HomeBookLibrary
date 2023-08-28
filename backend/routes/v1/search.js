@@ -62,9 +62,11 @@ router.get("/:keyword", async (req, res, next) => {
             : ""
         }
     ;`;
+    const keyword =
+      req.params.keyword === "*" ? "%%" : `%${req.params.keyword}%`;
 
     const [countRows] = await db.execute(countSql, [
-      `%${req.params.keyword}%`,
+      keyword,
       ...positionValues,
       ...authorsValues,
       ...languagesValues,
@@ -123,7 +125,7 @@ router.get("/:keyword", async (req, res, next) => {
         LIMIT ? , ? ;`;
 
     const [rows] = await db.execute(sql, [
-      `%${req.params.keyword}%`,
+      keyword,
       ...positionValues,
       ...authorsValues,
       ...languagesValues,

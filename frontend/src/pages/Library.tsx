@@ -93,6 +93,8 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
     const controller = new AbortController();
     apiClient.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
 
+    if (searcString === "") searcString = "*";
+
     const {
       selectedPositions,
       selectedAuthors,
