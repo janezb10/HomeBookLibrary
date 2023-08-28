@@ -2,15 +2,15 @@ import { useState } from "react";
 
 export interface FiltersInterface {
   selectedPositions: number[];
-  handleSelectPositions: (n: number[]) => void;
+  setSelectedPositions: (n: number[]) => void;
   selectedAuthors: number[];
-  handleSelectAuthors: (n: number[]) => void;
+  setSelectedAuthors: (n: number[]) => void;
   selectedLanguages: number[];
-  hancleSelectLanguages: (n: number[]) => void;
+  setSelectedLanguages: (n: number[]) => void;
   selectedCollections: number[];
-  handleSelectCollections: (n: number[]) => void;
+  setSelectedCollections: (n: number[]) => void;
   selectedFields: number[];
-  handleSelectFields: (n: number[]) => void;
+  setSelectedFields: (n: number[]) => void;
 }
 
 const useFilters = () => {

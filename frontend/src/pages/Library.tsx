@@ -31,18 +31,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const bookAttributes = useBookAttributes(authToken);
   const toast = useToast();
   const pagination = usePagination();
-  const {
-    selectedPositions,
-    setSelectedPositions,
-    selectedAuthors,
-    setSelectedAuthors,
-    selectedLanguages,
-    setSelectedLanguages,
-    selectedCollections,
-    setSelectedCollections,
-    selectedFields,
-    setSelectedFields,
-  } = useFilters();
+  const filters = useFilters();
 
   // deleting book
   const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
@@ -171,19 +160,7 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
           </Button>
         </Box>
       </Flex>
-      <SearchFilters
-        bookAttributes={bookAttributes}
-        selectedPositions={selectedPositions}
-        handleSelectPositions={setSelectedPositions}
-        selectedAuthors={selectedAuthors}
-        handleSelectAuthors={setSelectedAuthors}
-        selectedLanguages={selectedLanguages}
-        hancleSelectLanguages={setSelectedLanguages}
-        selectedCollections={selectedCollections}
-        handleSelectCollections={setSelectedCollections}
-        selectedFields={selectedFields}
-        handleSelectFields={setSelectedFields}
-      />
+      <SearchFilters filters={filters} bookAttributes={bookAttributes} />
       <PaginationList
         pagination={pagination}
         onSelectPage={(pageNumber) =>

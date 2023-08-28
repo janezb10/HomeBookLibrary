@@ -6,19 +6,11 @@ import { TiDelete } from "react-icons/ti";
 import LanguageFilter from "./Filters/LanguageFilter.tsx";
 import CollectionFilter from "./Filters/CollectionFilter.tsx";
 import FieldsFilter from "./Filters/FieldsFilter.tsx";
+import { FiltersInterface } from "../hooks/useFilters.ts";
 
 interface Props {
   bookAttributes: BookAttributesInterface;
-  selectedPositions: number[];
-  handleSelectPositions: (n: number[]) => void;
-  selectedAuthors: number[];
-  handleSelectAuthors: (n: number[]) => void;
-  selectedLanguages: number[];
-  hancleSelectLanguages: (n: number[]) => void;
-  selectedCollections: number[];
-  handleSelectCollections: (n: number[]) => void;
-  selectedFields: number[];
-  handleSelectFields: (n: number[]) => void;
+  filters: FiltersInterface;
 }
 
 const SearchFilters = ({
@@ -34,16 +26,18 @@ const SearchFilters = ({
     fields,
     fieldsMap,
   },
-  selectedPositions,
-  handleSelectPositions,
-  selectedAuthors,
-  handleSelectAuthors,
-  selectedLanguages,
-  hancleSelectLanguages,
-  selectedCollections,
-  handleSelectCollections,
-  selectedFields,
-  handleSelectFields,
+  filters: {
+    selectedPositions,
+    setSelectedPositions,
+    selectedAuthors,
+    setSelectedAuthors,
+    selectedLanguages,
+    setSelectedLanguages,
+    selectedCollections,
+    setSelectedCollections,
+    selectedFields,
+    setSelectedFields,
+  },
 }: Props) => {
   return (
     <Box m={1}>
@@ -56,7 +50,7 @@ const SearchFilters = ({
               as={TiDelete}
               fontSize="1.3rem"
               onClick={() =>
-                handleSelectPositions(selectedPositions.filter((p) => p !== sp))
+                setSelectedPositions(selectedPositions.filter((p) => p !== sp))
               }
             />
           </Badge>
@@ -68,7 +62,7 @@ const SearchFilters = ({
               as={TiDelete}
               fontSize="1.3rem"
               onClick={() =>
-                handleSelectAuthors(selectedAuthors.filter((a) => a !== sa))
+                setSelectedAuthors(selectedAuthors.filter((a) => a !== sa))
               }
             />
           </Badge>
@@ -80,7 +74,7 @@ const SearchFilters = ({
               as={TiDelete}
               fontSize="1.3rem"
               onClick={() =>
-                hancleSelectLanguages(selectedLanguages.filter((l) => l !== sl))
+                setSelectedLanguages(selectedLanguages.filter((l) => l !== sl))
               }
             />
           </Badge>
@@ -92,7 +86,7 @@ const SearchFilters = ({
               as={TiDelete}
               fontSize="1.3rem"
               onClick={() =>
-                handleSelectCollections(
+                setSelectedCollections(
                   selectedCollections.filter((c) => c !== sc),
                 )
               }
@@ -106,7 +100,7 @@ const SearchFilters = ({
               as={TiDelete}
               fontSize="1.3rem"
               onClick={() =>
-                handleSelectFields(selectedFields.filter((f) => f !== sf))
+                setSelectedFields(selectedFields.filter((f) => f !== sf))
               }
             />
           </Badge>
@@ -115,23 +109,23 @@ const SearchFilters = ({
       <PositionFilter
         options={positions}
         selectedOptions={selectedPositions}
-        onSelect={handleSelectPositions}
+        onSelect={setSelectedPositions}
       />
       <AuthorFilter
         options={authors}
         selectedOptions={selectedAuthors}
-        onSelect={handleSelectAuthors}
+        onSelect={setSelectedAuthors}
         authorsMap={authorsMap}
       />
       <LanguageFilter
         options={languages}
         selectedOptions={selectedLanguages}
-        onSelect={hancleSelectLanguages}
+        onSelect={setSelectedLanguages}
       />
       <CollectionFilter
         options={collections}
         selectedOptions={selectedCollections}
-        onSelect={handleSelectCollections}
+        onSelect={setSelectedCollections}
         collectionMap={collectionsMap}
       />
       <FieldsFilter
@@ -148,7 +142,7 @@ const SearchFilters = ({
           [],
         )}
         selectedOptions={selectedFields}
-        onSelect={handleSelectFields}
+        onSelect={setSelectedFields}
         fieldsMap={fieldsMap}
       />
     </Box>

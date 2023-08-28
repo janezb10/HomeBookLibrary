@@ -61,19 +61,6 @@ const SearchInput = ({
             }
           />
         </InputGroup>
-        {/*<SearchFilters*/}
-        {/*  bookAttributes={bookAttributes}*/}
-        {/*  selectedPositions={selectedPositions}*/}
-        {/*  handleSelectPositions={setSelectedPositions}*/}
-        {/*  selectedAuthors={selectedAuthors}*/}
-        {/*  handleSelectAuthors={setSelectedAuthors}*/}
-        {/*  selectedLanguages={selectedLanguages}*/}
-        {/*  hancleSelectLanguages={setSelectedLanguages}*/}
-        {/*  selectedCollections={selectedCollections}*/}
-        {/*  handleSelectCollections={setSelectedCollections}*/}
-        {/*  selectedFields={selectedFields}*/}
-        {/*  handleSelectFields={setSelectedFields}*/}
-        {/*/>*/}
       </form>
     </>
   );
