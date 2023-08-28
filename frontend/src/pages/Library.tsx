@@ -23,12 +23,26 @@ import usePagination from "../hooks/usePagination.ts";
 import PaginationList from "../components/PaginationList.tsx";
 import apiClient from "../services/api-client.ts";
 import { AxiosResponse, CanceledError } from "axios";
+import useFilters from "../hooks/useFilters.ts";
+import SearchFilters from "../components/SearchFilters.tsx";
 
 const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
   const [books, setBooks] = useState<BookInterface[]>([]);
   const bookAttributes = useBookAttributes(authToken);
   const toast = useToast();
   const pagination = usePagination();
+  const {
+    selectedPositions,
+    setSelectedPositions,
+    selectedAuthors,
+    setSelectedAuthors,
+    selectedLanguages,
+    setSelectedLanguages,
+    selectedCollections,
+    setSelectedCollections,
+    selectedFields,
+    setSelectedFields,
+  } = useFilters();
 
   // deleting book
   const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
@@ -157,6 +171,19 @@ const Library = ({ authToken, setAuthToken }: AuthTokenInterface) => {
           </Button>
         </Box>
       </Flex>
+      <SearchFilters
+        bookAttributes={bookAttributes}
+        selectedPositions={selectedPositions}
+        handleSelectPositions={setSelectedPositions}
+        selectedAuthors={selectedAuthors}
+        handleSelectAuthors={setSelectedAuthors}
+        selectedLanguages={selectedLanguages}
+        hancleSelectLanguages={setSelectedLanguages}
+        selectedCollections={selectedCollections}
+        handleSelectCollections={setSelectedCollections}
+        selectedFields={selectedFields}
+        handleSelectFields={setSelectedFields}
+      />
       <PaginationList
         pagination={pagination}
         onSelectPage={(pageNumber) =>

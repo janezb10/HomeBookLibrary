@@ -1,9 +1,8 @@
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { BookInterface } from "./Book.tsx";
 import { paginationInterface } from "../hooks/usePagination.ts";
-import SearchFilters from "./SearchFilters.tsx";
 import { BookAttributesInterface } from "../hooks/useBookAttributes.ts";
 
 export interface SearchResponse {
@@ -18,7 +17,6 @@ interface SearchInputProps {
 }
 
 const SearchInput = ({
-  bookAttributes,
   onBookSearch,
   pagination: { setLatestSearch },
 }: SearchInputProps) => {
@@ -39,11 +37,6 @@ const SearchInput = ({
   };
 
   // Filters
-  const [selectedPositions, setSelectedPositions] = useState<number[]>([]);
-  const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
-  const [selectedLanguages, setSelectedLanguages] = useState<number[]>([]);
-  const [selectedCollections, setSelectedCollections] = useState<number[]>([]);
-  const [selectedFields, setSelectedFields] = useState<number[]>([]);
 
   return (
     <>
@@ -68,19 +61,19 @@ const SearchInput = ({
             }
           />
         </InputGroup>
-        <SearchFilters
-          bookAttributes={bookAttributes}
-          selectedPositions={selectedPositions}
-          handleSelectPositions={setSelectedPositions}
-          selectedAuthors={selectedAuthors}
-          handleSelectAuthors={setSelectedAuthors}
-          selectedLanguages={selectedLanguages}
-          hancleSelectLanguages={setSelectedLanguages}
-          selectedCollections={selectedCollections}
-          handleSelectCollections={setSelectedCollections}
-          selectedFields={selectedFields}
-          handleSelectFields={setSelectedFields}
-        />
+        {/*<SearchFilters*/}
+        {/*  bookAttributes={bookAttributes}*/}
+        {/*  selectedPositions={selectedPositions}*/}
+        {/*  handleSelectPositions={setSelectedPositions}*/}
+        {/*  selectedAuthors={selectedAuthors}*/}
+        {/*  handleSelectAuthors={setSelectedAuthors}*/}
+        {/*  selectedLanguages={selectedLanguages}*/}
+        {/*  hancleSelectLanguages={setSelectedLanguages}*/}
+        {/*  selectedCollections={selectedCollections}*/}
+        {/*  handleSelectCollections={setSelectedCollections}*/}
+        {/*  selectedFields={selectedFields}*/}
+        {/*  handleSelectFields={setSelectedFields}*/}
+        {/*/>*/}
       </form>
     </>
   );
