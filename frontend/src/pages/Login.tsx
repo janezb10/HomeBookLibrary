@@ -19,7 +19,7 @@ import { AxiosError } from "axios";
 import { AuthTokenInterface } from "../hooks/useToken.ts";
 
 const schema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
+  username: z.string().max(50, { message: "Username too long." }),
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters long." }),
@@ -41,17 +41,20 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
   const onSubmit = async (data: FieldValues) => {
     try {
       const response = await apiClient.post("/auth/login", {
-        email: data.email,
+        username: data.username,
         password: data.password,
       });
       const { token } = response.data;
-      apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      sessionStorage.setItem("authToken", token);
-      if (setAuthToken) {
-        setAuthToken(token);
+      if (token) {
+        apiClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        sessionStorage.setItem("authToken", token);
+        if (setAuthToken) {
+          setAuthToken(token);
+        }
+        navigate("/library");
+      } else {
+        return;
       }
-
-      navigate("/library");
     } catch (error) {
       if (error instanceof AxiosError) {
         setAuthError(error?.response?.statusText || "");
@@ -81,16 +84,16 @@ const Login = ({ setAuthToken }: AuthTokenInterface) => {
       <GridItem border="2px solid #DDD" p="2rem" borderRadius="1rem">
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl p="0.5rem">
-            <FormLabel>Email address</FormLabel>
+            <FormLabel>Username</FormLabel>
             <Input
               type="text"
-              {...register("email")}
+              {...register("username")}
               placeholder="janezNovak@domain.com"
             />
-            {errors.email && (
+            {errors.username && (
               <Alert status="error" mt="0.5rem">
                 <AlertIcon />
-                {errors.email.message}
+                {errors.username.message}
               </Alert>
             )}
           </FormControl>
