@@ -54,6 +54,12 @@ CREATE TABLE IF NOT EXISTS books(
 	,FOREIGN KEY (id_collection)		REFERENCES collections(id_collection)
 );
 
+CREATE TABLE IF NOT EXISTS userData(
+    id               INTEGER            NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_name        VARCHAR(30)        NOT NULL,
+    password         VARCHAR(91)        NOT NULL
+)
+
 
 
 

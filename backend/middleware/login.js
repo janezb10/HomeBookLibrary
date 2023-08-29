@@ -1,16 +1,16 @@
 const { generateJWTToken } = require("../utils/authUtils");
+const db = require("../config/SQLConfig");
 
 const users = [
   { id: 1, email: "platinab10@gmail.com", password: "passw1" },
   { id: 2, email: "sd@sd.si", password: "passw2" },
 ];
 
-const handleLogin = (req, res) => {
-  const { username, password } = req.body;
+const handleLogin = (req, res, next) => {
+  const { email, password } = req.body;
   //   Check if user is in database
-  const user = users.find(
-    (u) => u.username === username && u.password === password,
-  );
+  console.log(email);
+  const user = users.find((u) => u.email === email && u.password === password);
   if (!user) {
     return res.status(401).json({ message: "wrong username or password" });
   }
@@ -20,3 +20,18 @@ const handleLogin = (req, res) => {
 };
 
 module.exports = handleLogin;
+
+// try {
+//   const { username, password } = req.body;
+//   const sql = `
+//         SELECT *
+//         FROM userData
+//         WHERE userData.user_name
+//         LIKE ?`;
+//   console.log("aaaa", username);
+//   const [result] = await db.execute(sql, [username]);
+//   console.log(result);
+//   res.send(result);
+// } catch (err) {
+//   next(err);
+// }

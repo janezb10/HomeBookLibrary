@@ -1,3 +1,5 @@
+USE knjiznica;
+
 INSERT INTO authors(id_author,author) VALUES (1,'NE VEM');
 INSERT INTO authors(id_author,author) VALUES (2,'ACHEBE CHINUA');
 INSERT INTO authors(id_author,author) VALUES (3,'ADAMLJE BOGATAJ');

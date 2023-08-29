@@ -1,3 +1,5 @@
+USE knjiznica;
+
 INSERT INTO books(id_field, id_subfield, title, id_author, id_position, id_language, id_collection, country, notes, year) VALUES (8,2,'NEMŠČINA ZA POTOVANJA IN PROSTI ČAS',878,3,2,1,NULL,'NEMŠČINA',NULL);
 INSERT INTO books(id_field, id_subfield, title, id_author, id_position, id_language, id_collection, country, notes, year) VALUES (7,2,'TRI RAZPRAVE',619,3,2,1,NULL,'IGOR',NULL);
 INSERT INTO books(id_field, id_subfield, title, id_author, id_position, id_language, id_collection, country, notes, year) VALUES (8,2,'ANGLEŠKO SLOVENSKI SLOVAR',335,3,2,1,NULL,'MINI SLOVAR ANGLEŠČINA',NULL);
